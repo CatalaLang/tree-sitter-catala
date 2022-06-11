@@ -13,7 +13,7 @@ module.exports = grammar({
   inline: $ => [$.code,$.law_text],
   word: $ => $.IDENT,
   rules: {
-    source_file: $ => choice(seq($.source_file_item, $.source_file), $.EOF),
+    source_file: $ => repeat1($._source_file_item),
     aggregate: $ =>
       seq($.aggregate_func, $.FOR, $.ident, $.IN, $.primitive_expression,
         $.OF, $.base_expression),
@@ -167,7 +167,7 @@ module.exports = grammar({
       choice($.atomic_expression,
         seq($.small_expression, $.DOT, optional(seq($.constructor, $.DOT)),
           $.ident)),
-    source_file_item: $ =>
+    _source_file_item: $ =>
       choice($.law_text, seq($.BEGIN_CODE, optional($.code), $.END_CODE),
         $.law_heading, $.metadata_block,
         seq($.BEGIN_DIRECTIVE, $.LAW_INCLUDE, $.COLON,
@@ -274,7 +274,7 @@ module.exports = grammar({
     LABEL: $ =>  "label" ,
     LAW_HEADING: $ =>  /#+\s*\S+/ ,
     LAW_INCLUDE: $ =>  'Include' ,
-    LAW_TEXT: $ =>  /[^`]/ ,
+    LAW_TEXT: $ =>  /\S+/ ,
     LBRACKET: $ =>  '{' ,
     LESSER: $ =>  '<' ,
     LESSER_DATE: $ =>  '<@' ,
