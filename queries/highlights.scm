@@ -1,6 +1,6 @@
 ; highlights.scm
 
-(law_heading) @property
+(LAW_HEADING) @property
 (law_text) @string
 (expression) @attribute
 (literal) @number
