@@ -18,21 +18,22 @@ module.exports = grammar({
   rules: {
     source_file: $ => repeat1($._source_file_item),
     aggregate: $ =>
-      seq($.aggregate_func, $.FOR, $.ident, $.IN, $._primitive_expression,
+      seq($.aggregate_func, $.FOR, $._ident, $.IN, $._primitive_expression,
         $.OF, $._base_expression),
     aggregate_func: $ =>
-      choice(seq($.CONTENT, $.MAXIMUM, $.typ_base, $.INIT,
+      choice(seq($.CONTENT, $.MAXIMUM, $._typ_base, $.INIT,
                $._primitive_expression),
-        seq($.CONTENT, $.MINIMUM, $.typ_base, $.INIT, $._primitive_expression),
-        seq($.MAXIMUM, $.typ_base, $.INIT, $._primitive_expression),
-        seq($.MINIMUM, $.typ_base, $.INIT, $._primitive_expression),
-        seq($.SUM, $.typ_base), $.CARDINAL, $.FILTER, $.MAP),
+        seq($.CONTENT, $.MINIMUM, $._typ_base, $.INIT,
+          $._primitive_expression),
+        seq($.MAXIMUM, $._typ_base, $.INIT, $._primitive_expression),
+        seq($.MINIMUM, $._typ_base, $.INIT, $._primitive_expression),
+        seq($.SUM, $._typ_base), $.CARDINAL, $.FILTER, $.MAP),
     assertion: $ =>
-      choice(seq(optional($.condition_consequence), $.assertion_base),
-        seq($.FIXED, $.qident, $.BY, $.ident),
+      choice(seq(optional($.condition_consequence), $._assertion_base),
+        seq($.FIXED, $.qident, $.BY, $._ident),
         seq($.VARIES, $.qident, $.WITH_V, $._base_expression,
-          optional($.variation_type))),
-    assertion_base: $ => $.expression,
+          optional($._variation_type))),
+    _assertion_base: $ => $.expression,
     _atomic_expression: $ =>
       choice($.IDENT, $.literal, seq($.LPAREN, $.expression, $.RPAREN)),
     _base_expression: $ =>
@@ -42,19 +43,19 @@ module.exports = grammar({
         seq($._primitive_expression, $.IN, $._base_expression)),
     code: $ => repeat1($.code_item),
     code_item: $ =>
-      choice(seq($.SCOPE, $.constructor, optional($.scope_use_condition),
-               $.COLON, repeat1($.scope_item)),
-        seq($.DECLARATION, $.STRUCT, $.constructor, $.COLON,
+      choice(seq($.SCOPE, $._constructor, optional($.scope_use_condition),
+               $.COLON, repeat1($._scope_item)),
+        seq($.DECLARATION, $.STRUCT, $._constructor, $.COLON,
           repeat($.struct_scope)),
-        seq($.DECLARATION, $.SCOPE, $.constructor, $.COLON,
+        seq($.DECLARATION, $.SCOPE, $._constructor, $.COLON,
           repeat1($.scope_decl_item)),
-        seq($.DECLARATION, $.ENUM, $.constructor, $.COLON,
+        seq($.DECLARATION, $.ENUM, $._constructor, $.COLON,
           repeat($.enum_decl_line))),
-    collection_marked: $ => $.COLLECTION,
+    _collection_marked: $ => $.COLLECTION,
     _compare_expression: $ =>
       choice($._sum_expression,
-        seq($._sum_expression, $.compare_op, $._compare_expression)),
-    compare_op: $ =>
+        seq($._sum_expression, $._compare_op, $._compare_expression)),
+    _compare_op: $ =>
       choice($.LESSER, $.LESSER_EQUAL, $.GREATER, $.GREATER_EQUAL,
         $.LESSER_DEC, $.LESSER_EQUAL_DEC, $.GREATER_DEC, $.GREATER_EQUAL_DEC,
         $.LESSER_MONEY, $.LESSER_EQUAL_MONEY, $.GREATER_MONEY,
@@ -64,24 +65,24 @@ module.exports = grammar({
         $.GREATER_EQUAL_DURATION, $.EQUAL, $.NOT_EQUAL),
     condition: $ => seq($.UNDER_CONDITION, $.expression),
     condition_consequence: $ => seq($.condition, $.CONSEQUENCE),
-    condition_pos: $ => $.CONDITION,
-    constructor: $ => $.CONSTRUCTOR,
+    _condition_pos: $ => $.CONDITION,
+    _constructor: $ => $.CONSTRUCTOR,
     constructor_binding: $ =>
       seq($.maybe_qualified_constructor, $.optional_binding),
-    date_int: $ => $.INT_LITERAL,
+    _date_int: $ => $.INT_LITERAL,
     definition: $ =>
       seq(optional($.label), optional($.exception_to), $.DEFINITION,
         $.qident, optional($.definition_parameters), optional($.state),
         optional($.condition_consequence), $.DEFINED_AS, $.expression),
-    definition_parameters: $ => seq($.OF, $.ident),
+    definition_parameters: $ => seq($.OF, $._ident),
     enum_decl_line: $ =>
-      seq($.ALT, $.constructor, optional($.enum_decl_line_payload)),
-    enum_decl_line_payload: $ => seq($.CONTENT, $.typ),
+      seq($.ALT, $._constructor, optional($.enum_decl_line_payload)),
+    enum_decl_line_payload: $ => seq($.CONTENT, $._typ),
     enum_inject_content: $ => seq($.CONTENT, $._small_expression),
-    exception_to: $ => seq($.EXCEPTION, optional($.ident)),
-    exists_marked: $ => $.EXISTS,
+    exception_to: $ => seq($.EXCEPTION, optional($._ident)),
+    _exists_marked: $ => $.EXISTS,
     exists_prefix: $ =>
-      seq($.exists_marked, $.ident, $.IN, $._primitive_expression, $.SUCH,
+      seq($._exists_marked, $._ident, $.IN, $._primitive_expression, $.SUCH,
         $.THAT),
     expression: $ =>
       choice(seq($.exists_prefix, $.expression),
@@ -91,48 +92,50 @@ module.exports = grammar({
         $._logical_expression),
     for_all_marked: $ => seq($.FOR, $.ALL),
     forall_prefix: $ =>
-      seq($.for_all_marked, $.ident, $.IN, $._primitive_expression, $.WE_HAVE),
-    ident: $ => $.IDENT,
-    label: $ => seq($.LABEL, $.ident),
-    law_heading: $ => $.LAW_HEADING,
+      seq($.for_all_marked, $._ident, $.IN, $._primitive_expression,
+        $.WE_HAVE),
+    _ident: $ => $.IDENT,
+    label: $ => seq($.LABEL, $._ident),
+    _law_heading: $ => $.LAW_HEADING,
     law_text: $ => prec(2,repeat1($.LAW_TEXT)),
     literal: $ =>
-      choice(seq($.num_literal, optional($.unit_literal)), $.MONEY_AMOUNT,
-        seq($.VERTICAL, $.date_int, $.MINUS, $.date_int, $.MINUS, $.date_int,
-          $.VERTICAL), $.TRUE, $.FALSE),
-    logical_and_op: $ => $.AND,
-    logical_atom: $ => $._compare_expression,
+      choice(seq($._num_literal, optional($._unit_literal)), $.MONEY_AMOUNT,
+        seq($.VERTICAL, $._date_int, $.MINUS, $._date_int, $.MINUS,
+          $._date_int, $.VERTICAL), $.TRUE, $.FALSE),
+    _logical_and_op: $ => $.AND,
+    _logical_atom: $ => $._compare_expression,
     _logical_expression: $ =>
       choice($._logical_or_expression,
-        seq($._logical_or_expression, $.logical_and_op, $._logical_expression)),
+        seq($._logical_or_expression, $._logical_and_op,
+          $._logical_expression)),
     _logical_or_expression: $ =>
-      choice($.logical_atom,
-        seq($.logical_atom, $.logical_or_op, $._logical_or_expression)),
-    logical_or_op: $ => choice($.OR, $.XOR),
-    __loption_separated_nonempty_list_SEMICOLON_expression__: $ =>
-      $.__separated_nonempty_list_SEMICOLON_expression_,
+      choice($._logical_atom,
+        seq($._logical_atom, $._logical_or_op, $._logical_or_expression)),
+    _logical_or_op: $ => choice($.OR, $.XOR),
+    _loption_separated_nonempty_list_SEMICOLON_expression__: $ =>
+      $._separated_nonempty_list_SEMICOLON_expression_,
     match_arm: $ =>
       choice(seq($.WILDCARD, $.COLON, $._logical_expression),
         seq($.constructor_binding, $.COLON, $._logical_expression)),
     match_arms: $ => seq($.ALT, $.match_arm, $.match_arms),
     maybe_qualified_constructor: $ =>
-      seq($.constructor, optional(seq($.DOT, $.constructor))),
+      seq($._constructor, optional(seq($.DOT, $._constructor))),
     metadata_block: $ =>
       seq($.BEGIN_METADATA, optional($.law_text), optional($.code), $.END_CODE),
     _mult_expression: $ =>
       choice($._unop_expression,
-        seq($._mult_expression, $.mult_op, $._unop_expression)),
-    mult_op: $ =>
+        seq($._mult_expression, $._mult_op, $._unop_expression)),
+    _mult_op: $ =>
       choice($.MULT, $.DIV, $.MULTDEC, $.DIVDEC, $.MULTMONEY, $.DIVMONEY,
         $.DIVDURATION),
-    num_literal: $ => choice($.INT_LITERAL, $.DECIMAL_LITERAL),
+    _num_literal: $ => choice($.INT_LITERAL, $.DECIMAL_LITERAL),
     optional_binding: $ =>
-      choice(seq($.OF, $.ident),
+      choice(seq($.OF, $._ident),
         seq($.OF, $.maybe_qualified_constructor, $.constructor_binding)),
     _primitive_expression: $ =>
       choice($._small_expression, $.CARDINAL, $.struct_or_enum_inject,
         seq($.LSQUARE,
-          $.__loption_separated_nonempty_list_SEMICOLON_expression__,
+          $._loption_separated_nonempty_list_SEMICOLON_expression__,
           $.RSQUARE)),
     qident: $ => $._separated_nonempty_list_DOT_ident_,
     rule: $ =>
@@ -142,17 +145,17 @@ module.exports = grammar({
     rule_consequence: $ => seq(optional($.NOT), $.FILLED),
     rule_expr: $ => seq($.qident, optional($.definition_parameters)),
     scope_decl_item: $ =>
-      choice(seq($.scope_decl_item_attribute, $.ident, $.CONTENT, $.typ,
+      choice(seq($.scope_decl_item_attribute, $._ident, $.CONTENT, $._typ,
                optional($.struct_scope_func), repeat($.state)),
-        seq($.ident, $.SCOPE, $.constructor),
-        seq($.scope_decl_item_attribute, $.ident, $.CONDITION,
+        seq($._ident, $.SCOPE, $._constructor),
+        seq($.scope_decl_item_attribute, $._ident, $.CONDITION,
           optional($.struct_scope_func), repeat($.state))),
     scope_decl_item_attribute: $ =>
-      choice(seq($.scope_decl_item_attribute_input,
-               $.scope_decl_item_attribute_output), $.INTERNAL, $.OUTPUT),
-    scope_decl_item_attribute_input: $ => choice($.CONTEXT, $.INPUT),
-    scope_decl_item_attribute_output: $ => $.OUTPUT,
-    scope_item: $ =>
+      choice(seq($._scope_decl_item_attribute_input,
+               $._scope_decl_item_attribute_output), $.INTERNAL, $.OUTPUT),
+    _scope_decl_item_attribute_input: $ => choice($.CONTEXT, $.INPUT),
+    _scope_decl_item_attribute_output: $ => $.OUTPUT,
+    _scope_item: $ =>
       choice($.rule, $.definition, seq($.ASSERTION, $.assertion)),
     scope_use_condition: $ => seq($.UNDER_CONDITION, $.expression),
     _separated_nonempty_list_ALT_struct_content_field_: $ =>
@@ -160,53 +163,53 @@ module.exports = grammar({
         seq($.struct_content_field, $.ALT,
           $._separated_nonempty_list_ALT_struct_content_field_)),
     _separated_nonempty_list_DOT_ident_: $ =>
-      choice($.ident,
-        seq($.ident, $.DOT, $._separated_nonempty_list_DOT_ident_)),
-    __separated_nonempty_list_SEMICOLON_expression_: $ =>
+      choice($._ident,
+        seq($._ident, $.DOT, $._separated_nonempty_list_DOT_ident_)),
+    _separated_nonempty_list_SEMICOLON_expression_: $ =>
       choice($.expression,
         seq($.expression, $.SEMICOLON,
-          $.__separated_nonempty_list_SEMICOLON_expression_)),
+          $._separated_nonempty_list_SEMICOLON_expression_)),
     _small_expression: $ =>
       choice($._atomic_expression,
-        seq($._small_expression, $.DOT, optional(seq($.constructor, $.DOT)),
-          $.ident)),
+        seq($._small_expression, $.DOT, optional(seq($._constructor, $.DOT)),
+          $._ident)),
     _source_file_item: $ =>
       choice($.law_text, seq($.BEGIN_CODE, optional($.code), $.END_CODE),
-        $.law_heading, $.metadata_block,
+        $._law_heading, $.metadata_block,
         seq($.BEGIN_DIRECTIVE, $.LAW_INCLUDE, $.COLON,
           repeat1($.DIRECTIVE_ARG), optional($.AT_PAGE), $.END_DIRECTIVE)),
-    state: $ => seq($.STATE, $.ident),
-    struct_content_field: $ => seq($.ident, $.COLON, $._logical_expression),
+    state: $ => seq($.STATE, $._ident),
+    struct_content_field: $ => seq($._ident, $.COLON, $._logical_expression),
     struct_inject_content: $ =>
       seq($.LBRACKET, $.ALT,
         $._separated_nonempty_list_ALT_struct_content_field_, $.RBRACKET),
     struct_or_enum_inject: $ =>
-      choice(seq($.constructor, optional(seq($.DOT, $.constructor)),
+      choice(seq($._constructor, optional(seq($.DOT, $._constructor)),
                optional($.enum_inject_content)),
-        seq($.constructor, $.struct_inject_content)),
+        seq($._constructor, $.struct_inject_content)),
     struct_scope: $ =>
       seq($.struct_scope_base, optional($.struct_scope_func)),
     struct_scope_base: $ =>
-      choice(seq($.DATA, $.ident, $.CONTENT, $.typ),
-        seq($.condition_pos, $.ident)),
-    struct_scope_func: $ => seq($.DEPENDS, $.typ),
+      choice(seq($.DATA, $._ident, $.CONTENT, $._typ),
+        seq($._condition_pos, $._ident)),
+    struct_scope_func: $ => seq($.DEPENDS, $._typ),
     _sum_expression: $ =>
       choice($._mult_expression,
-        seq($._sum_expression, $.sum_op, $._mult_expression)),
-    sum_op: $ =>
+        seq($._sum_expression, $._sum_op, $._mult_expression)),
+    _sum_op: $ =>
       choice($.PLUSDURATION, $.MINUSDURATION, $.PLUSDATE, $.MINUSDATE,
         $.PLUSMONEY, $.MINUSMONEY, $.PLUSDEC, $.MINUSDEC, $.PLUS, $.MINUS,
         $.PLUSPLUS),
-    typ: $ => choice($.typ_base, seq($.collection_marked, $.typ)),
-    typ_base: $ =>
+    _typ: $ => choice($._typ_base, seq($._collection_marked, $._typ)),
+    _typ_base: $ =>
       choice($.INTEGER, $.BOOLEAN, $.MONEY, $.DURATION, $.TEXT, $.DECIMAL,
-        $.DATE, $.constructor),
-    unit_literal: $ => choice($.PERCENT, $.YEAR, $.MONTH, $.DAY),
-    unop: $ =>
+        $.DATE, $._constructor),
+    _unit_literal: $ => choice($.PERCENT, $.YEAR, $.MONTH, $.DAY),
+    _unop: $ =>
       choice($.NOT, $.MINUS, $.MINUSDEC, $.MINUSMONEY, $.MINUSDURATION),
     _unop_expression: $ =>
-      choice($._base_expression, seq($.unop, $._unop_expression)),
-    variation_type: $ => choice($.INCREASING, $.DECREASING),
+      choice($._base_expression, seq($._unop, $._unop_expression)),
+    _variation_type: $ => choice($.INCREASING, $.DECREASING),
     ALL: $ =>  "all" ,
     ALT: $ =>  '--' ,
     AND: $ =>  "and" ,
