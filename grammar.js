@@ -1,6 +1,6 @@
-let name = "Catala"
+const name = "Catala"
 
-let tokens = {
+const tokens = {
   SCOPE: "scope",
   CONSEQUENCE: "consequence",
   DATA: "data",
@@ -87,9 +87,9 @@ let tokens = {
 // International tokens needing no translation (so far) below
   ALT: '--',
   AT_PAGE: /@\s*p.\s*[0-9]+/,
-  BEGIN_CODE: '```catala',
-  BEGIN_DIRECTIVE: '>',
-  BEGIN_METADATA: '```catala-metadata',
+  BEGIN_CODE: prec(2,token.immediate('```catala')),
+  BEGIN_DIRECTIVE: prec(2,token.immediate('>')),
+  BEGIN_METADATA: prec(2,token.immediate('```catala-metadata')),
   COLON: ':',
   CONSTRUCTOR: /[A-Z][A-Za-z0-9_']*/,
   DIRECTIVE_ARG: /\S+/,
@@ -110,8 +110,8 @@ let tokens = {
   GREATER_EQUAL_DURATION: '>=^',
   IDENT: /[a-z][a-zA-Z0-9_']*/,
   INT_LITERAL: /[0-9]+/,
-  LAW_HEADING: /#+\s*\S+/,
-  LAW_TEXT: /[^\n]+/,
+  LAW_HEADING: prec(2,token.immediate(/#+\s*[^\n]+/)),
+  LAW_TEXT: /([^`#\n]|`[^`\n]|``[^`\n])[^\n]*|`|``/,
   LBRACKET: '{',
   LESSER: '<',
   LESSER_DATE: '<@',
@@ -143,16 +143,32 @@ let tokens = {
   VERTICAL: '|'
 }
 
-let inline = $ => [
+const inline = $ => [
   // $.law_text,
 ]
 
-let word = $ => $.IDENT
+const word = $ => $.IDENT
+
+const rules = {
+  COMMENT: $ => seq('#', /[^\n]*/),
+  _newline: $ => /[ \t]*\r?\n[ \t]*/,
+  // newline tokens need to be explicit outside of code blocks, to properly
+  // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
+//  source_file: $ => repeat(choice($._newline,$._source_file_item)),
+  _law_line: $ => seq($.LAW_TEXT, $._newline),
+  law_text: $ => prec(1,repeat1($._law_line))
+}
+
+const extras = $ => [
+  /\s/, $.COMMENT
+]
+
 module.exports = grammar({
   name: name,
   inline: inline,
   word: word,
-  rules: {
+  extras: extras,
+  rules: Object.assign({
     source_file: $ => repeat($._source_file_item),
     aggregate: $ =>
       seq($.aggregate_func, $.FOR, $._ident, $.IN, $._primitive_expression,
@@ -234,7 +250,7 @@ module.exports = grammar({
     _ident: $ => $.IDENT,
     label: $ => seq($.LABEL, $._ident),
     _law_heading: $ => $.LAW_HEADING,
-    law_text: $ => prec.right(0,repeat1($.LAW_TEXT)),
+    law_text: $ => repeat1($.LAW_TEXT),
     literal: $ =>
       choice(seq($._num_literal, optional($._unit_literal)), $.MONEY_AMOUNT,
         seq($.VERTICAL, $._date_int, $.MINUS, $._date_int, $.MINUS,
@@ -258,7 +274,7 @@ module.exports = grammar({
     maybe_qualified_constructor: $ =>
       seq($._constructor, optional(seq($.DOT, $._constructor))),
     metadata_block: $ =>
-      seq($.BEGIN_METADATA, optional($.law_text), optional($.code),
+      seq($.BEGIN_METADATA, optional($.LAW_TEXT), optional($.code),
         $.END_CODE),
     _mult_expression: $ =>
       choice($._unop_expression,
@@ -417,7 +433,7 @@ module.exports = grammar({
     LABEL: $ => tokens.LABEL,
     LAW_HEADING: $ => tokens.LAW_HEADING,
     LAW_INCLUDE: $ => tokens.LAW_INCLUDE,
-    LAW_TEXT: $ => tokens.LAW_TEXT,
+    LAW_TEXT: $ => prec.right(1,tokens.LAW_TEXT),
     LBRACKET: $ => tokens.LBRACKET,
     LESSER: $ => tokens.LESSER,
     LESSER_DATE: $ => tokens.LESSER_DATE,
@@ -481,5 +497,5 @@ module.exports = grammar({
     WITH_V: $ => tokens.WITH_V,
     XOR: $ => tokens.XOR,
     YEAR: $ => tokens.YEAR,
-    }
+    }, rules)
   })
