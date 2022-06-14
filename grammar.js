@@ -87,9 +87,9 @@ const tokens = {
 // International tokens needing no translation (so far) below
   ALT: '--',
   AT_PAGE: /@\s*p.\s*[0-9]+/,
-  BEGIN_CODE: prec(2,token.immediate('```catala')),
-  BEGIN_DIRECTIVE: prec(2,token.immediate('>')),
-  BEGIN_METADATA: prec(2,token.immediate('```catala-metadata')),
+  BEGIN_CODE: token.immediate('```catala'),
+  BEGIN_DIRECTIVE: token.immediate('>'),
+  BEGIN_METADATA: token.immediate('```catala-metadata'),
   COLON: ':',
   CONSTRUCTOR: /[A-Z][A-Za-z0-9_']*/,
   DIRECTIVE_ARG: /\S+/,
@@ -110,7 +110,7 @@ const tokens = {
   GREATER_EQUAL_DURATION: '>=^',
   IDENT: /[a-z][a-zA-Z0-9_']*/,
   INT_LITERAL: /[0-9]+/,
-  LAW_HEADING: prec(2,token.immediate(/#+\s*[^\n]+/)),
+  LAW_HEADING: token.immediate(/#+\s*[^\n]+/),
   LAW_TEXT: /([^`#\n]|`[^`\n]|``[^`\n])[^\n]*|`|``/,
   LBRACKET: '{',
   LESSER: '<',
@@ -154,9 +154,12 @@ const rules = {
   _newline: $ => /[ \t]*\r?\n[ \t]*/,
   // newline tokens need to be explicit outside of code blocks, to properly
   // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
-//  source_file: $ => repeat(choice($._newline,$._source_file_item)),
-  _law_line: $ => seq($.LAW_TEXT, $._newline),
-  law_text: $ => prec(1,repeat1($._law_line))
+  _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
+  law_text: $ => prec(1,repeat1($._law_line)),
+  metadata_block: $ =>
+    seq($.BEGIN_METADATA, // optional($.LAW_TEXT), removed, I don't get what's expected here
+      optional($.code),
+      $.END_CODE)
 }
 
 const extras = $ => [
@@ -221,7 +224,7 @@ module.exports = grammar({
     _condition_pos: $ => $.CONDITION,
     _constructor: $ => $.CONSTRUCTOR,
     constructor_binding: $ =>
-      seq($.maybe_qualified_constructor, $.optional_binding),
+      seq($.maybe_qualified_constructor, optional($.optional_binding)),
     _date_int: $ => $.INT_LITERAL,
     definition: $ =>
       seq(optional($.label), optional($.exception_to), $.DEFINITION,
@@ -240,7 +243,7 @@ module.exports = grammar({
     expression: $ =>
       choice(seq($.exists_prefix, $.expression),
         seq($.forall_prefix, $.expression),
-        seq($.MATCH, $._primitive_expression, $.WITH, $.match_arms),
+        seq($.MATCH, $._primitive_expression, $.WITH, optional($.match_arms)),
         seq($.IF, $.expression, $.THEN, $.expression, $.ELSE, $.expression),
         $._logical_expression),
     for_all_marked: $ => seq($.FOR, $.ALL),
@@ -270,7 +273,7 @@ module.exports = grammar({
     match_arm: $ =>
       choice(seq($.WILDCARD, $.COLON, $._logical_expression),
         seq($.constructor_binding, $.COLON, $._logical_expression)),
-    match_arms: $ => seq($.ALT, $.match_arm, $.match_arms),
+    match_arms: $ => seq($.ALT, $.match_arm, optional($.match_arms)),
     maybe_qualified_constructor: $ =>
       seq($._constructor, optional(seq($.DOT, $._constructor))),
     metadata_block: $ =>
@@ -289,7 +292,7 @@ module.exports = grammar({
     _primitive_expression: $ =>
       choice($._small_expression, $.CARDINAL, $.struct_or_enum_inject,
         seq($.LSQUARE,
-          $._loption_separated_nonempty_list_SEMICOLON_expression__,
+          optional($._loption_separated_nonempty_list_SEMICOLON_expression__),
           $.RSQUARE)),
     qident: $ => $._separated_nonempty_list_DOT_ident_,
     rule: $ =>
@@ -306,7 +309,8 @@ module.exports = grammar({
           optional($.struct_scope_func), repeat($.state))),
     scope_decl_item_attribute: $ =>
       choice(seq($._scope_decl_item_attribute_input,
-               $._scope_decl_item_attribute_output), $.INTERNAL, $.OUTPUT),
+               optional($._scope_decl_item_attribute_output)), $.INTERNAL,
+        $.OUTPUT),
     _scope_decl_item_attribute_input: $ => choice($.CONTEXT, $.INPUT),
     _scope_decl_item_attribute_output: $ => $.OUTPUT,
     _scope_item: $ =>
