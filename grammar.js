@@ -111,7 +111,7 @@ const tokens = {
   IDENT: /[a-z][a-zA-Z0-9_']*/,
   INT_LITERAL: /[0-9]+/,
   LAW_HEADING: token.immediate(/#+\s*[^\n]+/),
-  LAW_TEXT: /([^`#\n]|`[^`\n]|``[^`\n])[^\n]*|`|``/,
+  LAW_TEXT: token.immediate(/[^\n]+/),
   LBRACKET: '{',
   LESSER: '<',
   LESSER_DATE: '<@',
@@ -154,12 +154,13 @@ const rules = {
   _newline: $ => /[ \t]*\r?\n[ \t]*/,
   // newline tokens need to be explicit outside of code blocks, to properly
   // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
-  _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
-  law_text: $ => prec(1,repeat1($._law_line)),
-  metadata_block: $ =>
-    seq($.BEGIN_METADATA, // optional($.LAW_TEXT), removed, I don't get what's expected here
-      optional($.code),
-      $.END_CODE)
+  // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
+  law_text: $ => prec.right(repeat1(seq($.LAW_TEXT,$._newline))),
+  _source_file_item: $ =>
+      choice($._newline, $.law_text, seq($.BEGIN_CODE, optional($.code), $.END_CODE),
+        $._law_heading, $.metadata_block,
+        seq($.BEGIN_DIRECTIVE, $.LAW_INCLUDE, $.COLON,
+          repeat1($.DIRECTIVE_ARG), optional($.AT_PAGE), $.END_DIRECTIVE))
 }
 
 const extras = $ => [
