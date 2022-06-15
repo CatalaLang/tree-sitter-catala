@@ -3,12 +3,64 @@
 (COMMENT) @comment
 (LAW_HEADING) @property
 ; (law_text) @string
-(expression) @attribute
-(literal) @number
-[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (COLLECTION) (ENUM) (INTEGER) (MONEY) (TEXT) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH_V) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (EXISTS) (IN) (SUCH) (THAT) (AND) (OR) (XOR) (NOT) (MAXIMUM) (MINIMUM) (FILTER) (MAP) (INIT) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @keyword
+; (expression) @attribute
 
-(CONSTRUCTOR) @string
-(IDENT) @variable
+;(expression) @string
+
+(literal) @constant
+
+;(IDENT) @variable.builtin
+
+(qident) @module
+(qident (ident) .) @module
+
+(label) @tag
+
+[(LBRACKET) (RBRACKET) (LPAREN) (RPAREN) (LSQUARE) (RSQUARE)] @punctuation.bracket
+
+[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (COLLECTION) (ENUM) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH_V) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (EXISTS) (IN) (SUCH) (THAT) (AND) (OR) (XOR) (NOT) (MAXIMUM) (MINIMUM) (FILTER) (MAP) (INIT) (CARDINAL) (YEAR) (MONTH) (DAY) (INPUT) (OUTPUT) (INTERNAL)] @keyword
+
+[(logical_and_op) (logical_or_op)] @operator.logical
+
+(compare_op) @operator.compare
+
+[(mult_op) (sum_op)] @operator.arith
+
+(unop) @operator.arith
+
+(enum_decl_line
+ (constructor) @property)
+(maybe_qualified_constructor
+ (constructor) @property)
+
+(code_item
+ (constructor) @module)
+
+(typ) @type
+
+
+[(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @punctuation.delimiter
+
+(code_item
+  (
+    (DECLARATION) @keyword.struct
+    [((ENUM) (constructor) @type)
+     ((STRUCT) (constructor) @type)
+     ((SCOPE) (constructor) @module)]
+    (COLON) @keyword.struct
+  )
+)
+
+(code_item
+  (
+    (SCOPE) @keyword.struct
+    (constructor) @module
+    (scope_use_condition)?
+    (COLON) @keyword.struct
+  )
+)
+
+;(match_arm
 
 ;; (assertion)
 ;; (code)
