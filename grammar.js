@@ -356,103 +356,109 @@ module.exports = grammar({
     qlident: $ =>
       seq(repeat(prec.left('DOT',seq($.UIDENT, $.DOT))),$.LIDENT),
 
-    expression: $ =>
+    _expression: $ =>
       choice(
-        $._expr_atom,
-        $._expr_apply,
-        $._expr_unop,
-        $._expr_binop,
-        $._expr_let,
-        $._expr_compound,
+        $.expr_atom,
+        $.expr_apply,
+        $.expr_unop,
+        $.expr_binop,
+        $.expr_let,
+        $.expr_compound,
       ),
 
-    _expr_atom: $ =>
+    expr_atom: $ =>
       choice(
         seq($.UIDENT,$.DOT,$.qlident),
         $.literal,
-        seq($.LPAREN, $.expression, $.RPAREN),
+        seq($.LPAREN, $._expression, $.RPAREN),
         $.CARDINAL,
         $.DECIMAL,
         $.MONEY,
+        seq($.LBRACKET,
+            optional(seq(repeat(seq($._expression, $.SEMICOLON)), $._expression)),
+            $.RBRACKET),
       ),
 
-    // _expr_list_comma: $ =>
-    //   prec.right(repeat(seq($.expression, $.COMMA)), $.expression),
+    // expr_list_comma: $ =>
+    //   prec.right(repeat(seq($._expression, $.COMMA)), $._expression),
 
-    _expr_apply: $ =>
-      prec.right(choice(
-        seq($.expression, $.OF, repeat(seq($.expression, $.COMMA)), $.expression),
+    // All expressions
+    
+
+    expr_apply: $ =>
+      prec.right('apply', choice(
+        seq($._expression, $.OF, repeat(seq($._expression, $.COMMA)), $._expression),
         seq($.OUTPUT, $.OF, $.quident,
             optional(seq($.WITH_V, $.LBRACE, repeat($.struct_content_field), $.RBRACE))),
-        seq($.expression, $.WITH, $.quident, optional(seq($.OF, $.LIDENT))),
-        seq($.expression, $.CONTAINS, $.expression),
-        seq($.SUM, $.primitive_typ, $.OF, $.expression),
-        seq($.expression, $.FOR, $.LIDENT, $.AMONG, $.expression),
-        seq(choice($.MINIMUM, $.MAXIMUM), $.OF, $.expression,
-            $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $.expression),
+        seq($._expression, $.WITH, $.quident, optional(seq($.OF, $.LIDENT))),
+        seq($._expression, $.CONTAINS, $._expression),
+        seq($.SUM, $.primitive_typ, $.OF, $._expression),
+        seq($._expression, $.FOR, $.LIDENT, $.AMONG, $._expression),
+        seq(choice($.MINIMUM, $.MAXIMUM), $.OF, $._expression,
+            $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expression),
       )),
 
-    _expr_unop: $ =>
+    expr_unop: $ =>
       prec.right('unop_expr', choice(
-        prec.right('unop_expr', seq($.unop, $.expression)),
+        prec.right('unop_expr', seq($.unop, $._expression)),
       )),
 
-    _expr_binop: $ =>
+    expr_binop: $ =>
       choice(
-        prec.left('MULT', seq($.expression, $.MULT, $.expression)),
-        prec.left('MULT', seq($.expression, $.DIV, $.expression)),
-        prec.left('PLUS', seq($.expression, $.PLUS, $.expression)),
-        prec.left('PLUS', seq($.expression, $.MINUS, $.expression)),
-        prec.left('PLUS', seq($.expression, $.PLUSPLUS, $.expression)),
-        prec.left('GREATER', seq($.expression, $.LESSER, $.expression)),
-        prec.left('GREATER', seq($.expression, $.LESSER_EQUAL, $.expression)),
-        prec.left('GREATER', seq($.expression, $.GREATER, $.expression)),
-        prec.left('GREATER', seq($.expression, $.GREATER_EQUAL, $.expression)),
-        prec.left('GREATER', seq($.expression, $.EQUAL, $.expression)),
-        prec.left('GREATER', seq($.expression, $.NOT_EQUAL, $.expression)),
-        prec.right('AND', seq($.expression, $.AND, $.expression)),
-        prec.right('AND', seq($.expression, $.OR, $.expression)),
-        prec.right('AND', seq($.expression, $.XOR, $.expression)),
+        prec.left('MULT', seq($._expression, $.MULT, $._expression)),
+        prec.left('MULT', seq($._expression, $.DIV, $._expression)),
+        prec.left('PLUS', seq($._expression, $.PLUS, $._expression)),
+        prec.left('PLUS', seq($._expression, $.MINUS, $._expression)),
+        prec.left('PLUS', seq($._expression, $.PLUSPLUS, $._expression)),
+        prec.left('GREATER', seq($._expression, $.LESSER, $._expression)),
+        prec.left('GREATER', seq($._expression, $.LESSER_EQUAL, $._expression)),
+        prec.left('GREATER', seq($._expression, $.GREATER, $._expression)),
+        prec.left('GREATER', seq($._expression, $.GREATER_EQUAL, $._expression)),
+        prec.left('GREATER', seq($._expression, $.EQUAL, $._expression)),
+        prec.left('GREATER', seq($._expression, $.NOT_EQUAL, $._expression)),
+        prec.right('AND', seq($._expression, $.AND, $._expression)),
+        prec.right('AND', seq($._expression, $.OR, $._expression)),
+        prec.right('AND', seq($._expression, $.XOR, $._expression)),
       ),
 
-    _expr_let: $ =>
+    expr_let: $ =>
       prec.right(choice(
-        seq($.EXISTS, $.LIDENT, $.AMONG, $.expression,
-            $.SUCH, $.THAT, $.expression),
-        seq($.FOR, $.ALL, $.LIDENT, $.AMONG, $.expression,
-            $.WE_HAVE, $.expression),
-        seq($.MATCH, $.expression, $.WITH,
+        seq($.EXISTS, $.LIDENT, $.AMONG, $._expression,
+            $.SUCH, $.THAT, $._expression),
+        seq($.FOR, $.ALL, $.LIDENT, $.AMONG, $._expression,
+            $.WE_HAVE, $._expression),
+        seq($.MATCH, $._expression, $.WITH,
             repeat1($.match_case)),
-        seq($.IF, $.expression, $.THEN, $.expression, $.ELSE, $.expression),
-        seq($.LET, $.LIDENT, $.DEFINED_AS, $.expression, $.IN, $.expression),
+        seq($.IF, $._expression, $.THEN, $._expression, $.ELSE, $._expression),
+        seq($.LET, $.LIDENT, $.DEFINED_AS, $._expression, $.IN, $._expression),
       )),
 
     match_case: $ =>
       prec.right(
         seq($.ALT,
             choice($.WILDCARD, seq($.quident, optional(seq($.OF, $.LIDENT)))),
-            $.COLON, $.expression)
+            $.COLON, $._expression)
       ),
 
-    _expr_compound: $ =>
+    expr_compound: $ =>
       (choice(
-        seq($.expression, $.DOT, $.qlident),
+        seq($._expression, $.DOT, $.qlident),
         seq($.LBRACE,
-            optional(seq(repeat(seq($.expression, $.SEMICOLON)), $.expression)),
+            optional(seq(repeat(seq($._expression, $.SEMICOLON)), $._expression)),
             $.RBRACE),
-        prec.right(seq($.quident, optional(seq($.CONTENT, $.expression)))),
+        prec.right(seq($.quident, optional(seq($.CONTENT, $._expression)))),
         seq($.quident, $.LBRACE, repeat1($.struct_content_field), $.RBRACE),
-        prec.right(seq($.LIDENT, $.AMONG, $.expression, $.SUCH, $.THAT, $.expression)),
-        prec.right(seq($.expression, $.FOR, $.LIDENT, $.AMONG, $.expression,
-                       $.SUCH, $.THAT, $.expression)),
-        prec.right(seq($.LIDENT, $.AMONG, $.expression,
-                       $.SUCH, $.THAT, $.expression, $.IS, choice($.MINIMUM,$.MAXIMUM),
-                       $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $.expression)),
+        prec.right(seq($.LIDENT, $.AMONG, $._expression, $.SUCH, $.THAT, $._expression)),
+        prec.right(seq($._expression, $.FOR, $.LIDENT, $.AMONG, $._expression,
+                       $.SUCH, $.THAT, $._expression)),
+        prec.right(seq($.LIDENT, $.AMONG, $._expression,
+                       $.SUCH, $.THAT, $._expression, $.IS, choice($.MINIMUM,$.MAXIMUM),
+                       $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expression)),
 
       )),
 
     struct_content_field: $ =>
-      seq($.ALT, $.LIDENT, $.COLON, $.expression),
+      seq($.ALT, $.LIDENT, $.COLON, $._expression),
     unit_literal: $ =>
       choice(
         $.PERCENT,
@@ -500,7 +506,7 @@ module.exports = grammar({
         $.scope_var,
         optional(seq($.OF, $.LIDENT, repeat(seq($.COMMA, $.LIDENT)))),
         optional(seq($.STATE, $.LIDENT)),
-        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, $._expression, $.CONSEQUENCE)),
         optional($.NOT),
         $.FILLED
       ),
@@ -513,22 +519,22 @@ module.exports = grammar({
         $.scope_var,
         optional(seq($.OF, $.LIDENT, repeat(seq($.COMMA, $.LIDENT)))),
         optional(seq($.STATE, $.LIDENT)),
-        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, $._expression, $.CONSEQUENCE)),
         $.DEFINED_AS,
-        $.expression
+        $._expression
       ),
 
     assertion: $ =>
       seq(
         $.ASSERTION,
-        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
-        $.expression
+        optional(seq($.UNDER_CONDITION, $._expression, $.CONSEQUENCE)),
+        $._expression
       ),
     // Note: not handling FIXED, VARIES
 
     scope: $ =>
       seq($.SCOPE, $.UIDENT,
-          optional(seq($.UNDER_CONDITION, $.expression)),
+          optional(seq($.UNDER_CONDITION, $._expression)),
           $.COLON,
           repeat1(choice($.rule, $.definition, $.assertion))),
 
@@ -575,11 +581,11 @@ module.exports = grammar({
     toplevel_def: $ =>
       seq(
         $.DECLARATION, $.LIDENT, $.CONTENT, $.typ,
-        $.depends_stance,
-        $.DEFINED_AS, $.expression
+        optional($.depends_stance),
+        $.DEFINED_AS, $._expression
       ),
 
-    code: $ =>
+    _code: $ =>
       repeat1(choice(
         $.scope,
         $.scope_decl,
@@ -594,7 +600,7 @@ module.exports = grammar({
           $.BEGIN_CODE,
           seq($.BEGIN_METADATA, optional($.law_text))
         ),
-        optional($.code),
+        optional($._code),
         $.END_CODE
       ),
 
@@ -606,7 +612,6 @@ module.exports = grammar({
       ),
 
     law_heading: $ => $.LAW_HEADING,
-    law_text: $ => prec.left(repeat1($.LAW_TEXT)),
 
   SCOPE: $ => token(tokens.SCOPE),
   CONSEQUENCE: $ => token(tokens.CONSEQUENCE),
