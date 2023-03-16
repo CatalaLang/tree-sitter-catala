@@ -85,14 +85,14 @@ const tokens_local = {
     LastDayOfMonth: "last_day_of_month",
     DECIMAL_LITERAL: /[0-9]+\.[0-9]*/,
     MONEY_AMOUNT: /\$[0-9]([0-9,]*[0-9])?(\.[0-9]{0,2})?/,
-    OP_KIND_SUFFIX: /[!.@^$]/,
+    OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
   },
   fr: {
-    SCOPE: "champ\s+d'application",
+    SCOPE: /champ\s+d'application/,
     CONSEQUENCE: "conséquence",
     DATA: "donnée",
-    DEPENDS: "dépend\s+de",
+    DEPENDS: /dépend\s+de/,
     DECLARATION: "déclaration",
     CONTEXT: "contexte",
     DECREASING: "décroissant",
@@ -114,11 +114,11 @@ const tokens_local = {
     STATE: "état",
     LABEL: "étiquette",
     EXCEPTION: "exception",
-    DEFINED_AS: "égal\s+à",
+    DEFINED_AS: /égal\s+à/,
     MATCH: "selon",
-    WILDCARD: "n'importe\s+quel",
-    WITH: "sous\s+forme",
-    UNDER_CONDITION: "sous\s+condition",
+    WILDCARD: /n'importe\s+quel/,
+    WITH: /sous\s+forme/,
+    UNDER_CONDITION: /sous\s+condition/,
     IF: "si",
     THEN: "alors",
     ELSE: "sinon",
@@ -130,7 +130,7 @@ const tokens_local = {
     WITH_V: "avec",
     FOR: "pour",
     ALL: "tout",
-    WE_HAVE: "on\s+a",
+    WE_HAVE: /on\s+a/,
     FIXED: "fixé",
     BY: "par",
     RULE: "règle",
@@ -142,7 +142,7 @@ const tokens_local = {
     THAT: "que",
     AND: "et",
     OR: "ou",
-    XOR: "ou\s+bien",
+    XOR: /ou\s+bien/,
     NOT: "non",
     MAXIMUM: "maximum",
     MINIMUM: "minimum",
@@ -169,14 +169,14 @@ const tokens_local = {
     LastDayOfMonth: "dernier_jour_du_mois",
     DECIMAL_LITERAL: /[0-9]+,[0-9]*/,
     MONEY_AMOUNT: /[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€/,
-    OP_KIND_SUFFIX: /[!.@^€]/,
+    OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
   },
   pl: {
     SCOPE: "zakres",
     CONSEQUENCE: "konsekwencja",
     DATA: "data",
-    DEPENDS: "zalezy\s+od",
+    DEPENDS: /zalezy\s+od/,
     DECLARATION: "deklaracja",
     CONTEXT: "kontekst",
     DECREASING: "malejacy",
@@ -190,7 +190,7 @@ const tokens_local = {
     TEXT: "tekst",
     DECIMAL: "dziesiętny",
     DATE: "czas",
-    DURATION: "czas\s+trwania",
+    DURATION: /czas\s+trwania/,
     BOOLEAN: "zerojedynkowy",
     SUM: "suma",
     FILLED: "spelnione",
@@ -201,8 +201,8 @@ const tokens_local = {
     DEFINED_AS: "wynosi",
     MATCH: "pasuje",
     WILDCARD: "cokolwiek",
-    WITH: "ze\s+wzorem",
-    UNDER_CONDITION: "pod\s+warunkiem",
+    WITH: /ze\s+wzorem/,
+    UNDER_CONDITION: /pod\s+warunkiem/,
     IF: "jezeli",
     THEN: "wtedy",
     ELSE: "inaczej",
@@ -211,7 +211,7 @@ const tokens_local = {
     STRUCT: "struktura",
     ASSERTION: "asercja",
     VARIES: "rozna",
-    WITH_V: "wraz\s+z",
+    WITH_V: /wraz\s+z/,
     FOR: "dla",
     ALL: "wszystkie",
     WE_HAVE: "mamy",
@@ -222,7 +222,7 @@ const tokens_local = {
     EXISTS: "istnieje",
     IN: "in",
     AMONG: "wśród",
-    SUCH: "takie\s+ze",
+    SUCH: /takie\s+ze/,
     THAT: "to",
     AND: "i",
     OR: "lub",
@@ -253,7 +253,7 @@ const tokens_local = {
     LastDayOfMonth: "ostatni_dzień_miesiąca",
     DECIMAL_LITERAL: /[0-9]+\.[0-9]*/,
     MONEY_AMOUNT: /[0-9]([0-9,]*[0-9])?(\.[0-9]{0,2})? *PLN/,
-    OP_KIND_SUFFIX: /[!.@^$]/,
+    OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
   }
 }
@@ -266,7 +266,7 @@ const tokens_international = {
   BEGIN_DIRECTIVE: token.immediate('>'),
   BEGIN_METADATA: token.immediate('```catala-metadata'),
   COLON: ':',
-  UIDENT: /[A-Z][A-Za-z0-9_']*/,
+  UIDENT: /[\p{Lu}](\p{L}|\p{N}|[_'])*/,
   DIRECTIVE_ARG: /\S+/,
   DIV: '/',
   DOT: '.',
@@ -277,7 +277,7 @@ const tokens_international = {
   NOT_EQUAL: '!=',
   GREATER: '>',
   GREATER_EQUAL: '>=',
-  LIDENT: /[a-z][a-zA-Z0-9_']*/,
+  LIDENT: /\p{Ll}(\p{L}|\p{N}|[_'])*/,
   INT_LITERAL: /[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
   LAW_HEADING: token.immediate(/#+\s*[^\n]+/),
@@ -358,7 +358,7 @@ module.exports = grammar({
 
     _expression: $ =>
       choice(
-        $.expr_atom,
+        $._expr_atom,
         $.expr_apply,
         $.expr_unop,
         $.expr_binop,
@@ -366,7 +366,7 @@ module.exports = grammar({
         $.expr_compound,
       ),
 
-    expr_atom: $ =>
+    _expr_atom: $ =>
       choice(
         seq($.UIDENT,$.DOT,$.qlident),
         $.literal,
@@ -379,15 +379,11 @@ module.exports = grammar({
             $.RBRACKET),
       ),
 
-    // expr_list_comma: $ =>
-    //   prec.right(repeat(seq($._expression, $.COMMA)), $._expression),
-
-    // All expressions
-    
+    fun_argument: $ => prec.right('apply', $._expression),
 
     expr_apply: $ =>
       prec.right('apply', choice(
-        seq($._expression, $.OF, repeat(seq($._expression, $.COMMA)), $._expression),
+        seq($._expression, $.OF, repeat(seq($.fun_argument, $.COMMA)), $.fun_argument),
         seq($.OUTPUT, $.OF, $.quident,
             optional(seq($.WITH_V, $.LBRACE, repeat($.struct_content_field), $.RBRACE))),
         seq($._expression, $.WITH, $.quident, optional(seq($.OF, $.LIDENT))),
@@ -544,17 +540,17 @@ module.exports = grammar({
         $.INTERNAL,
         $.OUTPUT
       ),
-    params_decl: $ =>
-      seq($.LIDENT, $.CONTENT, $.typ,
-          repeat(seq($.COMMA, $.LIDENT, $.CONTENT, $.typ))),
-    depends_stance: $ =>
-      seq($.DEPENDS, choice(seq($.LPAREN, $.params_decl, $.RPAREN),
-                            $.params_decl)),
+    param_decl: $ => seq($.LIDENT, $.CONTENT, $.typ),
+    _params_decl: $ =>
+      seq(repeat(seq($.param_decl, $.COMMA)), $.param_decl),
+    _depends_stance: $ =>
+      seq($.DEPENDS, choice(seq($.LPAREN, $._params_decl, $.RPAREN),
+                            $._params_decl)),
     scope_decl_item: $ =>
       choice(
         seq($.scope_decl_item_attribute, $.LIDENT,
             choice(seq($.CONTENT, $.typ),$.CONDITION),
-            optional($.depends_stance),
+            optional($._depends_stance),
             repeat(seq($.STATE, $.LIDENT))),
         seq($.LIDENT, $.SCOPE, $.UIDENT)
       ),
@@ -566,7 +562,7 @@ module.exports = grammar({
       seq(
         choice(seq($.DATA, $.LIDENT, $.CONTENT, $.typ),
                seq($.CONDITION, $.LIDENT)),
-        optional($.depends_stance)
+        optional($._depends_stance)
       ),
     struct_decl: $ =>
       seq($.DECLARATION, $.STRUCT, $.UIDENT, $.COLON,
@@ -581,7 +577,7 @@ module.exports = grammar({
     toplevel_def: $ =>
       seq(
         $.DECLARATION, $.LIDENT, $.CONTENT, $.typ,
-        optional($.depends_stance),
+        optional($._depends_stance),
         $.DEFINED_AS, $._expression
       ),
 
