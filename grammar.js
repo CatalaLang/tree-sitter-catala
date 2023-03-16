@@ -352,9 +352,9 @@ module.exports = grammar({
     scope_var: $ =>
       seq(repeat(seq($.LIDENT, $.DOT)),$.LIDENT),
     quident: $ =>
-      prec.left(seq(repeat(prec.left('DOT',seq($.UIDENT, $.DOT))),$.UIDENT)),
+      prec.right(seq(repeat(prec.right('DOT',seq($.UIDENT, $.DOT))),$.UIDENT)),
     qlident: $ =>
-      seq(repeat(prec.left('DOT',seq($.UIDENT, $.DOT))),$.LIDENT),
+      seq(repeat(prec.right('DOT',seq($.UIDENT, $.DOT))),$.LIDENT),
 
     _expression: $ =>
       choice(
@@ -368,7 +368,7 @@ module.exports = grammar({
 
     _expr_atom: $ =>
       choice(
-        seq($.UIDENT,$.DOT,$.qlident),
+        $.qlident,
         $.literal,
         seq($.LPAREN, $._expression, $.RPAREN),
         $.CARDINAL,
@@ -438,8 +438,8 @@ module.exports = grammar({
 
     expr_compound: $ =>
       (choice(
-        seq($._expression, $.DOT, $.qlident),
-        seq($.LBRACE,
+        prec.right('DOT',seq($._expression, $.DOT, $.qlident)),
+        seq($.quident, $.LBRACE,
             optional(seq(repeat(seq($._expression, $.SEMICOLON)), $._expression)),
             $.RBRACE),
         prec.right(seq($.quident, optional(seq($.CONTENT, $._expression)))),
