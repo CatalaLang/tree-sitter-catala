@@ -339,12 +339,13 @@ module.exports = grammar({
              $.DATE, $.quident),
     typ: $ =>
       seq(repeat($.COLLECTION), $.primitive_typ),
+    variable: $ => $.LIDENT,
     scope_var: $ =>
-      seq(repeat(seq($.LIDENT, $.DOT)),$.LIDENT),
+      seq(repeat(seq($.LIDENT, $.DOT)),$.variable),
     quident: $ =>
       prec.right(seq(repeat(prec.right('DOT',seq($.UIDENT, $.DOT))),$.UIDENT)),
     qlident: $ =>
-      seq(repeat(prec.right('DOT',seq($.UIDENT, $.DOT))),$.LIDENT),
+      seq(repeat(prec.right('DOT',seq($.UIDENT, $.DOT))),$.variable),
 
     _expression: $ =>
       choice(
@@ -374,17 +375,18 @@ module.exports = grammar({
         seq($._expression, $.OF, repeat(seq($.fun_argument, $.COMMA)), $.fun_argument),
         seq($.OUTPUT, $.OF, $.quident,
             optional(seq($.WITH_V, $.LBRACE, repeat($.struct_content_field), $.RBRACE))),
-        seq($._expression, $.WITH, $.quident, optional(seq($.OF, $.LIDENT))),
+        seq($._expression, $.WITH, $.quident, optional(seq($.OF, $.variable))),
         seq($._expression, $.CONTAINS, $._expression),
         seq($.SUM, $.primitive_typ, $.OF, $._expression),
-        seq($._expression, $.FOR, $.LIDENT, $.AMONG, $._expression),
+        seq($._expression, $.FOR, $.variable, $.AMONG, $._expression),
         seq(choice($.MINIMUM, $.MAXIMUM), $.OF, $._expression,
             $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expression),
       )),
 
     expr_unop: $ =>
       prec.right('unop_expr', choice(
-        prec.right('unop_expr', seq($.unop, $._expression)),
+        seq($.NOT, $._expression),
+        seq($.MINUS, $._expression),
       )),
 
     expr_binop: $ =>
@@ -407,20 +409,20 @@ module.exports = grammar({
 
     expr_let: $ =>
       prec.right(choice(
-        seq($.EXISTS, $.LIDENT, $.AMONG, $._expression,
+        seq($.EXISTS, $.variable, $.AMONG, $._expression,
             $.SUCH, $.THAT, $._expression),
-        seq($.FOR, $.ALL, $.LIDENT, $.AMONG, $._expression,
+        seq($.FOR, $.ALL, $.variable, $.AMONG, $._expression,
             $.WE_HAVE, $._expression),
         seq($.MATCH, $._expression, $.WITH,
             repeat1($.match_case)),
         seq($.IF, $._expression, $.THEN, $._expression, $.ELSE, $._expression),
-        seq($.LET, $.LIDENT, $.DEFINED_AS, $._expression, $.IN, $._expression),
+        seq($.LET, $.variable, $.DEFINED_AS, $._expression, $.IN, $._expression),
       )),
 
     match_case: $ =>
       prec.right(
         seq($.ALT,
-            choice($.WILDCARD, seq($.quident, optional(seq($.OF, $.LIDENT)))),
+            choice($.WILDCARD, seq($.quident, optional(seq($.OF, $.variable)))),
             $.COLON, $._expression)
       ),
 
@@ -432,10 +434,10 @@ module.exports = grammar({
             $.RBRACE),
         prec.right(seq($.quident, optional(seq($.CONTENT, $._expression)))),
         seq($.quident, $.LBRACE, repeat1($.struct_content_field), $.RBRACE),
-        prec.right(seq($.LIDENT, $.AMONG, $._expression, $.SUCH, $.THAT, $._expression)),
-        prec.right(seq($._expression, $.FOR, $.LIDENT, $.AMONG, $._expression,
+        prec.right(seq($.variable, $.AMONG, $._expression, $.SUCH, $.THAT, $._expression)),
+        prec.right(seq($._expression, $.FOR, $.variable, $.AMONG, $._expression,
                        $.SUCH, $.THAT, $._expression)),
-        prec.right(seq($.LIDENT, $.AMONG, $._expression,
+        prec.right(seq($.variable, $.AMONG, $._expression,
                        $.SUCH, $.THAT, $._expression, $.IS, choice($.MINIMUM,$.MAXIMUM),
                        $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expression)),
 
@@ -473,6 +475,8 @@ module.exports = grammar({
       ),
     label: $ => $.LIDENT,
 
+    expression: $ => $._expression,
+
     rule: $ =>
       seq(
         optional(seq($.LABEL, $.label)),
@@ -481,7 +485,7 @@ module.exports = grammar({
         $.scope_var,
         optional(seq($.OF, $.LIDENT, repeat(seq($.COMMA, $.LIDENT)))),
         optional(seq($.STATE, $.LIDENT)),
-        optional(seq($.UNDER_CONDITION, $._expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
         optional($.NOT),
         $.FILLED
       ),
@@ -494,22 +498,22 @@ module.exports = grammar({
         $.scope_var,
         optional(seq($.OF, $.LIDENT, repeat(seq($.COMMA, $.LIDENT)))),
         optional(seq($.STATE, $.LIDENT)),
-        optional(seq($.UNDER_CONDITION, $._expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
         $.DEFINED_AS,
-        $._expression
+        $.expression
       ),
 
     assertion: $ =>
       seq(
         $.ASSERTION,
-        optional(seq($.UNDER_CONDITION, $._expression, $.CONSEQUENCE)),
-        $._expression
+        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
+        $.expression
       ),
     // Note: not handling FIXED, VARIES
 
     scope: $ =>
       seq($.SCOPE, $.UIDENT,
-          optional(seq($.UNDER_CONDITION, $._expression)),
+          optional(seq($.UNDER_CONDITION, $.expression)),
           $.COLON,
           repeat1(choice($.rule, $.definition, $.assertion))),
 
@@ -557,7 +561,7 @@ module.exports = grammar({
       seq(
         $.DECLARATION, $.LIDENT, $.CONTENT, $.typ,
         optional($._depends_stance),
-        $.DEFINED_AS, $._expression
+        $.DEFINED_AS, $.expression
       ),
 
     _code: $ =>

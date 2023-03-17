@@ -3,7 +3,6 @@
 (COMMENT) @comment
 (LAW_HEADING) @property
 
-(typ) @type
 
 ; (law_text) @string
 ; (expression) @attribute
@@ -14,39 +13,48 @@
 
 ;(IDENT) @variable.builtin
 
-(qlident (LIDENT) @variable) @module
+(qlident ((DOT) @punctuation.delimiter)* ) @module
+((variable) @error (#is-not? local))
+
+(typ (_ (quident (UIDENT) @type))*) @type
+
+(UIDENT) @module
 
 (label) @tag
 
 [(LBRACE) (RBRACE) (LPAREN) (RPAREN) (LBRACKET) (RBRACKET)] @punctuation.bracket
 
-[(INPUT) (OUTPUT) (INTERNAL)] @keyword
+[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @keyword.def
+
+[(rule) (definition)] @keyword.struct
+[(struct_decl_item) (enum_decl_item) (scope_decl_item)] @keyword.struct
+
+(expression) @keyword
+
+(expr_compound (DOT)* @operator)
+
+;;(typ) @type
+
+;; (scope_decl_item
+;;  (scope_decl_item_attribute) @keyword
+;;  (LIDENT) @variable) @keyword.struct
 
 [(YEAR) (MONTH) (DAY)] @keyword
 
 (builtin) @function.builtin
 (literal) @constant
-(expr_unop _ @operator)
-(expr_binop _ _ @operator _)
+(expr_unop . (_) @operator)
+(expr_binop [
+    (PLUS) (MINUS) (MULT) (DIV)
+    (EQUAL) (NOT_EQUAL) (GREATER) (GREATER_EQUAL) (LESSER) (LESSER_EQUAL)
+    (AND) (OR) (XOR)
+  ] @operator)
 
 [(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @punctuation.delimiter
 
-;; (code_item
-;;   (
-;;     (DECLARATION) @keyword.struct
-;;     [((ENUM) (constructor) @type)
-;;      ((STRUCT) (constructor) @type)
-;;      ((SCOPE) (constructor) @module)]
-;;     (COLON) @keyword.struct
-;;   )
-;; )
+(code_block) @block
 
-;; (code_item
-;;   (
-;;     (SCOPE) @keyword.struct
-;;     (constructor) @module
-;;     (scope_use_condition)?
-;;     (COLON) @keyword.struct
-;;   )
-;; )
+(law_text) @law_text
 
+;(code_block) @keyword.def
+;(ERROR) @error
