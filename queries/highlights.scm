@@ -13,12 +13,14 @@
 
 ;(IDENT) @variable.builtin
 
-(qlident ((DOT) @punctuation.delimiter)* ) @module
+(path ((DOT) @punctuation.delimiter)*) @module
 ((variable) @error (#is-not? local))
 
-(typ (_ (quident (UIDENT) @type))*) @type
+(typ) @type
 
-(UIDENT) @module
+(module_name) @type
+(scope_name) @keyword.def
+[(constructor_name) (struct_name)] @type
 
 (label) @tag
 
@@ -31,7 +33,7 @@
 
 (expression) @keyword
 
-(expr_compound (DOT)* @operator)
+(e_fieldaccess (DOT)* @operator)
 
 ;;(typ) @type
 
@@ -43,12 +45,12 @@
 
 (builtin) @function.builtin
 (literal) @constant
-(expr_unop . (_) @operator)
-(expr_binop [
-    (PLUS) (MINUS) (MULT) (DIV)
-    (EQUAL) (NOT_EQUAL) (GREATER) (GREATER_EQUAL) (LESSER) (LESSER_EQUAL)
-    (AND) (OR) (XOR)
-  ] @operator)
+(e_unop . (_) @operator)
+(e_binop . _ . (_) @operator)
+  ;;   (PLUS) (MINUS) (MULT) (DIV)
+  ;;   (EQUAL) (NOT_EQUAL) (GREATER) (GREATER_EQUAL) (LESSER) (LESSER_EQUAL)
+  ;;   (AND) (OR) (XOR)
+  ;; ] @operator)
 
 [(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @punctuation.delimiter
 
