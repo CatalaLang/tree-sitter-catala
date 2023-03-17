@@ -35,7 +35,7 @@ const tokens_local = {
     DEFINED_AS: "equals",
     MATCH: "match",
     WILDCARD: "anything",
-    WITH: /with\s+pattern/,
+    WITH_PATT: /with\s+pattern/,
     UNDER_CONDITION: /under\s+condition/,
     IF: "if",
     THEN: "then",
@@ -45,7 +45,7 @@ const tokens_local = {
     STRUCT: "structure",
     ASSERTION: "assertion",
     VARIES: "varies",
-    WITH_V: "with",
+    WITH: "with",
     FOR: "for",
     ALL: "all",
     WE_HAVE: /we\s+have/,
@@ -115,7 +115,7 @@ const tokens_local = {
     DEFINED_AS: /égal\s+à/,
     MATCH: "selon",
     WILDCARD: /n'importe\s+quel/,
-    WITH: /sous\s+forme/,
+    WITH_PATT: /sous\s+forme/,
     UNDER_CONDITION: /sous\s+condition/,
     IF: "si",
     THEN: "alors",
@@ -125,7 +125,7 @@ const tokens_local = {
     STRUCT: "structure",
     ASSERTION: "assertion",
     VARIES: "varie",
-    WITH_V: "avec",
+    WITH: "avec",
     FOR: "pour",
     ALL: "tout",
     WE_HAVE: /on\s+a/,
@@ -195,7 +195,7 @@ const tokens_local = {
     DEFINED_AS: "wynosi",
     MATCH: "pasuje",
     WILDCARD: "cokolwiek",
-    WITH: /ze\s+wzorem/,
+    WITH_PATT: /ze\s+wzorem/,
     UNDER_CONDITION: /pod\s+warunkiem/,
     IF: "jezeli",
     THEN: "wtedy",
@@ -205,7 +205,7 @@ const tokens_local = {
     STRUCT: "struktura",
     ASSERTION: "asercja",
     VARIES: "rozna",
-    WITH_V: /wraz\s+z/,
+    WITH: /wraz\s+z/,
     FOR: "dla",
     ALL: "wszystkie",
     WE_HAVE: "mamy",
@@ -350,7 +350,7 @@ module.exports = grammar({
     _expression: $ =>
       choice(
         $._expr_atom,
-        $.expr_apply,
+        $._expr_apply,
         $.expr_unop,
         $.expr_binop,
         $.expr_let,
@@ -370,18 +370,33 @@ module.exports = grammar({
 
     fun_argument: $ => prec.right('apply', $._expression),
 
-    expr_apply: $ =>
+    _expr_apply: $ =>
       prec.right('apply', choice(
-        seq($._expression, $.OF, repeat(seq($.fun_argument, $.COMMA)), $.fun_argument),
-        seq($.OUTPUT, $.OF, $.quident,
-            optional(seq($.WITH_V, $.LBRACE, repeat($.struct_content_field), $.RBRACE))),
-        seq($._expression, $.WITH, $.quident, optional(seq($.OF, $.variable))),
-        seq($._expression, $.CONTAINS, $._expression),
-        seq($.SUM, $.primitive_typ, $.OF, $._expression),
-        seq($._expression, $.FOR, $.variable, $.AMONG, $._expression),
-        seq(choice($.MINIMUM, $.MAXIMUM), $.OF, $._expression,
-            $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expression),
+        $.e_apply,
+        $.e_scope_apply,
+        $.e_test_match,
+        $.e_coll_contains,
+        $.e_coll_sum,
+        $.e_coll_map,
+        $.e_coll_extremum,
       )),
+
+    e_apply: $ =>
+      seq($._expression, $.OF, repeat(seq($.fun_argument, $.COMMA)), $.fun_argument),
+    e_scope_apply: $ =>
+      seq($.OUTPUT, $.OF, $.quident,
+          optional(seq($.WITH, $.LBRACE, repeat($.struct_content_field), $.RBRACE))),
+    e_test_match: $ =>
+      seq($._expression, $.WITH_PATT, $.quident, optional(seq($.OF, $.variable))),
+    e_coll_contains: $ =>
+      seq($._expression, $.CONTAINS, $._expression),
+    e_coll_sum: $ =>
+      seq($.SUM, $.primitive_typ, $.OF, $._expression),
+    e_coll_map: $ =>
+      seq($._expression, $.FOR, $.variable, $.AMONG, $._expression),
+    e_coll_extremum: $ =>
+      seq(choice($.MINIMUM, $.MAXIMUM), $.OF, $._expression,
+          $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expression),
 
     expr_unop: $ =>
       prec.right('unop_expr', choice(
@@ -413,7 +428,7 @@ module.exports = grammar({
             $.SUCH, $.THAT, $._expression),
         seq($.FOR, $.ALL, $.variable, $.AMONG, $._expression,
             $.WE_HAVE, $._expression),
-        seq($.MATCH, $._expression, $.WITH,
+        seq($.MATCH, $._expression, $.WITH_PATT,
             repeat1($.match_case)),
         seq($.IF, $._expression, $.THEN, $._expression, $.ELSE, $._expression),
         seq($.LET, $.variable, $.DEFINED_AS, $._expression, $.IN, $._expression),
@@ -620,7 +635,7 @@ module.exports = grammar({
   DEFINED_AS: $ => token(tokens.DEFINED_AS),
   MATCH: $ => token(tokens.MATCH),
   WILDCARD: $ => token(tokens.WILDCARD),
-  WITH: $ => token(tokens.WITH),
+  WITH_PATT: $ => token(tokens.WITH_PATT),
   UNDER_CONDITION: $ => token(tokens.UNDER_CONDITION),
   IF: $ => token(tokens.IF),
   THEN: $ => token(tokens.THEN),
@@ -630,7 +645,7 @@ module.exports = grammar({
   STRUCT: $ => token(tokens.STRUCT),
   ASSERTION: $ => token(tokens.ASSERTION),
   VARIES: $ => token(tokens.VARIES),
-  WITH_V: $ => token(tokens.WITH_V),
+  WITH: $ => token(tokens.WITH),
   FOR: $ => token(tokens.FOR),
   ALL: $ => token(tokens.ALL),
   WE_HAVE: $ => token(tokens.WE_HAVE),
