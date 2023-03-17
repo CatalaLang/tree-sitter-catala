@@ -1,9 +1,9 @@
-const name = "Catala"
-
 var lang = "en"
 if ('TREESITTER_CATALA_LANG' in process.env) {
   lang = process.env.TREESITTER_CATALA_LANG
 }
+
+const name = ("catala")
 
 const tokens_local = {
   en: {

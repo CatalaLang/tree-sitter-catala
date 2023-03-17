@@ -14,7 +14,7 @@
 ;(IDENT) @variable.builtin
 
 (path ((DOT) @punctuation.delimiter)*) @module
-((variable) @error (#is-not? local))
+((variable) @variable)
 
 (typ) @type
 
