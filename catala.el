@@ -29,7 +29,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-code-block-face
-  '((t (:inherit fixed-pitch :extend t :background "grey15")))
+  '((t (:extend t :background "grey15")))
   "Face description for Catala code blocks."
   :group 'catala-faces)
 
@@ -172,7 +172,7 @@
    :language 'catala :feature 'all :override t
      "[(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @catala-font-lock-code-delimiter-face"
    :language 'catala :feature 'all :override 'keep
-     "(ERROR) @default"
+     "(ERROR) @catala-font-lock-code-error-face"
    :language 'catala :feature 'all :override 'keep
      "(expression) @catala-font-lock-expression-face"
    :language 'catala :feature 'all :override 'keep
@@ -183,27 +183,33 @@
      "[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @catala-font-lock-declaration-face"
    :language 'catala :feature 'all :override 'keep
      "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (COLLECTION) (CONTAINS) (ENUM) (INTEGER) (MONEY) (TEXT) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
-   :language 'catala :feature 'all :override 'keep
-     "(ERROR) @catala-font-lock-error-face"
    :language 'catala :feature 'all :override t
      '((COMMENT) @catala-font-lock-comment-face)
    :language 'catala :feature 'all :override 'prepend
      "(code_block) @catala-font-lock-code-block-face"
+   :language 'catala :feature 'all :override 'prepend
+     "(ERROR . [(BEGIN_METADATA) (BEGIN_CODE)])  @catala-font-lock-code-block-face"
 )
   "Tree-sitter Catala font-lock settings.")
 
 (defvar catala--treesit-indent-rules
   `((catala
-     (no-node prev-line 0)
+     (no-node first-sibling 0)
+     ((query "(law_heading) @indent") parent-bol 0)
+     ((query "(law_text) @indent") parent-bol 0)
      ((query "(code_block) @indent") column-0 0)
      ((query "(code_block (_) @indent)") parent-bol 0)
      ((query "(e_binop _* . (_) @ident)") first-sibling 0)
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
-
+     ((query "(e_letin def: (_) @indent)") first-sibling 2)
+     ((query "(e_letin (variable) @indent)") first-sibling 2)
      ((query "(e_letin body: (_) @indent)") first-sibling 0)
      ((query "(e_letin [(DEFINED_AS) (IN)] @indent)") first-sibling 0)
-     ((query "(match_case (_)* @indent)") first-sibling 3)
+     ((query "(e_match arg: (_) @indent)") first-sibling 2)
+     ((query "(e_match (_) @indent)") first-sibling 0)
+     ((query "(match_case (_) @indent)") first-sibling 3)
+     ((query "(e_apply (_) @indent)") first-sibling 0)
      ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(rule [(CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
      ((query "(rule (_) @indent)") first-sibling 4)
