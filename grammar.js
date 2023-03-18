@@ -416,7 +416,7 @@ module.exports = grammar({
       prec.right('apply', seq(field('arg', $._expr),
                               $.WITH_PATT, $.qenum, optional(seq($.OF, $.variable)))),
     e_coll_contains: $ =>
-      prec.right('apply',seq(field('coll', $._expr), $.CONTAINS, field('elt', $._expr))),
+      prec.right('apply', seq(field('coll', $._expr), $.CONTAINS, field('elt', $._expr))),
     e_coll_sum: $ =>
       prec.right('apply', seq($.SUM, $.primitive_typ, $.OF, field('coll', $._expr))),
     e_coll_map: $ =>
@@ -523,13 +523,15 @@ module.exports = grammar({
 
     expression: $ => $._expr,
 
+    rule_parameters: $ => seq($.variable, repeat(seq($.COMMA, $.variable))),
+
     rule: $ =>
       seq(
         optional(seq($.LABEL, $.label)),
         optional(seq($.EXCEPTION, optional($.label))),
         $.RULE,
         $.scope_var,
-        optional(seq($.OF, $.variable, repeat(seq($.COMMA, $.variable)))),
+        optional(seq($.OF, $.rule_parameters)),
         optional(seq($.STATE, $.state_label)),
         optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
         optional($.NOT),
@@ -542,7 +544,7 @@ module.exports = grammar({
         optional(seq($.EXCEPTION, optional($.label))),
         $.DEFINITION,
         $.scope_var,
-        optional(seq($.OF, $.variable, repeat(seq($.COMMA, $.variable)))),
+        optional(seq($.OF, $.rule_parameters)),
         optional(seq($.STATE, $.state_label)),
         optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
         $.DEFINED_AS,
@@ -605,7 +607,7 @@ module.exports = grammar({
 
     toplevel_def: $ =>
       seq(
-        $.DECLARATION, $.LIDENT, $.CONTENT, $.typ,
+        $.DECLARATION, $.variable, $.CONTENT, $.typ,
         optional($._depends_stance),
         $.DEFINED_AS, $.expression
       ),
