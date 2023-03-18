@@ -404,21 +404,28 @@ module.exports = grammar({
     fun_argument: $ => prec.right('apply', $._expr),
 
     e_apply: $ =>
-      prec.right('apply', seq($._expr, $.OF, repeat(seq($.fun_argument, $.COMMA)), $.fun_argument)),
+      prec.right('apply', seq(field('fun', $._expr),
+                              $.OF, repeat(seq($.fun_argument, $.COMMA)),
+                              $.fun_argument)),
     e_scope_apply: $ =>
       prec.right('apply', seq($.OUTPUT, $.OF, $.qscope,
-          optional(seq($.WITH, $.LBRACE, repeat($.struct_content_field), $.RBRACE)))),
+                              optional(seq($.WITH, $.LBRACE,
+                                           repeat($.struct_content_field),
+                                           $.RBRACE)))),
     e_test_match: $ =>
-      prec.right('apply', seq($._expr, $.WITH_PATT, $.qenum, optional(seq($.OF, $.variable)))),
+      prec.right('apply', seq(field('arg', $._expr),
+                              $.WITH_PATT, $.qenum, optional(seq($.OF, $.variable)))),
     e_coll_contains: $ =>
-      prec.right('apply',seq($._expr, $.CONTAINS, $._expr)),
+      prec.right('apply',seq(field('coll', $._expr), $.CONTAINS, field('elt', $._expr))),
     e_coll_sum: $ =>
-      prec.right('apply', seq($.SUM, $.primitive_typ, $.OF, $._expr)),
+      prec.right('apply', seq($.SUM, $.primitive_typ, $.OF, field('coll', $._expr))),
     e_coll_map: $ =>
-      prec.right('apply', seq($._expr, $.FOR, $.variable, $.AMONG, $._expr)),
+      prec.right('apply', seq(field('mapf', $._expr),
+                              $.FOR, $.variable, $.AMONG,
+                              field('coll', $._expr))),
     e_coll_extremum: $ =>
-      prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, $._expr,
-                              $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expr)),
+      prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
+                              $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, field('dft', $._expr))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -428,35 +435,35 @@ module.exports = grammar({
 
     e_binop: $ =>
       choice(
-        prec.left('MULT', seq($._expr, $.MULT, $._expr)),
-        prec.left('MULT', seq($._expr, $.DIV, $._expr)),
-        prec.left('PLUS', seq($._expr, $.PLUS, $._expr)),
-        prec.left('PLUS', seq($._expr, $.MINUS, $._expr)),
-        prec.left('PLUS', seq($._expr, $.PLUSPLUS, $._expr)),
-        prec.left('GREATER', seq($._expr, $.LESSER, $._expr)),
-        prec.left('GREATER', seq($._expr, $.LESSER_EQUAL, $._expr)),
-        prec.left('GREATER', seq($._expr, $.GREATER, $._expr)),
-        prec.left('GREATER', seq($._expr, $.GREATER_EQUAL, $._expr)),
-        prec.left('GREATER', seq($._expr, $.EQUAL, $._expr)),
-        prec.left('GREATER', seq($._expr, $.NOT_EQUAL, $._expr)),
-        prec.right('AND', seq($._expr, $.AND, $._expr)),
-        prec.right('AND', seq($._expr, $.OR, $._expr)),
-        prec.right('AND', seq($._expr, $.XOR, $._expr)),
+        prec.left('MULT', seq(field('lhs', $._expr), $.MULT, field('rhs', $._expr))),
+        prec.left('MULT', seq(field('lhs', $._expr), $.DIV, field('rhs', $._expr))),
+        prec.left('PLUS', seq(field('lhs', $._expr), $.PLUS, field('rhs', $._expr))),
+        prec.left('PLUS', seq(field('lhs', $._expr), $.MINUS, field('rhs', $._expr))),
+        prec.left('PLUS', seq(field('lhs', $._expr), $.PLUSPLUS, field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), $.LESSER, field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), $.LESSER_EQUAL, field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), $.GREATER, field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), $.GREATER_EQUAL, field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), $.EQUAL, field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), $.NOT_EQUAL, field('rhs', $._expr))),
+        prec.right('AND', seq(field('lhs', $._expr), $.AND, field('rhs', $._expr))),
+        prec.right('AND', seq(field('lhs', $._expr), $.OR, field('rhs', $._expr))),
+        prec.right('AND', seq(field('lhs', $._expr), $.XOR, field('rhs', $._expr))),
       ),
 
     e_coll_exists: $ =>
-      prec.right(seq($.EXISTS, $.variable, $.AMONG, $._expr,
-          $.SUCH, $.THAT, $._expr)),
+      prec.right(seq($.EXISTS, $.variable, $.AMONG, field('coll', $._expr),
+          $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_forall: $ =>
-      prec.right(seq($.FOR, $.ALL, $.variable, $.AMONG, $._expr,
-        $.WE_HAVE, $._expr)),
+      prec.right(seq($.FOR, $.ALL, $.variable, $.AMONG, field('coll', $._expr),
+        $.WE_HAVE, field('cond', $._expr))),
     e_match: $ =>
-      prec.right(seq($.MATCH, $._expr, $.WITH_PATT,
+      prec.right(seq($.MATCH, field('arg', $._expr), $.WITH_PATT,
         repeat1($.match_case))),
     e_ifthenelse: $ =>
-      prec.right(seq($.IF, $._expr, $.THEN, $._expr, $.ELSE, $._expr)),
+      prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
     e_letin: $ =>
-      prec.right(seq($.LET, $.variable, $.DEFINED_AS, $._expr, $.IN, $._expr)),
+      prec.right(seq($.LET, $.variable, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
       prec.right(
@@ -475,13 +482,13 @@ module.exports = grammar({
     e_enum: $ =>
       prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
-      prec.right(seq($.variable, $.AMONG, $._expr, $.SUCH, $.THAT, $._expr)),
+      prec.right(seq($.variable, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
-      prec.right(seq($._expr, $.FOR, $.variable, $.AMONG, $._expr, $.SUCH, $.THAT, $._expr)),
+      prec.right(seq(field('mapf', $._expr), $.FOR, $.variable, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_arg_extremum: $ =>
-      prec.right(seq($.variable, $.AMONG, $._expr,
-                     $.SUCH, $.THAT, $._expr, $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, $._expr)),
+      prec.right(seq($.variable, $.AMONG, field('coll', $._expr),
+                     $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
+                     $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, field('dft', $._expr))),
 
     struct_content_field: $ =>
       seq($.ALT, $.field_name, $.COLON, $._expr),
