@@ -200,6 +200,9 @@
      ((query "(e_binop _* . (_) @ident)") first-sibling 0)
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
+
+     ((query "(e_letin body: (_) @indent)") first-sibling 0)
+     ((query "(e_letin [(DEFINED_AS) (IN)] @indent)") first-sibling 0)
      ((query "(match_case (_)* @indent)") first-sibling 3)
      ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(rule [(CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
