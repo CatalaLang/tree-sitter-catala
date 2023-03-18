@@ -64,7 +64,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-label-face
-  '((t (:inherit tree-sitter-hl-face:label :slant italic)))
+  '((t (:inherit tree-sitter-hl-face:label :underline t :slant italic)))
   "Face description for Catala labels."
   :group 'catala-faces)
 
@@ -194,15 +194,19 @@
 
 (defvar catala--treesit-indent-rules
   `((catala
-;     ((query "(code_block [(BEGIN_METADATA) (END_CODE) (BEGIN_CODE)] @indent)")
-;      column-0 0)
      (no-node prev-line 0)
+     ((query "(code_block) @indent") column-0 0)
      ((query "(code_block (_) @indent)") parent-bol 0)
      ((query "(e_binop _* . (_) @ident)") first-sibling 0)
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
-     ((query "([(rule) (definition) (assertion)] [(LABEL) (EXCEPTION) (RULE)] @indent)") first-sibling 3)
-     ((query "([(rule) (definition)] _ . (_) @indent)") first-sibling 4)
+     ((query "(match_case (_)* @indent)") first-sibling 3)
+     ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
+     ((query "(rule [(CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
+     ((query "(rule (_) @indent)") first-sibling 4)
+     ((query "(definition [(DEFINITION) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
+     ((query "(definition [(CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
+     ((query "(definition (_) @indent)") first-sibling 4)
      ((query "(_ (_) @indent)") parent-bol catala-default-indent)
      )))
      ;; ((query "(e_struct (struct_content_field) . (struct_content_field) @indent)") prev_sibling 0)

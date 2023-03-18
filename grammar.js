@@ -252,16 +252,16 @@ const tokens_local = {
 const tokens_international = {
   ALT: '--',
   AT_PAGE: /@\s*p.\s*[0-9]+/,
-  BEGIN_CODE: token.immediate('```catala'),
+  BEGIN_CODE: token.immediate('```catala\n'),
   BEGIN_DIRECTIVE: token.immediate('>'),
-  BEGIN_METADATA: token.immediate('```catala-metadata'),
+  BEGIN_METADATA: token.immediate(/```catala-metadata[^\n]*\n/),
   COLON: ':',
   UIDENT: /[\p{Lu}](\p{L}|\p{N}|[_'])*/,
   DIRECTIVE_ARG: /\S+/,
   DIV: '/',
   DOT: '.',
   COMMA: ',',
-  END_CODE: '```',
+  END_CODE: '```\n',
   END_DIRECTIVE: '\n',
   EQUAL: '=',
   NOT_EQUAL: '!=',
@@ -625,7 +625,7 @@ module.exports = grammar({
       seq(
         choice(
           $.BEGIN_CODE,
-          seq($.BEGIN_METADATA, optional($.law_text))
+          $.BEGIN_METADATA
         ),
         optional($._code),
         $.END_CODE

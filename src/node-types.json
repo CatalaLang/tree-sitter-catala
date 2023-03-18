@@ -103,10 +103,6 @@
           "named": true
         },
         {
-          "type": "law_text",
-          "named": true
-        },
-        {
           "type": "scope",
           "named": true
         },
@@ -149,10 +145,6 @@
       "required": true,
       "types": [
         {
-          "type": "COMMA",
-          "named": true
-        },
-        {
           "type": "CONSEQUENCE",
           "named": true
         },
@@ -193,15 +185,15 @@
           "named": true
         },
         {
+          "type": "rule_parameters",
+          "named": true
+        },
+        {
           "type": "scope_var",
           "named": true
         },
         {
           "type": "state_label",
-          "named": true
-        },
-        {
-          "type": "variable",
           "named": true
         }
       ]
@@ -245,7 +237,114 @@
   {
     "type": "e_apply",
     "named": true,
-    "fields": {},
+    "fields": {
+      "fun": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -259,107 +358,7 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
           "type": "fun_argument",
-          "named": true
-        },
-        {
-          "type": "literal",
           "named": true
         }
       ]
@@ -368,9 +367,222 @@
   {
     "type": "e_binop",
     "named": true,
-    "fields": {},
+    "fields": {
+      "lhs": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "rhs": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -428,106 +640,6 @@
         {
           "type": "XOR",
           "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
         }
       ]
     }
@@ -535,7 +647,326 @@
   {
     "type": "e_coll_arg_extremum",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "dft": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "mapf": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -585,106 +1016,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -694,113 +1025,226 @@
   {
     "type": "e_coll_contains",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "elt": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "CONTAINS",
-          "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
           "named": true
         }
       ]
@@ -809,7 +1253,220 @@
   {
     "type": "e_coll_exists",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "cond": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -831,106 +1488,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -940,7 +1497,220 @@
   {
     "type": "e_coll_extremum",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "dft": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -976,106 +1746,6 @@
         {
           "type": "THEN",
           "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
         }
       ]
     }
@@ -1083,7 +1753,220 @@
   {
     "type": "e_coll_filter",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "cond": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1101,106 +1984,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -1210,7 +1993,326 @@
   {
     "type": "e_coll_filter_map",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "cond": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "mapf": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1232,106 +2334,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -1341,7 +2343,220 @@
   {
     "type": "e_coll_forall",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "cond": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1363,106 +2578,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -1472,7 +2587,220 @@
   {
     "type": "e_coll_map",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "mapf": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1486,106 +2814,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -1595,7 +2823,114 @@
   {
     "type": "e_coll_sum",
     "named": true,
-    "fields": {},
+    "fields": {
+      "coll": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1606,106 +2941,6 @@
         },
         {
           "type": "SUM",
-          "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
           "named": true
         },
         {
@@ -2079,7 +3314,326 @@
   {
     "type": "e_ifthenelse",
     "named": true,
-    "fields": {},
+    "fields": {
+      "cond": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "else": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "then": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2095,106 +3649,6 @@
         {
           "type": "THEN",
           "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
         }
       ]
     }
@@ -2202,7 +3656,220 @@
   {
     "type": "e_letin",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "def": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2220,106 +3887,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
           "type": "variable",
           "named": true
         }
@@ -2329,7 +3896,114 @@
   {
     "type": "e_match",
     "named": true,
-    "fields": {},
+    "fields": {
+      "arg": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2340,106 +4014,6 @@
         },
         {
           "type": "WITH_PATT",
-          "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
           "named": true
         },
         {
@@ -2637,7 +4211,114 @@
   {
     "type": "e_test_match",
     "named": true,
-    "fields": {},
+    "fields": {
+      "arg": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_coll_arg_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2648,106 +4329,6 @@
         },
         {
           "type": "WITH_PATT",
-          "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_paren",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
           "named": true
         },
         {
@@ -3632,10 +5213,6 @@
       "required": true,
       "types": [
         {
-          "type": "COMMA",
-          "named": true
-        },
-        {
           "type": "CONSEQUENCE",
           "named": true
         },
@@ -3680,11 +5257,30 @@
           "named": true
         },
         {
+          "type": "rule_parameters",
+          "named": true
+        },
+        {
           "type": "scope_var",
           "named": true
         },
         {
           "type": "state_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rule_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COMMA",
           "named": true
         },
         {
@@ -4187,10 +5783,6 @@
           "named": true
         },
         {
-          "type": "LIDENT",
-          "named": true
-        },
-        {
           "type": "LPAREN",
           "named": true
         },
@@ -4208,6 +5800,10 @@
         },
         {
           "type": "typ",
+          "named": true
+        },
+        {
+          "type": "variable",
           "named": true
         }
       ]
