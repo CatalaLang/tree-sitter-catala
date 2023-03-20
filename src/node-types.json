@@ -4198,7 +4198,7 @@
           "named": true
         },
         {
-          "type": "qstruct",
+          "type": "qenum_struct",
           "named": true
         },
         {
@@ -4332,7 +4332,7 @@
           "named": true
         },
         {
-          "type": "qenum",
+          "type": "qconstructor",
           "named": true
         },
         {
@@ -4505,7 +4505,7 @@
           "named": true
         },
         {
-          "type": "enum_name",
+          "type": "enum_struct_name",
           "named": true
         }
       ]
@@ -4539,7 +4539,7 @@
     }
   },
   {
-    "type": "enum_name",
+    "type": "enum_struct_name",
     "named": true,
     "fields": {},
     "children": {
@@ -4810,11 +4810,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "BAR",
+          "named": true
+        },
+        {
           "type": "LAW_HEADING",
+          "named": true
+        },
+        {
+          "type": "LAW_LABEL",
           "named": true
         }
       ]
@@ -4999,7 +5007,7 @@
           "named": true
         },
         {
-          "type": "qenum",
+          "type": "qconstructor",
           "named": true
         },
         {
@@ -5103,7 +5111,7 @@
           "named": true
         },
         {
-          "type": "qstruct",
+          "type": "qenum_struct",
           "named": true
         }
       ]
@@ -5118,18 +5126,22 @@
       "required": true,
       "types": [
         {
+          "type": "DOT",
+          "named": true
+        },
+        {
           "type": "constructor_name",
           "named": true
         },
         {
-          "type": "path",
+          "type": "enum_struct_name",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "qenum",
+    "type": "qenum_struct",
     "named": true,
     "fields": {},
     "children": {
@@ -5137,7 +5149,7 @@
       "required": true,
       "types": [
         {
-          "type": "enum_name",
+          "type": "enum_struct_name",
           "named": true
         },
         {
@@ -5156,11 +5168,15 @@
       "required": true,
       "types": [
         {
-          "type": "field_name",
+          "type": "DOT",
           "named": true
         },
         {
-          "type": "path",
+          "type": "enum_struct_name",
+          "named": true
+        },
+        {
+          "type": "field_name",
           "named": true
         }
       ]
@@ -5180,25 +5196,6 @@
         },
         {
           "type": "scope_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "qstruct",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "struct_name",
           "named": true
         }
       ]
@@ -5647,11 +5644,11 @@
           "named": true
         },
         {
-          "type": "field_name",
+          "type": "literal",
           "named": true
         },
         {
-          "type": "literal",
+          "type": "qfield",
           "named": true
         }
       ]
@@ -5678,11 +5675,11 @@
           "named": true
         },
         {
-          "type": "struct_decl_item",
+          "type": "enum_struct_name",
           "named": true
         },
         {
-          "type": "struct_name",
+          "type": "struct_decl_item",
           "named": true
         }
       ]
@@ -5734,21 +5731,6 @@
         },
         {
           "type": "typ",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "struct_name",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "UIDENT",
           "named": true
         }
       ]
@@ -5896,6 +5878,10 @@
   },
   {
     "type": "AT_PAGE",
+    "named": true
+  },
+  {
+    "type": "BAR",
     "named": true
   },
   {
@@ -6112,6 +6098,10 @@
   },
   {
     "type": "LAW_INCLUDE",
+    "named": true
+  },
+  {
+    "type": "LAW_LABEL",
     "named": true
   },
   {

@@ -3,7 +3,7 @@ if ('TREESITTER_CATALA_LANG' in process.env) {
   lang = process.env.TREESITTER_CATALA_LANG
 }
 
-const name = ("catala")
+const name = ("catala_"+lang)
 
 const tokens_local = {
   en: {
@@ -253,7 +253,7 @@ const tokens_international = {
   ALT: '--',
   AT_PAGE: /@\s*p.\s*[0-9]+/,
   BEGIN_CODE: token.immediate('```catala\n'),
-  BEGIN_DIRECTIVE: token.immediate('>'),
+  BEGIN_DIRECTIVE: token.immediate(/>\s*/),
   BEGIN_METADATA: token.immediate(/```catala-metadata[^\n]*\n/),
   COLON: ':',
   UIDENT: /[\p{Lu}](\p{L}|\p{N}|[_'])*/,
@@ -270,8 +270,9 @@ const tokens_international = {
   LIDENT: /\p{Ll}(\p{L}|\p{N}|[_'])*/,
   INT_LITERAL: /[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
-  LAW_HEADING: token.immediate(/#+\s*[^\n]+/),
-  LAW_TEXT: token.immediate(/\S[^\n]*/),
+  LAW_HEADING: token.immediate(/#+\s*[^\n|]+/),
+  LAW_LABEL: /\S[^\n]*/,
+  LAW_TEXT: prec(-1,token.immediate(/\S[^\n]*/)),
   LBRACE: '{',
   LESSER: '<',
   LESSER_EQUAL: '<=',
@@ -286,7 +287,7 @@ const tokens_international = {
   RPAREN: ')',
   RBRACKET: ']',
   SEMICOLON: ';',
-  VERTICAL: '|',
+  BAR: '|',
 }
 
 const tokens = Object.assign({}, tokens_local[lang], tokens_international)
@@ -302,6 +303,7 @@ module.exports = grammar({
   extras: $ => [ /\s/, $.COMMENT ],
   precedences: $ => [[
     'keyword',
+    'module',
     'DOT',
     'UIDENT',
     'CONTENT',
@@ -324,7 +326,7 @@ module.exports = grammar({
         $.law_text,
         $.code_block,
         $.law_heading,
-        $.directive
+        $.directive,
       )),
 
     COMMENT: $ => seq('#', /[^\n]*/),
@@ -336,7 +338,7 @@ module.exports = grammar({
 
     primitive_typ: $ =>
       choice($.INTEGER, $.BOOLEAN, $.MONEY, $.DURATION, $.TEXT, $.DECIMAL,
-             $.DATE, $.qstruct),
+             $.DATE, $.qenum_struct),
     typ: $ =>
       seq(repeat($.COLLECTION), $.primitive_typ),
 
@@ -345,22 +347,20 @@ module.exports = grammar({
     label: $ => $.LIDENT,
     state_label: $ => $.LIDENT,
 
-    module_name: $ => prec.right('DOT', $.UIDENT),
-    scope_name: $ => prec.right('UIDENT', $.UIDENT),
-    struct_name: $ => prec.right('UIDENT', $.UIDENT),
-    enum_name: $ => prec.right('UIDENT', $.UIDENT),
-    constructor_name: $ => prec.right('UIDENT', $.UIDENT),
+    module_name: $ => prec.left('module', $.UIDENT),
+    scope_name: $ => prec.left('UIDENT', $.UIDENT),
+    enum_struct_name: $ => prec.left('UIDENT', $.UIDENT),
+    constructor_name: $ => prec.left('CONTENT', $.UIDENT),
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
     path: $ =>
-      prec.right('DOT', repeat1(prec.right('DOT', seq($.module_name, $.DOT)))),
+      prec.left('module', repeat1(prec.left('module', seq($.module_name, $.DOT)))),
 
-    qscope: $ => prec.right('DOT', seq(optional($.path), $.scope_name)),
-    qstruct: $ => prec.right('DOT', seq(optional($.path), $.struct_name)),
-    qenum: $ => prec.right('DOT', seq(optional($.path), $.enum_name)),
-    qconstructor: $ => prec.right('DOT', seq(optional($.path), $.constructor_name)),
-
+    qscope: $ => prec.left('DOT', seq(optional($.path), $.scope_name)),
+    qenum_struct: $ => prec.left('UIDENT', seq(optional($.path), $.enum_struct_name)),
+    qconstructor: $ => seq(optional(seq($.enum_struct_name, $.DOT)), $.constructor_name),
+    qfield: $ => seq(optional(seq($.enum_struct_name, $.DOT)),$.field_name),
 
     _expr: $ =>
       choice(
@@ -414,7 +414,7 @@ module.exports = grammar({
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
-                              $.WITH_PATT, $.qenum, optional(seq($.OF, $.variable)))),
+                              $.WITH_PATT, $.qconstructor, optional(seq($.OF, $.variable)))),
     e_coll_contains: $ =>
       prec.right('apply', seq(field('coll', $._expr), $.CONTAINS, field('elt', $._expr))),
     e_coll_sum: $ =>
@@ -468,17 +468,15 @@ module.exports = grammar({
     match_case: $ =>
       prec.right(
         seq($.ALT,
-            choice($.WILDCARD, seq($.qenum, optional(seq($.OF, $.variable)))),
+            choice($.WILDCARD, seq($.qconstructor, optional(seq($.OF, $.variable)))),
             $.COLON, $._expr)
       ),
-
-    qfield: $ => seq(optional($.path),$.field_name),
 
     e_fieldaccess: $ =>
       prec.right('DOT',seq($._expr, $.DOT, $.qfield)),
 
     e_struct: $ =>
-      seq($.qstruct, $.LBRACE, repeat1($.struct_content_field), $.RBRACE),
+      seq($.qenum_struct, $.LBRACE, repeat1($.struct_content_field), $.RBRACE),
     e_enum: $ =>
       prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
@@ -491,7 +489,7 @@ module.exports = grammar({
                      $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, field('dft', $._expr))),
 
     struct_content_field: $ =>
-      seq($.ALT, $.field_name, $.COLON, $._expr),
+      seq($.ALT, $.qfield, $.COLON, $._expr),
     unit_literal: $ =>
       choice(
         $.PERCENT,
@@ -596,13 +594,13 @@ module.exports = grammar({
         optional($._depends_stance)
       ),
     struct_decl: $ =>
-      seq($.DECLARATION, $.STRUCT, $.struct_name, $.COLON,
+      seq($.DECLARATION, $.STRUCT, $.enum_struct_name, $.COLON,
           repeat($.struct_decl_item)),
 
     enum_decl_item: $ =>
       seq($.ALT, $.constructor_name, optional(seq($.CONTENT, $.typ))),
     enum_decl: $ =>
-      seq($.DECLARATION, $.ENUM, $.enum_name, $.COLON,
+      seq($.DECLARATION, $.ENUM, $.enum_struct_name, $.COLON,
           repeat($.enum_decl_item)),
 
     toplevel_def: $ =>
@@ -638,7 +636,9 @@ module.exports = grammar({
         $.END_DIRECTIVE
       ),
 
-    law_heading: $ => $.LAW_HEADING,
+    law_heading: $ =>
+      prec(1, seq($.LAW_HEADING,
+                  prec(1, optional(seq($.BAR, $.LAW_LABEL))))),
 
   SCOPE: $ => token(tokens.SCOPE),
   CONSEQUENCE: $ => token(tokens.CONSEQUENCE),
@@ -731,6 +731,7 @@ module.exports = grammar({
   INT_LITERAL: $ => token(tokens.INT_LITERAL),
   DATE_LITERAL: $ => token(tokens.DATE_LITERAL),
   LAW_HEADING: $ => token(tokens.LAW_HEADING),
+  LAW_LABEL: $ => token(tokens.LAW_LABEL),
   LAW_TEXT: $ => token(tokens.LAW_TEXT),
   LBRACE: $ => token(tokens.LBRACE),
   LPAREN: $ => token(tokens.LPAREN),
@@ -741,7 +742,7 @@ module.exports = grammar({
   RPAREN: $ => token(tokens.RPAREN),
   RBRACKET: $ => token(tokens.RBRACKET),
   SEMICOLON: $ => token(tokens.SEMICOLON),
-  VERTICAL: $ => token(tokens.VERTICAL),
+  BAR: $ => token(tokens.BAR),
 
   PLUS: $ => token(seq(tokens.PLUS, token.immediate(tokens.OP_KIND_SUFFIX))),
   MINUS: $ => token(seq(tokens.MINUS, token.immediate(tokens.OP_KIND_SUFFIX))),
