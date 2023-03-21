@@ -137,13 +137,13 @@
    :language lang :feature 'all :override t
      "(law_heading
         (LAW_HEADING) @catala-font-lock-law-heading-face
-        (LAW_LABEL) @catala-font-lock-label-face)"
+        (LAW_LABEL)? @catala-font-lock-label-face)"
    :language lang :feature 'all :override t
      "(directive) @catala-font-lock-directive-face"
    :language lang :feature 'all :override t
      "(literal) @catala-font-lock-literal-face"
    :language lang :feature 'all :override t
-     "(path ((DOT) @catala-font-lock-punctuation-face)*) @catala-font-lock-module-face"
+     "(path ((DOT) @catala-font-lock-punctuation-face)*)"
    :language lang :feature 'all :override t
      "(variable) @catala-font-lock-variable-face"
    :language lang :feature 'all :override t

@@ -3454,14 +3454,10 @@
     "BEGIN_DIRECTIVE": {
       "type": "TOKEN",
       "content": {
-        "type": "PREC",
-        "value": 1,
+        "type": "IMMEDIATE_TOKEN",
         "content": {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": ">\\s*"
-          }
+          "type": "PATTERN",
+          "value": ">\\s*"
         }
       }
     },
