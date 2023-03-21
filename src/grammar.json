@@ -137,16 +137,24 @@
       "name": "LIDENT"
     },
     "module_name": {
-      "type": "PREC_LEFT",
-      "value": "module",
+      "type": "PREC_RIGHT",
+      "value": 1,
       "content": {
         "type": "SYMBOL",
         "name": "UIDENT"
       }
     },
+    "module_dot": {
+      "type": "PREC_RIGHT",
+      "value": 1,
+      "content": {
+        "type": "SYMBOL",
+        "name": "DOT"
+      }
+    },
     "scope_name": {
       "type": "PREC_LEFT",
-      "value": "UIDENT",
+      "value": 2,
       "content": {
         "type": "SYMBOL",
         "name": "UIDENT"
@@ -154,15 +162,23 @@
     },
     "enum_struct_name": {
       "type": "PREC_LEFT",
-      "value": "UIDENT",
+      "value": 2,
       "content": {
         "type": "SYMBOL",
         "name": "UIDENT"
       }
     },
+    "enum_struct_dot": {
+      "type": "PREC_LEFT",
+      "value": 2,
+      "content": {
+        "type": "SYMBOL",
+        "name": "DOT"
+      }
+    },
     "constructor_name": {
       "type": "PREC_LEFT",
-      "value": "CONTENT",
+      "value": 3,
       "content": {
         "type": "SYMBOL",
         "name": "UIDENT"
@@ -194,32 +210,28 @@
       ]
     },
     "path": {
-      "type": "PREC_LEFT",
-      "value": "module",
+      "type": "PREC_RIGHT",
+      "value": 1,
       "content": {
         "type": "REPEAT1",
         "content": {
-          "type": "PREC_LEFT",
-          "value": "module",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "module_name"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "DOT"
-              }
-            ]
-          }
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "module_name"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "module_dot"
+            }
+          ]
         }
       }
     },
     "qscope": {
       "type": "PREC_LEFT",
-      "value": "DOT",
+      "value": 0,
       "content": {
         "type": "SEQ",
         "members": [
@@ -244,7 +256,7 @@
     },
     "qenum_struct": {
       "type": "PREC_LEFT",
-      "value": "UIDENT",
+      "value": 0,
       "content": {
         "type": "SEQ",
         "members": [
@@ -268,64 +280,72 @@
       }
     },
     "qconstructor": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "enum_struct_name"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "DOT"
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "constructor_name"
-        }
-      ]
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "qenum_struct"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "enum_struct_dot"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "constructor_name"
+          }
+        ]
+      }
     },
     "qfield": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "enum_struct_name"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "DOT"
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "field_name"
-        }
-      ]
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "qenum_struct"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "enum_struct_dot"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "field_name"
+          }
+        ]
+      }
     },
     "_expr": {
       "type": "CHOICE",
@@ -524,6 +544,26 @@
         "name": "_expr"
       }
     },
+    "fun_arguments": {
+      "type": "PREC_RIGHT",
+      "value": "apply",
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "fun_argument"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "COMMA"
+            }
+          ]
+        }
+      }
+    },
     "e_apply": {
       "type": "PREC_RIGHT",
       "value": "apply",
@@ -543,20 +583,16 @@
             "name": "OF"
           },
           {
-            "type": "REPEAT",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "fun_argument"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "COMMA"
-                }
-              ]
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "fun_arguments"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "SYMBOL",
@@ -598,11 +634,16 @@
                     "name": "LBRACE"
                   },
                   {
-                    "type": "REPEAT",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "struct_content_field"
-                    }
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "struct_content_fields"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "SYMBOL",
@@ -874,8 +915,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "MULT"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "MULT"
+                }
               },
               {
                 "type": "FIELD",
@@ -903,8 +948,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "DIV"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "DIV"
+                }
               },
               {
                 "type": "FIELD",
@@ -932,8 +981,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "PLUS"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "PLUS"
+                }
               },
               {
                 "type": "FIELD",
@@ -961,8 +1014,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "MINUS"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "MINUS"
+                }
               },
               {
                 "type": "FIELD",
@@ -990,8 +1047,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "PLUSPLUS"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "PLUSPLUS"
+                }
               },
               {
                 "type": "FIELD",
@@ -1019,8 +1080,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "LESSER"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "LESSER"
+                }
               },
               {
                 "type": "FIELD",
@@ -1048,8 +1113,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "LESSER_EQUAL"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "LESSER_EQUAL"
+                }
               },
               {
                 "type": "FIELD",
@@ -1077,8 +1146,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "GREATER"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "GREATER"
+                }
               },
               {
                 "type": "FIELD",
@@ -1106,8 +1179,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "GREATER_EQUAL"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "GREATER_EQUAL"
+                }
               },
               {
                 "type": "FIELD",
@@ -1135,8 +1212,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "EQUAL"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "EQUAL"
+                }
               },
               {
                 "type": "FIELD",
@@ -1164,8 +1245,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "NOT_EQUAL"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "NOT_EQUAL"
+                }
               },
               {
                 "type": "FIELD",
@@ -1193,8 +1278,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "AND"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "AND"
+                }
               },
               {
                 "type": "FIELD",
@@ -1222,8 +1311,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "OR"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "OR"
+                }
               },
               {
                 "type": "FIELD",
@@ -1251,8 +1344,12 @@
                 }
               },
               {
-                "type": "SYMBOL",
-                "name": "XOR"
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "XOR"
+                }
               },
               {
                 "type": "FIELD",
@@ -1382,8 +1479,17 @@
           {
             "type": "REPEAT1",
             "content": {
-              "type": "SYMBOL",
-              "name": "match_case"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "ALT"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "match_case"
+                }
+              ]
             }
           }
         ]
@@ -1482,10 +1588,6 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "ALT"
-          },
-          {
             "type": "CHOICE",
             "members": [
               {
@@ -1568,11 +1670,8 @@
           "name": "LBRACE"
         },
         {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "struct_content_field"
-          }
+          "type": "SYMBOL",
+          "name": "struct_content_fields"
         },
         {
           "type": "SYMBOL",
@@ -1799,10 +1898,6 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "ALT"
-        },
-        {
-          "type": "SYMBOL",
           "name": "qfield"
         },
         {
@@ -1814,6 +1909,22 @@
           "name": "_expr"
         }
       ]
+    },
+    "struct_content_fields": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "ALT"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "struct_content_field"
+          }
+        ]
+      }
     },
     "unit_literal": {
       "type": "CHOICE",
@@ -2027,8 +2138,12 @@
           "name": "RULE"
         },
         {
-          "type": "SYMBOL",
-          "name": "scope_var"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "scope_var"
+          }
         },
         {
           "type": "CHOICE",
@@ -2098,20 +2213,29 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "NOT"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "FILLED"
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "NOT"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "FILLED"
+              }
+            ]
+          }
         }
       ]
     },
@@ -2173,8 +2297,12 @@
           "name": "DEFINITION"
         },
         {
-          "type": "SYMBOL",
-          "name": "scope_var"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "scope_var"
+          }
         },
         {
           "type": "CHOICE",
@@ -2248,8 +2376,12 @@
           "name": "DEFINED_AS"
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         }
       ]
     },
@@ -2286,8 +2418,12 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         }
       ]
     },
@@ -2299,8 +2435,12 @@
           "name": "SCOPE"
         },
         {
-          "type": "SYMBOL",
-          "name": "scope_name"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "scope_name"
+          }
         },
         {
           "type": "CHOICE",
@@ -2328,23 +2468,27 @@
           "name": "COLON"
         },
         {
-          "type": "REPEAT1",
+          "type": "FIELD",
+          "name": "body",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "rule"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "definition"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "assertion"
-              }
-            ]
+            "type": "REPEAT1",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "rule"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "definition"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "assertion"
+                }
+              ]
+            }
           }
         }
       ]
@@ -2409,7 +2553,7 @@
         }
       ]
     },
-    "_params_decl": {
+    "params_decl": {
       "type": "SEQ",
       "members": [
         {
@@ -2453,7 +2597,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_params_decl"
+                  "name": "params_decl"
                 },
                 {
                   "type": "SYMBOL",
@@ -2463,7 +2607,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_params_decl"
+              "name": "params_decl"
             }
           ]
         }
@@ -2566,18 +2710,26 @@
           "name": "SCOPE"
         },
         {
-          "type": "SYMBOL",
-          "name": "scope_name"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "scope_name"
+          }
         },
         {
           "type": "SYMBOL",
           "name": "COLON"
         },
         {
-          "type": "REPEAT1",
+          "type": "FIELD",
+          "name": "body",
           "content": {
-            "type": "SYMBOL",
-            "name": "scope_decl_item"
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "scope_decl_item"
+            }
           }
         }
       ]
@@ -2650,18 +2802,26 @@
           "name": "STRUCT"
         },
         {
-          "type": "SYMBOL",
-          "name": "enum_struct_name"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enum_struct_name"
+          }
         },
         {
           "type": "SYMBOL",
           "name": "COLON"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "body",
           "content": {
-            "type": "SYMBOL",
-            "name": "struct_decl_item"
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "struct_decl_item"
+            }
           }
         }
       ]
@@ -2669,10 +2829,6 @@
     "enum_decl_item": {
       "type": "SEQ",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "ALT"
-        },
         {
           "type": "SYMBOL",
           "name": "constructor_name"
@@ -2712,18 +2868,35 @@
           "name": "ENUM"
         },
         {
-          "type": "SYMBOL",
-          "name": "enum_struct_name"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enum_struct_name"
+          }
         },
         {
           "type": "SYMBOL",
           "name": "COLON"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "body",
           "content": {
-            "type": "SYMBOL",
-            "name": "enum_decl_item"
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "ALT"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "enum_decl_item"
+                }
+              ]
+            }
           }
         }
       ]
@@ -2736,8 +2909,12 @@
           "name": "DECLARATION"
         },
         {
-          "type": "SYMBOL",
-          "name": "variable"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "variable"
+          }
         },
         {
           "type": "SYMBOL",
@@ -2764,8 +2941,12 @@
           "name": "DEFINED_AS"
         },
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         }
       ]
     },

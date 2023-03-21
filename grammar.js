@@ -347,20 +347,22 @@ module.exports = grammar({
     label: $ => $.LIDENT,
     state_label: $ => $.LIDENT,
 
-    module_name: $ => prec.left('module', $.UIDENT),
-    scope_name: $ => prec.left('UIDENT', $.UIDENT),
-    enum_struct_name: $ => prec.left('UIDENT', $.UIDENT),
-    constructor_name: $ => prec.left('CONTENT', $.UIDENT),
+    module_name: $ => prec.right(1, $.UIDENT),
+    module_dot: $ => prec.right(1, $.DOT),
+    scope_name: $ => prec.left(2, $.UIDENT),
+    enum_struct_name: $ => prec.left(2, $.UIDENT),
+    enum_struct_dot: $ => prec.left(2, $.DOT),
+    constructor_name: $ => prec.left(3, $.UIDENT),
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
-    path: $ =>
-      prec.left('module', repeat1(prec.left('module', seq($.module_name, $.DOT)))),
+    path: $ => prec.right(1,repeat1(seq($.module_name, $.module_dot))),
+//      prec.left('module', repeat1(prec.left('module', seq($.module_name, $.DOT)))),
 
-    qscope: $ => prec.left('DOT', seq(optional($.path), $.scope_name)),
-    qenum_struct: $ => prec.left('UIDENT', seq(optional($.path), $.enum_struct_name)),
-    qconstructor: $ => seq(optional(seq($.enum_struct_name, $.DOT)), $.constructor_name),
-    qfield: $ => seq(optional(seq($.enum_struct_name, $.DOT)),$.field_name),
+    qscope: $ => prec.left(seq(optional($.path), $.scope_name)),
+    qenum_struct: $ => prec.left(seq(optional($.path), $.enum_struct_name)),
+    qconstructor: $ => prec.left(seq(optional(seq($.qenum_struct, $.enum_struct_dot)), $.constructor_name)),
+    qfield: $ => prec.left(seq(optional(seq($.qenum_struct, $.enum_struct_dot)),$.field_name)),
 
     _expr: $ =>
       choice(
@@ -402,15 +404,15 @@ module.exports = grammar({
           $.RBRACKET),
 
     fun_argument: $ => prec.right('apply', $._expr),
-
+    fun_arguments: $ => prec.right('apply', repeat1(seq($.fun_argument, $.COMMA))),
     e_apply: $ =>
       prec.right('apply', seq(field('fun', $._expr),
-                              $.OF, repeat(seq($.fun_argument, $.COMMA)),
+                              $.OF, optional($.fun_arguments),
                               $.fun_argument)),
     e_scope_apply: $ =>
       prec.right('apply', seq($.OUTPUT, $.OF, $.qscope,
                               optional(seq($.WITH, $.LBRACE,
-                                           repeat($.struct_content_field),
+                                           optional($.struct_content_fields),
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
@@ -435,20 +437,20 @@ module.exports = grammar({
 
     e_binop: $ =>
       choice(
-        prec.left('MULT', seq(field('lhs', $._expr), $.MULT, field('rhs', $._expr))),
-        prec.left('MULT', seq(field('lhs', $._expr), $.DIV, field('rhs', $._expr))),
-        prec.left('PLUS', seq(field('lhs', $._expr), $.PLUS, field('rhs', $._expr))),
-        prec.left('PLUS', seq(field('lhs', $._expr), $.MINUS, field('rhs', $._expr))),
-        prec.left('PLUS', seq(field('lhs', $._expr), $.PLUSPLUS, field('rhs', $._expr))),
-        prec.left('GREATER', seq(field('lhs', $._expr), $.LESSER, field('rhs', $._expr))),
-        prec.left('GREATER', seq(field('lhs', $._expr), $.LESSER_EQUAL, field('rhs', $._expr))),
-        prec.left('GREATER', seq(field('lhs', $._expr), $.GREATER, field('rhs', $._expr))),
-        prec.left('GREATER', seq(field('lhs', $._expr), $.GREATER_EQUAL, field('rhs', $._expr))),
-        prec.left('GREATER', seq(field('lhs', $._expr), $.EQUAL, field('rhs', $._expr))),
-        prec.left('GREATER', seq(field('lhs', $._expr), $.NOT_EQUAL, field('rhs', $._expr))),
-        prec.right('AND', seq(field('lhs', $._expr), $.AND, field('rhs', $._expr))),
-        prec.right('AND', seq(field('lhs', $._expr), $.OR, field('rhs', $._expr))),
-        prec.right('AND', seq(field('lhs', $._expr), $.XOR, field('rhs', $._expr))),
+        prec.left('MULT', seq(field('lhs', $._expr), field('op', $.MULT), field('rhs', $._expr))),
+        prec.left('MULT', seq(field('lhs', $._expr), field('op', $.DIV), field('rhs', $._expr))),
+        prec.left('PLUS', seq(field('lhs', $._expr), field('op', $.PLUS), field('rhs', $._expr))),
+        prec.left('PLUS', seq(field('lhs', $._expr), field('op', $.MINUS), field('rhs', $._expr))),
+        prec.left('PLUS', seq(field('lhs', $._expr), field('op', $.PLUSPLUS), field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), field('op', $.LESSER), field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), field('op', $.LESSER_EQUAL), field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), field('op', $.GREATER), field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), field('op', $.GREATER_EQUAL), field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), field('op', $.EQUAL), field('rhs', $._expr))),
+        prec.left('GREATER', seq(field('lhs', $._expr), field('op', $.NOT_EQUAL), field('rhs', $._expr))),
+        prec.right('AND', seq(field('lhs', $._expr), field('op', $.AND), field('rhs', $._expr))),
+        prec.right('AND', seq(field('lhs', $._expr), field('op', $.OR), field('rhs', $._expr))),
+        prec.right('AND', seq(field('lhs', $._expr), field('op', $.XOR), field('rhs', $._expr))),
       ),
 
     e_coll_exists: $ =>
@@ -459,24 +461,21 @@ module.exports = grammar({
         $.WE_HAVE, field('cond', $._expr))),
     e_match: $ =>
       prec.right(seq($.MATCH, field('arg', $._expr), $.WITH_PATT,
-        repeat1($.match_case))),
+        repeat1(seq($.ALT, $.match_case)))),
     e_ifthenelse: $ =>
       prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
     e_letin: $ =>
       prec.right(seq($.LET, $.variable, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
-      prec.right(
-        seq($.ALT,
-            choice($.WILDCARD, seq($.qconstructor, optional(seq($.OF, $.variable)))),
-            $.COLON, $._expr)
-      ),
+      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.OF, $.variable)))),
+                     $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
       prec.right('DOT',seq($._expr, $.DOT, $.qfield)),
 
     e_struct: $ =>
-      seq($.qenum_struct, $.LBRACE, repeat1($.struct_content_field), $.RBRACE),
+      seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
     e_enum: $ =>
       prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
@@ -489,7 +488,10 @@ module.exports = grammar({
                      $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, field('dft', $._expr))),
 
     struct_content_field: $ =>
-      seq($.ALT, $.qfield, $.COLON, $._expr),
+      seq($.qfield, $.COLON, $._expr),
+    struct_content_fields: $ =>
+      repeat1(seq($.ALT, $.struct_content_field)),
+
     unit_literal: $ =>
       choice(
         $.PERCENT,
@@ -528,12 +530,11 @@ module.exports = grammar({
         optional(seq($.LABEL, $.label)),
         optional(seq($.EXCEPTION, optional($.label))),
         $.RULE,
-        $.scope_var,
+        field('name', $.scope_var),
         optional(seq($.OF, $.rule_parameters)),
         optional(seq($.STATE, $.state_label)),
         optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
-        optional($.NOT),
-        $.FILLED
+        field('body', seq(optional($.NOT), $.FILLED))
       ),
 
     definition: $ =>
@@ -541,27 +542,28 @@ module.exports = grammar({
         optional(seq($.LABEL, $.label)),
         optional(seq($.EXCEPTION, optional($.label))),
         $.DEFINITION,
-        $.scope_var,
+        field('name', $.scope_var),
         optional(seq($.OF, $.rule_parameters)),
         optional(seq($.STATE, $.state_label)),
         optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
         $.DEFINED_AS,
-        $.expression
+        field('body', $.expression)
       ),
 
     assertion: $ =>
       seq(
         $.ASSERTION,
         optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
-        $.expression
+        field('body', $.expression)
       ),
     // Note: not handling FIXED, VARIES
 
     scope: $ =>
-      seq($.SCOPE, $.scope_name,
+      seq($.SCOPE, field('name', $.scope_name),
           optional(seq($.UNDER_CONDITION, $.expression)),
           $.COLON,
-          repeat1(choice($.rule, $.definition, $.assertion))),
+          field('body',
+                repeat1(choice($.rule, $.definition, $.assertion)))),
 
     scope_decl_item_attribute: $ =>
       choice(
@@ -570,11 +572,11 @@ module.exports = grammar({
         $.OUTPUT
       ),
     param_decl: $ => seq($.variable, $.CONTENT, $.typ),
-    _params_decl: $ =>
+    params_decl: $ =>
       seq(repeat(seq($.param_decl, $.COMMA)), $.param_decl),
     _depends_stance: $ =>
-      seq($.DEPENDS, choice(seq($.LPAREN, $._params_decl, $.RPAREN),
-                            $._params_decl)),
+      seq($.DEPENDS, choice(seq($.LPAREN, $.params_decl, $.RPAREN),
+                            $.params_decl)),
     scope_decl_item: $ =>
       choice(
         seq($.scope_decl_item_attribute, $.variable,
@@ -584,8 +586,8 @@ module.exports = grammar({
         seq($.variable, $.SCOPE, $.scope_name)
       ),
     scope_decl: $ =>
-      seq($.DECLARATION, $.SCOPE, $.scope_name, $.COLON,
-          repeat1($.scope_decl_item)),
+      seq($.DECLARATION, $.SCOPE, field('name', $.scope_name), $.COLON,
+          field('body', repeat1($.scope_decl_item))),
 
     struct_decl_item: $ =>
       seq(
@@ -594,20 +596,20 @@ module.exports = grammar({
         optional($._depends_stance)
       ),
     struct_decl: $ =>
-      seq($.DECLARATION, $.STRUCT, $.enum_struct_name, $.COLON,
-          repeat($.struct_decl_item)),
+      seq($.DECLARATION, $.STRUCT, field('name', $.enum_struct_name), $.COLON,
+          field('body', repeat($.struct_decl_item))),
 
     enum_decl_item: $ =>
-      seq($.ALT, $.constructor_name, optional(seq($.CONTENT, $.typ))),
+      seq($.constructor_name, optional(seq($.CONTENT, $.typ))),
     enum_decl: $ =>
-      seq($.DECLARATION, $.ENUM, $.enum_struct_name, $.COLON,
-          repeat($.enum_decl_item)),
+      seq($.DECLARATION, $.ENUM, field('name', $.enum_struct_name), $.COLON,
+          field('body', repeat(seq($.ALT, $.enum_decl_item)))),
 
     toplevel_def: $ =>
       seq(
-        $.DECLARATION, $.variable, $.CONTENT, $.typ,
+        $.DECLARATION, field('name', $.variable), $.CONTENT, $.typ,
         optional($._depends_stance),
-        $.DEFINED_AS, $.expression
+        $.DEFINED_AS, field('body', $.expression)
       ),
 
     _code: $ =>

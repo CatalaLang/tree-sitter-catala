@@ -1,7 +1,16 @@
+;; To use automatically, add this to your .emacs:
+; (add-to-list 'treesit-extra-load-path "/path/to/tree-sitter-catala")
+; (autoload 'catala-ts-mode "/path/to/catala.el" "Major mode for Catala code." t)
+; (add-to-list 'auto-mode-alist '("\\.catala_\\(fr\\|en\\|pl\\)" . catala-ts-mode))
+
+
 (defgroup catala nil
   "Support for the Catala language."
-  :link '(url-link "https://github.com/CatalaLang/catala")
+  :link '(url-link "https://catala-lang.org/")
   :group 'languages)
+
+(defvar catala-mode-hook nil
+  "Hook to be run when Catala mode loads")
 
 (defcustom catala-default-indent 2
   "Default indentation."
@@ -119,7 +128,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-error-face
-  '((t (:inherit font-lock-warning-face)))
+  `((t (:foreground ,(face-attribute 'default :foreground))))
   "Face description for Catala parse errors."
   :group 'catala-faces)
 
@@ -142,8 +151,8 @@
      "(directive) @catala-font-lock-directive-face"
    :language lang :feature 'all :override t
      "(literal) @catala-font-lock-literal-face"
-   :language lang :feature 'all :override t
-     "(path ((DOT) @catala-font-lock-punctuation-face)*)"
+   ;; :language lang :feature 'all :override t
+   ;;   "(path_dot) @catala-font-lock-punctuation-face"
    :language lang :feature 'all :override t
      "(variable) @catala-font-lock-variable-face"
    :language lang :feature 'all :override t
@@ -176,8 +185,8 @@
      "(e_binop [(MULT) (DIV) (PLUS) (MINUS) (PLUSPLUS) (LESSER) (LESSER_EQUAL) (GREATER) (GREATER_EQUAL) (EQUAL) (NOT_EQUAL) (AND) (OR) (XOR)] @catala-font-lock-operator-face)"
    :language lang :feature 'all :override t
      "[(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @catala-font-lock-code-delimiter-face"
-;   :language lang :feature 'all :override 'keep
-;     "(ERROR) @catala-font-lock-error-face"
+  :language lang :feature 'all :override 'keep
+    "(ERROR) @catala-font-lock-error-face"
    :language lang :feature 'all :override 'keep
      "(expression) @catala-font-lock-expression-face"
    :language lang :feature 'all :override 'keep
@@ -202,36 +211,29 @@
      ((query "(law_heading) @indent") parent-bol 0)
      ((query "(law_text (LAW_TEXT) @indent) @indent") prev-sibling 0)
      ((query "(code_block (_) @indent) @indent") column-0 0)
-     ((query "(e_binop (_) @ident)") first-sibling 0)
+     ((query "(e_binop op: (_) @indent)") first-sibling 0)
+     ((query "(e_binop op: [(AND) (OR) (XOR)] rhs: (_)? @indent)") first-sibling 0)
+     ((query "(e_binop rhs: (_) @ident)") first-sibling catala-default-indent)
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
      ((query "(e_letin (variable) @indent def: (_) @indent)") first-sibling catala-default-indent)
      ((query "(e_letin [(DEFINED_AS) (IN)] @indent body: (_) @indent)") first-sibling 0)
+     ((query "(params_decl) @indent") parent-bol ,(* 2 catala-default-indent))
+     ((query "(param_decl) @indent") first-sibling 0)
      ((query "(e_match arg: (_) @indent)") first-sibling catala-default-indent)
      ((query "(e_match (_) @indent)") first-sibling 0)
-     ((query "(match_case (_) @indent)") first-sibling 3)
-     ((query "(enum_decl_item (_) @indent)") first-sibling 3)
+     ((query "(match_case (_) @indent)") first-sibling 0)
+     ((query "(enum_decl_item (_) @indent)") first-sibling 0)
      ((query "(e_apply (_) @indent)") first-sibling catala-default-indent)
      ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(rule [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
-     ((query "(rule (_) @indent)") first-sibling 4)
+     ((query "(rule (_) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(definition [(DEFINITION) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(definition [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
-     ((query "(definition (_) @indent .)") parent-bol catala-default-indent)
-     ((query "(definition (_) @indent)") first-sibling 4)
      ((query "(_ (_) @indent)") parent-bol catala-default-indent)
-     )))
-     ;; ((query "(e_struct (struct_content_field) . (struct_content_field) @indent)") prev_sibling 0)
-     ;; ((query "(e_match (match_case) . (match_case) @indent)") prev-sibling 0)
-     ;; ((query "(e_apply (fun_argument) . (fun_argument) @indent)") prev-sibling 0)
-     ;; ((query "(e_scope_apply (struct_content_field) . (struct_content_field) @indent)") prev-sibling 0)
-     ;; ((query "(rule_parameters (variable) . (variable) @indent)") prev-sibling 0)
-     ;; ((query "(scope_decl_item (param_decl) . (param_decl) @indent)") prev-sibling 0)
-     ;; ((query "(struct_decl (struct_decl_item) . (struct_decl_item) @indent)") prev-sibling 0)
-;;     ((n-p-gp "ELSE" "e_ifthenelse" "e_ifthenelse") parent-bol 0)
-;;query "(e_ifthenelse (ELSE) . (e_ifthenelse (_) @indent)") parent 0)
+)))
 
-
+;;;###autoload
 (define-derived-mode catala-ts-mode markdown-mode "Catala"
   "Major mode for editing Catala syntax
 
@@ -251,23 +253,42 @@
       (setq-local treesit-font-lock-feature-list '((all)))
       (setq-local treesit-simple-indent-rules (catala--treesit-indent-rules lang))
 
+      ;; The following are WIP, not sure yet how treesit handles navigation
+      (setq-local treesit-defun-type-regexp "(scope|(scope|struct|enum)_decl|toplevel_def|definition|rule)")
+      (setq-local treesit-block-type-regexp "(code_block)")
+      (setq-local treesit-sexp-type-regexp "(e_.*)")
+      (setq-local treesit-sentence-type-regexp "(expression)")
+      (setq-local treesit-text-type-regexp "(COMMENT)")
+      (setq-local
+       treesit-defun-name-function
+       (lambda (node)
+         (treesit-node-text
+          (treesit-node-child-by-field-name node "name"))))
+
       (treesit-major-mode-setup)))
 
   (setq-local word-wrap t)
-  (setq-local font-lock-keywords
-              '((">=" . (0 (compose-region (match-beginning 0) (match-end 0)
-           		                   ?≥
-           		                   'decompose-region)))
-                ("<=" . (0 (compose-region (match-beginning 0) (match-end 0)
-           		                   ?≤
-           		                   'decompose-region)))
-                ("!=" . (0 (compose-region (match-beginning 0) (match-end 0)
-           		                   ?≠
-           		                   'decompose-region)))
-              ))
+
+  ; activate prettify-symbols-mode to use. Note: affects indentation
+  ; You can use: (add-hook 'catala-mode-hook 'prettify-symbols-mode)
+  (setq-local prettify-symbols-alist
+              '((">=" . ?≥)
+                ("<=" . ?≤)
+                ("!=" . ?≠)
+                ("--" . ?—)
+                ))
+
+
+  (run-mode-hooks 'catala-mode-hook)
 )
 
-(setq treesit--font-lock-verbose t)
+(provide 'catala-ts-mode)
+
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.catala_\\(fr\\|en\\|pl\\)" . catala-ts-mode))
+
+
+;; Debugging
+;(setq treesit--font-lock-verbose t)
 (setq treesit--indent-verbose t)
-(add-to-list 'auto-mode-alist '("\\.catala_en" . catala-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.catala_fr" . catala-ts-mode))
+(add-hook 'catala-mode-hook 'prettify-symbols-mode)

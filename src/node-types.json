@@ -7,7 +7,18 @@
   {
     "type": "assertion",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -139,7 +150,28 @@
   {
     "type": "definition",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "scope_var",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -186,10 +218,6 @@
         },
         {
           "type": "rule_parameters",
-          "named": true
-        },
-        {
-          "type": "scope_var",
           "named": true
         },
         {
@@ -350,15 +378,15 @@
       "required": true,
       "types": [
         {
-          "type": "COMMA",
-          "named": true
-        },
-        {
           "type": "OF",
           "named": true
         },
         {
           "type": "fun_argument",
+          "named": true
+        },
+        {
+          "type": "fun_arguments",
           "named": true
         }
       ]
@@ -474,6 +502,68 @@
           }
         ]
       },
+      "op": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "AND",
+            "named": true
+          },
+          {
+            "type": "DIV",
+            "named": true
+          },
+          {
+            "type": "EQUAL",
+            "named": true
+          },
+          {
+            "type": "GREATER",
+            "named": true
+          },
+          {
+            "type": "GREATER_EQUAL",
+            "named": true
+          },
+          {
+            "type": "LESSER",
+            "named": true
+          },
+          {
+            "type": "LESSER_EQUAL",
+            "named": true
+          },
+          {
+            "type": "MINUS",
+            "named": true
+          },
+          {
+            "type": "MULT",
+            "named": true
+          },
+          {
+            "type": "NOT_EQUAL",
+            "named": true
+          },
+          {
+            "type": "OR",
+            "named": true
+          },
+          {
+            "type": "PLUS",
+            "named": true
+          },
+          {
+            "type": "PLUSPLUS",
+            "named": true
+          },
+          {
+            "type": "XOR",
+            "named": true
+          }
+        ]
+      },
       "rhs": {
         "multiple": false,
         "required": true,
@@ -580,68 +670,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "AND",
-          "named": true
-        },
-        {
-          "type": "DIV",
-          "named": true
-        },
-        {
-          "type": "EQUAL",
-          "named": true
-        },
-        {
-          "type": "GREATER",
-          "named": true
-        },
-        {
-          "type": "GREATER_EQUAL",
-          "named": true
-        },
-        {
-          "type": "LESSER",
-          "named": true
-        },
-        {
-          "type": "LESSER_EQUAL",
-          "named": true
-        },
-        {
-          "type": "MINUS",
-          "named": true
-        },
-        {
-          "type": "MULT",
-          "named": true
-        },
-        {
-          "type": "NOT_EQUAL",
-          "named": true
-        },
-        {
-          "type": "OR",
-          "named": true
-        },
-        {
-          "type": "PLUS",
-          "named": true
-        },
-        {
-          "type": "PLUSPLUS",
-          "named": true
-        },
-        {
-          "type": "XOR",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -4009,6 +4037,10 @@
       "required": true,
       "types": [
         {
+          "type": "ALT",
+          "named": true
+        },
+        {
           "type": "MATCH",
           "named": true
         },
@@ -4175,7 +4207,7 @@
           "named": true
         },
         {
-          "type": "struct_content_field",
+          "type": "struct_content_fields",
           "named": true
         }
       ]
@@ -4202,7 +4234,7 @@
           "named": true
         },
         {
-          "type": "struct_content_field",
+          "type": "struct_content_fields",
           "named": true
         }
       ]
@@ -4483,7 +4515,32 @@
   {
     "type": "enum_decl",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "ALT",
+            "named": true
+          },
+          {
+            "type": "enum_decl_item",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_struct_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -4499,14 +4556,6 @@
         {
           "type": "ENUM",
           "named": true
-        },
-        {
-          "type": "enum_decl_item",
-          "named": true
-        },
-        {
-          "type": "enum_struct_name",
-          "named": true
         }
       ]
     }
@@ -4520,10 +4569,6 @@
       "required": true,
       "types": [
         {
-          "type": "ALT",
-          "named": true
-        },
-        {
           "type": "CONTENT",
           "named": true
         },
@@ -4533,6 +4578,21 @@
         },
         {
           "type": "typ",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_struct_dot",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "DOT",
           "named": true
         }
       ]
@@ -4791,6 +4851,25 @@
     }
   },
   {
+    "type": "fun_arguments",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COMMA",
+          "named": true
+        },
+        {
+          "type": "fun_argument",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "label",
     "named": true,
     "fields": {},
@@ -4890,10 +4969,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "ALT",
-          "named": true
-        },
         {
           "type": "COLON",
           "named": true
@@ -5018,6 +5093,21 @@
     }
   },
   {
+    "type": "module_dot",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "DOT",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "module_name",
     "named": true,
     "fields": {},
@@ -5056,6 +5146,25 @@
     }
   },
   {
+    "type": "params_decl",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COMMA",
+          "named": true
+        },
+        {
+          "type": "param_decl",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "path",
     "named": true,
     "fields": {},
@@ -5064,7 +5173,7 @@
       "required": true,
       "types": [
         {
-          "type": "DOT",
+          "type": "module_dot",
           "named": true
         },
         {
@@ -5126,15 +5235,15 @@
       "required": true,
       "types": [
         {
-          "type": "DOT",
-          "named": true
-        },
-        {
           "type": "constructor_name",
           "named": true
         },
         {
-          "type": "enum_struct_name",
+          "type": "enum_struct_dot",
+          "named": true
+        },
+        {
+          "type": "qenum_struct",
           "named": true
         }
       ]
@@ -5168,15 +5277,15 @@
       "required": true,
       "types": [
         {
-          "type": "DOT",
-          "named": true
-        },
-        {
-          "type": "enum_struct_name",
+          "type": "enum_struct_dot",
           "named": true
         },
         {
           "type": "field_name",
+          "named": true
+        },
+        {
+          "type": "qenum_struct",
           "named": true
         }
       ]
@@ -5204,7 +5313,32 @@
   {
     "type": "rule",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "FILLED",
+            "named": true
+          },
+          {
+            "type": "NOT",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "scope_var",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -5218,15 +5352,7 @@
           "named": true
         },
         {
-          "type": "FILLED",
-          "named": true
-        },
-        {
           "type": "LABEL",
-          "named": true
-        },
-        {
-          "type": "NOT",
           "named": true
         },
         {
@@ -5258,10 +5384,6 @@
           "named": true
         },
         {
-          "type": "scope_var",
-          "named": true
-        },
-        {
           "type": "state_label",
           "named": true
         }
@@ -5290,7 +5412,36 @@
   {
     "type": "scope",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "assertion",
+            "named": true
+          },
+          {
+            "type": "definition",
+            "named": true
+          },
+          {
+            "type": "rule",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "scope_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -5308,23 +5459,7 @@
           "named": true
         },
         {
-          "type": "assertion",
-          "named": true
-        },
-        {
-          "type": "definition",
-          "named": true
-        },
-        {
           "type": "expression",
-          "named": true
-        },
-        {
-          "type": "rule",
-          "named": true
-        },
-        {
-          "type": "scope_name",
           "named": true
         }
       ]
@@ -5333,7 +5468,28 @@
   {
     "type": "scope_decl",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "scope_decl_item",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "scope_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -5349,14 +5505,6 @@
         {
           "type": "SCOPE",
           "named": true
-        },
-        {
-          "type": "scope_decl_item",
-          "named": true
-        },
-        {
-          "type": "scope_name",
-          "named": true
         }
       ]
     }
@@ -5369,10 +5517,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "COMMA",
-          "named": true
-        },
         {
           "type": "CONDITION",
           "named": true
@@ -5402,7 +5546,7 @@
           "named": true
         },
         {
-          "type": "param_decl",
+          "type": "params_decl",
           "named": true
         },
         {
@@ -5540,10 +5684,6 @@
       "required": true,
       "types": [
         {
-          "type": "ALT",
-          "named": true
-        },
-        {
           "type": "COLON",
           "named": true
         },
@@ -5655,9 +5795,49 @@
     }
   },
   {
-    "type": "struct_decl",
+    "type": "struct_content_fields",
     "named": true,
     "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ALT",
+          "named": true
+        },
+        {
+          "type": "struct_content_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "struct_decl",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "struct_decl_item",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_struct_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -5673,14 +5853,6 @@
         {
           "type": "STRUCT",
           "named": true
-        },
-        {
-          "type": "enum_struct_name",
-          "named": true
-        },
-        {
-          "type": "struct_decl_item",
-          "named": true
         }
       ]
     }
@@ -5693,10 +5865,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "COMMA",
-          "named": true
-        },
         {
           "type": "CONDITION",
           "named": true
@@ -5726,7 +5894,7 @@
           "named": true
         },
         {
-          "type": "param_decl",
+          "type": "params_decl",
           "named": true
         },
         {
@@ -5739,15 +5907,32 @@
   {
     "type": "toplevel_def",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "COMMA",
-          "named": true
-        },
         {
           "type": "CONTENT",
           "named": true
@@ -5773,19 +5958,11 @@
           "named": true
         },
         {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "param_decl",
+          "type": "params_decl",
           "named": true
         },
         {
           "type": "typ",
-          "named": true
-        },
-        {
-          "type": "variable",
           "named": true
         }
       ]
