@@ -404,11 +404,11 @@ module.exports = grammar({
           $.RBRACKET),
 
     fun_argument: $ => prec.right('apply', $._expr),
-    fun_arguments: $ => prec.right('apply', repeat1(seq($.fun_argument, $.COMMA))),
+    fun_arguments: $ => prec.right(seq(repeat(seq($.fun_argument, $.COMMA)), $.fun_argument)),
     e_apply: $ =>
       prec.right('apply', seq(field('fun', $._expr),
-                              $.OF, optional($.fun_arguments),
-                              $.fun_argument)),
+                              $.OF,
+                              field('args', $.fun_arguments))),
     e_scope_apply: $ =>
       prec.right('apply', seq($.OUTPUT, $.OF, $.qscope,
                               optional(seq($.WITH, $.LBRACE,
@@ -558,12 +558,15 @@ module.exports = grammar({
       ),
     // Note: not handling FIXED, VARIES
 
+    rounding_mode: $ =>
+      seq($.DATE, $.Round, choice($.INCREASING, $.DECREASING)),
+
     scope: $ =>
       seq($.SCOPE, field('name', $.scope_name),
           optional(seq($.UNDER_CONDITION, $.expression)),
           $.COLON,
           field('body',
-                repeat1(choice($.rule, $.definition, $.assertion)))),
+                repeat1(choice($.rule, $.definition, $.assertion, $.rounding_mode)))),
 
     scope_decl_item_attribute: $ =>
       choice(

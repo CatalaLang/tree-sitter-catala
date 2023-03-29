@@ -77,6 +77,11 @@
   "Face description for Catala labels."
   :group 'catala-faces)
 
+(defface catala-font-lock-state-face
+  '((t (:inherit tree-sitter-hl-face:variable :slant italic)))
+  "Face description for Catala state labels."
+  :group 'catala-faces)
+
 (defface catala-font-lock-punctuation-face
   '((t (:inherit tree-sitter-hl-face:punctuation)))
   "Face description for Catala punctuation."
@@ -163,12 +168,14 @@
      "(typ) @catala-font-lock-type-face"
    :language lang :feature 'all :override t
      "(module_name) @catala-font-lock-module-face"
-   :language lang :feature 'all :override t
+     :language lang :feature 'all :override t
      "(scope_name) @catala-font-lock-scope-face"
    :language lang :feature 'all :override t
      "(enum_struct_name) @catala-font-lock-type-face"
    :language lang :feature 'all :override t
      "(label) @catala-font-lock-label-face"
+   :language lang :feature 'all :override t
+     "(state_label) @catala-font-lock-state-face"
    :language lang :feature 'all :override t
      "[(LBRACE) (RBRACE) (LPAREN) (RPAREN) (LBRACKET) (RBRACKET)] @catala-font-lock-punctuation-face"
    :language lang :feature 'all :override t
@@ -192,7 +199,7 @@
    :language lang :feature 'all :override 'keep
      "[(scope_decl_item)] @catala-font-lock-expression-face"
    :language lang :feature 'all :override 'keep
-     "[(struct_decl_item) (enum_decl_item) (rule) (definition) (assertion)] @catala-font-lock-definition-face"
+     "[(struct_decl_item) (enum_decl_item) (rule) (definition) (assertion) (rounding_mode)] @catala-font-lock-definition-face"
    :language lang :feature 'all :override 'keep
      "[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @catala-font-lock-declaration-face"
    :language lang :feature 'all :override 'prepend
@@ -214,6 +221,7 @@
      ((query "(e_binop op: (_) @indent)") first-sibling 0)
      ((query "(e_binop op: [(AND) (OR) (XOR)] rhs: (_)? @indent)") first-sibling 0)
      ((query "(e_binop rhs: (_) @ident)") first-sibling catala-default-indent)
+     ((query "(e_fieldaccess (_) @indent)") first-sibling 2)
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
      ((query "(e_letin (variable) @indent def: (_) @indent)") first-sibling catala-default-indent)
@@ -224,12 +232,15 @@
      ((query "(e_match (_) @indent)") first-sibling 0)
      ((query "(match_case (_) @indent)") first-sibling 0)
      ((query "(enum_decl_item (_) @indent)") first-sibling 0)
+     ((query "(struct_content_fields (ALT) @indent)") first-sibling 0)
      ((query "(e_apply (_) @indent)") first-sibling catala-default-indent)
+     ((query "(fun_arguments (_) @indent)") first-sibling 0)
      ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(rule [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
      ((query "(rule (_) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(definition [(DEFINITION) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(definition [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
+     ((query "(definition (_) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(_ (_) @indent)") parent-bol catala-default-indent)
 )))
 

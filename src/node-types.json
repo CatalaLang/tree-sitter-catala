@@ -266,6 +266,16 @@
     "type": "e_apply",
     "named": true,
     "fields": {
+      "args": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "fun_arguments",
+            "named": true
+          }
+        ]
+      },
       "fun": {
         "multiple": false,
         "required": true,
@@ -374,19 +384,11 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "OF",
-          "named": true
-        },
-        {
-          "type": "fun_argument",
-          "named": true
-        },
-        {
-          "type": "fun_arguments",
           "named": true
         }
       ]
@@ -5311,6 +5313,33 @@
     }
   },
   {
+    "type": "rounding_mode",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "DATE",
+          "named": true
+        },
+        {
+          "type": "DECREASING",
+          "named": true
+        },
+        {
+          "type": "INCREASING",
+          "named": true
+        },
+        {
+          "type": "Round",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "rule",
     "named": true,
     "fields": {
@@ -5423,6 +5452,10 @@
           },
           {
             "type": "definition",
+            "named": true
+          },
+          {
+            "type": "rounding_mode",
             "named": true
           },
           {
@@ -6142,6 +6175,10 @@
     "named": true
   },
   {
+    "type": "DECREASING",
+    "named": true
+  },
+  {
     "type": "DEFINED_AS",
     "named": true
   },
@@ -6243,6 +6280,10 @@
   },
   {
     "type": "IN",
+    "named": true
+  },
+  {
+    "type": "INCREASING",
     "named": true
   },
   {

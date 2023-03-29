@@ -230,7 +230,7 @@
       }
     },
     "qscope": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 0,
       "content": {
         "type": "SEQ",
@@ -255,7 +255,7 @@
       }
     },
     "qenum_struct": {
-      "type": "PREC_LEFT",
+      "type": "PREC_RIGHT",
       "value": 0,
       "content": {
         "type": "SEQ",
@@ -546,22 +546,31 @@
     },
     "fun_arguments": {
       "type": "PREC_RIGHT",
-      "value": "apply",
+      "value": 0,
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "fun_argument"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "COMMA"
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "fun_argument"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "COMMA"
+                }
+              ]
             }
-          ]
-        }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "fun_argument"
+          }
+        ]
       }
     },
     "e_apply": {
@@ -583,20 +592,12 @@
             "name": "OF"
           },
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "fun_arguments"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "SYMBOL",
-            "name": "fun_argument"
+            "type": "FIELD",
+            "name": "args",
+            "content": {
+              "type": "SYMBOL",
+              "name": "fun_arguments"
+            }
           }
         ]
       }
@@ -2427,6 +2428,32 @@
         }
       ]
     },
+    "rounding_mode": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "DATE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "Round"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "INCREASING"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "DECREASING"
+            }
+          ]
+        }
+      ]
+    },
     "scope": {
       "type": "SEQ",
       "members": [
@@ -2486,6 +2513,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "assertion"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "rounding_mode"
                 }
               ]
             }
