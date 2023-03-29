@@ -3,6 +3,7 @@
 ; (autoload 'catala-ts-mode "/path/to/catala.el" "Major mode for Catala code." t)
 ; (add-to-list 'auto-mode-alist '("\\.catala_\\(fr\\|en\\|pl\\)" . catala-ts-mode))
 
+(require 'treesit)
 
 (defgroup catala nil
   "Support for the Catala language."
@@ -214,7 +215,7 @@
 
 (defun catala--treesit-indent-rules (lang)
   `((,lang
-     (no-node first-sibling 0)
+     (no-node prev-line 0)
      ((query "(law_heading) @indent") parent-bol 0)
      ((query "(law_text (LAW_TEXT) @indent) @indent") prev-sibling 0)
      ((query "(code_block (_) @indent) @indent") column-0 0)
@@ -251,7 +252,6 @@
 
 \\<catala-ts-mode-map>"
   :group 'catala
-  (define-key catala-ts-mode-map (kbd "RET") 'newline)
   (let*
       ((name (buffer-file-name (current-buffer)))
        (lang (if (and name (string-match-p "\\.catala_fr" name))
@@ -279,7 +279,33 @@
 
       (treesit-major-mode-setup)))
 
+  (setq-local comment-start "#")
+  (setq-local comment-end "")
   (setq-local word-wrap t)
+  (setq-local markdown-asymmetric-header t)
+  (setq-local markdown-indent-on-enter nil)
+  (setq-local markdown-command "catala typecheck")
+  (setq-local markdown-command-needs-filename t)
+
+  (define-skeleton catala-insert-code-block
+    "Insert a Catala code block"
+    nil
+    \n "```catala" \n _ \n "```" \n)
+
+  (define-skeleton catala-insert-metadata-block
+    "Insert a Catala code block"
+    nil
+    \n "```catala-metadata" \n _ \n "```" \n)
+
+  (define-skeleton catala-insert-test-block
+    "Insert a Catala code block"
+    nil
+    \n "```catala-test-inline" \n "$ catala " _ \n "```" > \n)
+
+  (define-key catala-ts-mode-map "\C-c.c" 'catala-insert-code-block)
+  (define-key catala-ts-mode-map "\C-c.m" 'catala-insert-metadata-block)
+  (define-key catala-ts-mode-map "\C-c.t" 'catala-insert-test-block)
+
 
   ; activate prettify-symbols-mode to use. Note: affects indentation
   ; You can use: (add-hook 'catala-mode-hook 'prettify-symbols-mode)
