@@ -299,11 +299,13 @@ const inline = $ => [
 module.exports = grammar({
   name: name,
   inline: inline,
-  word: $ => $.LIDENT,
+  word: $ => $._LIDENT,
   extras: $ => [ /\s/, $.COMMENT ],
   precedences: $ => [[
     'keyword',
     'module',
+    'enum_struct',
+    'scope_constr',
     'DOT',
     'UIDENT',
     'CONTENT',
@@ -342,27 +344,33 @@ module.exports = grammar({
     typ: $ =>
       seq(repeat($.COLLECTION), $.primitive_typ),
 
-    variable: $ => $.LIDENT,
-    field_name: $ => $.LIDENT,
-    label: $ => $.LIDENT,
-    state_label: $ => $.LIDENT,
+    variable: $ => $._LIDENT,
+    field_name: $ => $._LIDENT,
+    label: $ => $._LIDENT,
+    state_label: $ => $._LIDENT,
 
-    module_name: $ => prec.right(1, $.UIDENT),
-    module_dot: $ => prec.right(1, $.DOT),
-    scope_name: $ => prec.left(2, $.UIDENT),
-    enum_struct_name: $ => prec.left(2, $.UIDENT),
-    enum_struct_dot: $ => prec.left(2, $.DOT),
-    constructor_name: $ => prec.left(3, $.UIDENT),
+    module_name: $ => prec('module', $._UIDENT),
+    scope_name: $ => prec('scope_constr', $._UIDENT),
+    enum_struct_name: $ => prec('enum_struct', $._UIDENT),
+
+    constructor_name: $ => prec('scope_constr', $._UIDENT),
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
-    path: $ => prec.right(1,repeat1(seq($.module_name, $.module_dot))),
+    _path: $ => choice(
+      seq($.module_name, $.DOT),
+      seq($._path, $.module_name, $.DOT)
+    ),
 //      prec.left('module', repeat1(prec.left('module', seq($.module_name, $.DOT)))),
 
-    qscope: $ => prec.left(seq(optional($.path), $.scope_name)),
-    qenum_struct: $ => prec.left(seq(optional($.path), $.enum_struct_name)),
-    qconstructor: $ => prec.left(seq(optional(seq($.qenum_struct, $.enum_struct_dot)), $.constructor_name)),
-    qfield: $ => prec.left(seq(optional(seq($.qenum_struct, $.enum_struct_dot)),$.field_name)),
+    qscope: $ => seq(optional($._path), $.scope_name),
+    qenum_struct: $ => seq(optional($._path), $.enum_struct_name),
+
+    qconstructor: $ =>
+      seq(optional(seq($.qenum_struct, $.DOT)), $.constructor_name),
+      // prec.right(seq(optional(seq($.qenum_struct, $.DOT)), $.constructor_name)),
+    qfield: $ =>
+      seq(optional(seq($.qenum_struct, $.DOT)), $.field_name),
 
     _expr: $ =>
       choice(
@@ -394,7 +402,7 @@ module.exports = grammar({
       ),
 
     e_variable: $ =>
-      seq(optional($.path), $.variable),
+      seq(optional($._path), $.variable),
 
     e_paren: $ => seq($.LPAREN, $._expr, $.RPAREN),
 
@@ -472,7 +480,7 @@ module.exports = grammar({
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
-      prec.right('DOT',seq($._expr, $.DOT, $.qfield)),
+      seq($._expr, $.DOT, $.qfield),
 
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
@@ -533,7 +541,7 @@ module.exports = grammar({
         field('name', $.scope_var),
         optional(seq($.OF, $.rule_parameters)),
         optional(seq($.STATE, $.state_label)),
-        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, field('condition', $.expression), $.CONSEQUENCE)),
         field('body', seq(optional($.NOT), $.FILLED))
       ),
 
@@ -545,7 +553,7 @@ module.exports = grammar({
         field('name', $.scope_var),
         optional(seq($.OF, $.rule_parameters)),
         optional(seq($.STATE, $.state_label)),
-        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, field('condition', $.expression), $.CONSEQUENCE)),
         $.DEFINED_AS,
         field('body', $.expression)
       ),
@@ -553,7 +561,7 @@ module.exports = grammar({
     assertion: $ =>
       seq(
         $.ASSERTION,
-        optional(seq($.UNDER_CONDITION, $.expression, $.CONSEQUENCE)),
+        optional(seq($.UNDER_CONDITION, field('condition', $.expression), $.CONSEQUENCE)),
         field('body', $.expression)
       ),
     // Note: not handling FIXED, VARIES
@@ -563,10 +571,11 @@ module.exports = grammar({
 
     scope: $ =>
       seq($.SCOPE, field('name', $.scope_name),
-          optional(seq($.UNDER_CONDITION, $.expression)),
+          optional(seq($.UNDER_CONDITION, field('condition', $.expression))),
           $.COLON,
           field('body',
-                repeat1(choice($.rule, $.definition, $.assertion, $.rounding_mode)))),
+                repeat(choice($.rule, $.definition, $.assertion, $.rounding_mode)))),
+    // The actual syntax is repeat1, but this is better for incomplete code
 
     scope_decl_item_attribute: $ =>
       choice(
@@ -590,7 +599,8 @@ module.exports = grammar({
       ),
     scope_decl: $ =>
       seq($.DECLARATION, $.SCOPE, field('name', $.scope_name), $.COLON,
-          field('body', repeat1($.scope_decl_item))),
+          field('body', repeat($.scope_decl_item))),
+    // The actual syntax is repeat1, but this is better for incomplete code
 
     struct_decl_item: $ =>
       seq(
@@ -726,13 +736,13 @@ module.exports = grammar({
   BEGIN_DIRECTIVE: $ => token(tokens.BEGIN_DIRECTIVE),
   BEGIN_METADATA: $ => token(tokens.BEGIN_METADATA),
   COLON: $ => token(tokens.COLON),
-  UIDENT: $ => token(tokens.UIDENT),
+  _UIDENT: $ => token(tokens.UIDENT),
   DIRECTIVE_ARG: $ => token(tokens.DIRECTIVE_ARG),
   DOT: $ => token(tokens.DOT),
   COMMA: $ => token(tokens.COMMA),
   END_CODE: $ => token(tokens.END_CODE),
   END_DIRECTIVE: $ => token(tokens.END_DIRECTIVE),
-  LIDENT: $ => token(tokens.LIDENT),
+  _LIDENT: $ => token(tokens.LIDENT),
   INT_LITERAL: $ => token(tokens.INT_LITERAL),
   DATE_LITERAL: $ => token(tokens.DATE_LITERAL),
   LAW_HEADING: $ => token(tokens.LAW_HEADING),

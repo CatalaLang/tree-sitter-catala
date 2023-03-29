@@ -17,6 +17,16 @@
             "named": true
           }
         ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -33,10 +43,6 @@
         },
         {
           "type": "UNDER_CONDITION",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         }
       ]
@@ -135,17 +141,7 @@
   {
     "type": "constructor_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "UIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "definition",
@@ -154,6 +150,16 @@
       "body": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "expression",
@@ -206,10 +212,6 @@
         },
         {
           "type": "UNDER_CONDITION",
-          "named": true
-        },
-        {
-          "type": "expression",
           "named": true
         },
         {
@@ -4504,7 +4506,11 @@
       "required": true,
       "types": [
         {
-          "type": "path",
+          "type": "DOT",
+          "named": true
+        },
+        {
+          "type": "module_name",
           "named": true
         },
         {
@@ -4586,34 +4592,9 @@
     }
   },
   {
-    "type": "enum_struct_dot",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "DOT",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "enum_struct_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "UIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "expression",
@@ -4729,17 +4710,7 @@
   {
     "type": "field_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "LIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "fun_argument",
@@ -4874,17 +4845,7 @@
   {
     "type": "label",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "LIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "law_heading",
@@ -5095,34 +5056,9 @@
     }
   },
   {
-    "type": "module_dot",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "DOT",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "module_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "UIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "param_decl",
@@ -5161,25 +5097,6 @@
         },
         {
           "type": "param_decl",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "path",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "module_dot",
-          "named": true
-        },
-        {
-          "type": "module_name",
           "named": true
         }
       ]
@@ -5237,11 +5154,11 @@
       "required": true,
       "types": [
         {
-          "type": "constructor_name",
+          "type": "DOT",
           "named": true
         },
         {
-          "type": "enum_struct_dot",
+          "type": "constructor_name",
           "named": true
         },
         {
@@ -5260,11 +5177,15 @@
       "required": true,
       "types": [
         {
+          "type": "DOT",
+          "named": true
+        },
+        {
           "type": "enum_struct_name",
           "named": true
         },
         {
-          "type": "path",
+          "type": "module_name",
           "named": true
         }
       ]
@@ -5279,7 +5200,7 @@
       "required": true,
       "types": [
         {
-          "type": "enum_struct_dot",
+          "type": "DOT",
           "named": true
         },
         {
@@ -5302,7 +5223,11 @@
       "required": true,
       "types": [
         {
-          "type": "path",
+          "type": "DOT",
+          "named": true
+        },
+        {
+          "type": "module_name",
           "named": true
         },
         {
@@ -5357,6 +5282,16 @@
           }
         ]
       },
+      "condition": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -5401,10 +5336,6 @@
           "named": true
         },
         {
-          "type": "expression",
-          "named": true
-        },
-        {
           "type": "label",
           "named": true
         },
@@ -5444,7 +5375,7 @@
     "fields": {
       "body": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "assertion",
@@ -5460,6 +5391,16 @@
           },
           {
             "type": "rule",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
             "named": true
           }
         ]
@@ -5490,10 +5431,6 @@
         {
           "type": "UNDER_CONDITION",
           "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
         }
       ]
     }
@@ -5504,7 +5441,7 @@
     "fields": {
       "body": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "scope_decl_item",
@@ -5635,17 +5572,7 @@
   {
     "type": "scope_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "UIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "scope_var",
@@ -5696,17 +5623,7 @@
   {
     "type": "state_label",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "LIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "struct_content_field",
@@ -6050,17 +5967,7 @@
   {
     "type": "variable",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "LIDENT",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "#",
@@ -6347,10 +6254,6 @@
     "named": true
   },
   {
-    "type": "LIDENT",
-    "named": true
-  },
-  {
     "type": "LPAREN",
     "named": true
   },
@@ -6480,10 +6383,6 @@
   },
   {
     "type": "TRUE",
-    "named": true
-  },
-  {
-    "type": "UIDENT",
     "named": true
   },
   {

@@ -1,6 +1,6 @@
 {
   "name": "catala_fr",
-  "word": "LIDENT",
+  "word": "_LIDENT",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -122,66 +122,50 @@
     },
     "variable": {
       "type": "SYMBOL",
-      "name": "LIDENT"
+      "name": "_LIDENT"
     },
     "field_name": {
       "type": "SYMBOL",
-      "name": "LIDENT"
+      "name": "_LIDENT"
     },
     "label": {
       "type": "SYMBOL",
-      "name": "LIDENT"
+      "name": "_LIDENT"
     },
     "state_label": {
       "type": "SYMBOL",
-      "name": "LIDENT"
+      "name": "_LIDENT"
     },
     "module_name": {
-      "type": "PREC_RIGHT",
-      "value": 1,
+      "type": "PREC",
+      "value": "module",
       "content": {
         "type": "SYMBOL",
-        "name": "UIDENT"
-      }
-    },
-    "module_dot": {
-      "type": "PREC_RIGHT",
-      "value": 1,
-      "content": {
-        "type": "SYMBOL",
-        "name": "DOT"
+        "name": "_UIDENT"
       }
     },
     "scope_name": {
-      "type": "PREC_LEFT",
-      "value": 2,
+      "type": "PREC",
+      "value": "scope_constr",
       "content": {
         "type": "SYMBOL",
-        "name": "UIDENT"
+        "name": "_UIDENT"
       }
     },
     "enum_struct_name": {
-      "type": "PREC_LEFT",
-      "value": 2,
+      "type": "PREC",
+      "value": "enum_struct",
       "content": {
         "type": "SYMBOL",
-        "name": "UIDENT"
-      }
-    },
-    "enum_struct_dot": {
-      "type": "PREC_LEFT",
-      "value": 2,
-      "content": {
-        "type": "SYMBOL",
-        "name": "DOT"
+        "name": "_UIDENT"
       }
     },
     "constructor_name": {
-      "type": "PREC_LEFT",
-      "value": 3,
+      "type": "PREC",
+      "value": "scope_constr",
       "content": {
         "type": "SYMBOL",
-        "name": "UIDENT"
+        "name": "_UIDENT"
       }
     },
     "scope_var": {
@@ -209,12 +193,10 @@
         }
       ]
     },
-    "path": {
-      "type": "PREC_RIGHT",
-      "value": 1,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
+    "_path": {
+      "type": "CHOICE",
+      "members": [
+        {
           "type": "SEQ",
           "members": [
             {
@@ -223,129 +205,130 @@
             },
             {
               "type": "SYMBOL",
-              "name": "module_dot"
+              "name": "DOT"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_path"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "module_name"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "DOT"
             }
           ]
         }
-      }
+      ]
     },
     "qscope": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "path"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "SYMBOL",
-            "name": "scope_name"
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_path"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "scope_name"
+        }
+      ]
     },
     "qenum_struct": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "path"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "SYMBOL",
-            "name": "enum_struct_name"
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_path"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "enum_struct_name"
+        }
+      ]
     },
     "qconstructor": {
-      "type": "PREC_LEFT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "qenum_struct"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "enum_struct_dot"
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "SYMBOL",
-            "name": "constructor_name"
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "qenum_struct"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "DOT"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "constructor_name"
+        }
+      ]
     },
     "qfield": {
-      "type": "PREC_LEFT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "qenum_struct"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "enum_struct_dot"
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "SYMBOL",
-            "name": "field_name"
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "qenum_struct"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "DOT"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "field_name"
+        }
+      ]
     },
     "_expr": {
       "type": "CHOICE",
@@ -460,7 +443,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "path"
+              "name": "_path"
             },
             {
               "type": "BLANK"
@@ -1639,25 +1622,21 @@
       }
     },
     "e_fieldaccess": {
-      "type": "PREC_RIGHT",
-      "value": "DOT",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_expr"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "DOT"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "qfield"
-          }
-        ]
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "DOT"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "qfield"
+        }
+      ]
     },
     "e_struct": {
       "type": "SEQ",
@@ -2199,8 +2178,12 @@
                   "name": "UNDER_CONDITION"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "expression"
+                  "type": "FIELD",
+                  "name": "condition",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
                 },
                 {
                   "type": "SYMBOL",
@@ -2358,8 +2341,12 @@
                   "name": "UNDER_CONDITION"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "expression"
+                  "type": "FIELD",
+                  "name": "condition",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
                 },
                 {
                   "type": "SYMBOL",
@@ -2404,8 +2391,12 @@
                   "name": "UNDER_CONDITION"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "expression"
+                  "type": "FIELD",
+                  "name": "condition",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
                 },
                 {
                   "type": "SYMBOL",
@@ -2480,8 +2471,12 @@
                   "name": "UNDER_CONDITION"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "expression"
+                  "type": "FIELD",
+                  "name": "condition",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
                 }
               ]
             },
@@ -2498,7 +2493,7 @@
           "type": "FIELD",
           "name": "body",
           "content": {
-            "type": "REPEAT1",
+            "type": "REPEAT",
             "content": {
               "type": "CHOICE",
               "members": [
@@ -2756,7 +2751,7 @@
           "type": "FIELD",
           "name": "body",
           "content": {
-            "type": "REPEAT1",
+            "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
               "name": "scope_decl_item"
@@ -3690,7 +3685,7 @@
         "value": ":"
       }
     },
-    "UIDENT": {
+    "_UIDENT": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
@@ -3732,7 +3727,7 @@
         "value": "\n"
       }
     },
-    "LIDENT": {
+    "_LIDENT": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
@@ -4062,6 +4057,14 @@
       {
         "type": "STRING",
         "value": "module"
+      },
+      {
+        "type": "STRING",
+        "value": "enum_struct"
+      },
+      {
+        "type": "STRING",
+        "value": "scope_constr"
       },
       {
         "type": "STRING",

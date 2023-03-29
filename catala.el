@@ -235,6 +235,7 @@
      ((query "(struct_content_fields (ALT) @indent)") first-sibling 0)
      ((query "(e_apply (_) @indent)") first-sibling catala-default-indent)
      ((query "(fun_arguments (_) @indent)") first-sibling 0)
+     ((query "(_ condition: (_) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
      ((query "(rule [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
      ((query "(rule (_) @indent)") first-sibling ,(* 2 catala-default-indent))
