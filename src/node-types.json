@@ -5164,10 +5164,6 @@
         {
           "type": "enum_struct_name",
           "named": true
-        },
-        {
-          "type": "module_name",
-          "named": true
         }
       ]
     }
@@ -5208,11 +5204,11 @@
           "named": true
         },
         {
-          "type": "field_name",
+          "type": "enum_struct_name",
           "named": true
         },
         {
-          "type": "qenum_struct",
+          "type": "field_name",
           "named": true
         }
       ]

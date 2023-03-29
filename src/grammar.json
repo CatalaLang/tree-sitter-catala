@@ -194,43 +194,39 @@
       ]
     },
     "_path": {
-      "type": "PREC",
-      "value": -2,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "module_name"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "DOT"
-              }
-            ]
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_path"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "module_name"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "DOT"
-              }
-            ]
-          }
-        ]
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "module_name"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "DOT"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_path"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "module_name"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "DOT"
+            }
+          ]
+        }
+      ]
     },
     "qscope": {
       "type": "SEQ",
@@ -274,89 +270,33 @@
         }
       ]
     },
-    "enum_struct_path": {
-      "type": "CHOICE",
+    "qconstructor": {
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "enum_struct_name"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "enum_struct_name"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "DOT"
+                }
+              ]
             },
             {
-              "type": "SYMBOL",
-              "name": "DOT"
+              "type": "BLANK"
             }
           ]
         },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_path"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "enum_struct_name"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "DOT"
-            }
-          ]
-        }
-      ]
-    },
-    "qconstructor": {
-      "type": "CHOICE",
-      "members": [
         {
           "type": "SYMBOL",
           "name": "constructor_name"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "enum_struct_name"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "DOT"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "constructor_name"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "module_name"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "DOT"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "enum_struct_name"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "DOT"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "constructor_name"
-            }
-          ]
         }
       ]
     },
@@ -371,7 +311,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "qenum_struct"
+                  "name": "enum_struct_name"
                 },
                 {
                   "type": "SYMBOL",
