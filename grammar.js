@@ -365,11 +365,18 @@ module.exports = grammar({
     qscope: $ => seq(optional($._path), $.scope_name),
     qenum_struct: $ => seq(optional($._path), $.enum_struct_name),
 
+    enum_struct_path: $ => choice(
+      seq($.enum_struct_name, $.DOT),
+      seq($._path, $.enum_struct_name, $.DOT)
+    ),
+
     qconstructor: $ => choice(
       $.constructor_name,
-      seq($.enum_struct_name, prec(-1, $.DOT), $.constructor_name),
-      seq($._path, $.enum_struct_name, prec(-2, $.DOT), $.constructor_name),
+      seq($.enum_struct_name, $.DOT, $.constructor_name),
+      seq($.module_name, $.DOT, $.enum_struct_name, $.DOT, $.constructor_name),
+      // seq($._path, $.module_name, $.DOT, $.enum_struct_name, $.DOT, $.constructor_name),
     ),
+      // seq($._path, $.enum_struct_name, $.DOT, $.constructor_name),
 
       // seq(optional(seq(optional($._path), $.enum_struct_name, $.DOT)), $.constructor_name),
       // prec.right(seq(optional(seq($.qenum_struct, $.DOT)), $.constructor_name)),
