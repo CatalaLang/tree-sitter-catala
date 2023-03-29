@@ -303,9 +303,9 @@ module.exports = grammar({
   extras: $ => [ /\s/, $.COMMENT ],
   precedences: $ => [[
     'keyword',
-    'module',
-    'enum_struct',
-    'scope_constr',
+    'path',
+    'enum_scope',
+    'constr',
     'DOT',
     'UIDENT',
     'CONTENT',
@@ -349,11 +349,11 @@ module.exports = grammar({
     label: $ => $._LIDENT,
     state_label: $ => $._LIDENT,
 
-    module_name: $ => prec('module', $._UIDENT),
-    scope_name: $ => prec('scope_constr', $._UIDENT),
-    enum_struct_name: $ => prec('enum_struct', $._UIDENT),
+    module_name: $ => prec('path', $._UIDENT),
+    scope_name: $ => prec('enum_scope', $._UIDENT),
+    enum_struct_name: $ => prec('enum_scope', $._UIDENT),
 
-    constructor_name: $ => prec('scope_constr', $._UIDENT),
+    constructor_name: $ => prec('constr', $._UIDENT),
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
@@ -361,13 +361,17 @@ module.exports = grammar({
       seq($.module_name, $.DOT),
       seq($._path, $.module_name, $.DOT)
     ),
-//      prec.left('module', repeat1(prec.left('module', seq($.module_name, $.DOT)))),
 
     qscope: $ => seq(optional($._path), $.scope_name),
     qenum_struct: $ => seq(optional($._path), $.enum_struct_name),
 
-    qconstructor: $ =>
-      seq(optional(seq($.qenum_struct, $.DOT)), $.constructor_name),
+    qconstructor: $ => choice(
+      $.constructor_name,
+      seq($.enum_struct_name, prec(-1, $.DOT), $.constructor_name),
+      seq($._path, $.enum_struct_name, prec(-2, $.DOT), $.constructor_name),
+    ),
+
+      // seq(optional(seq(optional($._path), $.enum_struct_name, $.DOT)), $.constructor_name),
       // prec.right(seq(optional(seq($.qenum_struct, $.DOT)), $.constructor_name)),
     qfield: $ =>
       seq(optional(seq($.qenum_struct, $.DOT)), $.field_name),
