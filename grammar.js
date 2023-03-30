@@ -480,7 +480,7 @@ module.exports = grammar({
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
-      seq($._expr, $.DOT, $.qfield),
+      prec.left('DOT', seq($._expr, $.DOT, $.qfield)),
 
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),

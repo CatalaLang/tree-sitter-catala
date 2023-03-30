@@ -1,5 +1,5 @@
 {
-  "name": "catala_fr",
+  "name": "catala_en",
   "word": "_LIDENT",
   "rules": {
     "source_file": {
@@ -1622,21 +1622,25 @@
       }
     },
     "e_fieldaccess": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_expr"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "DOT"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "qfield"
-        }
-      ]
+      "type": "PREC_LEFT",
+      "value": "DOT",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expr"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "DOT"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "qfield"
+          }
+        ]
+      }
     },
     "e_struct": {
       "type": "SEQ",
@@ -3119,64 +3123,64 @@
     "SCOPE": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "champ\\s+d'application"
+        "type": "STRING",
+        "value": "scope"
       }
     },
     "CONSEQUENCE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "conséquence"
+        "value": "consequence"
       }
     },
     "DATA": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "donnée"
+        "value": "data"
       }
     },
     "DEPENDS": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "dépend\\s+de"
+        "value": "depends\\s+on"
       }
     },
     "DECLARATION": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "déclaration"
+        "value": "declaration"
       }
     },
     "CONTEXT": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "contexte"
+        "value": "context"
       }
     },
     "DECREASING": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "décroissant"
+        "value": "decreasing"
       }
     },
     "INCREASING": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "croissant"
+        "value": "increasing"
       }
     },
     "OF": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "de"
+        "value": "of"
       }
     },
     "COLLECTION": {
@@ -3190,42 +3194,42 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "contient"
+        "value": "contains"
       }
     },
     "ENUM": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "énumération"
+        "value": "enumeration"
       }
     },
     "INTEGER": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "entier"
+        "value": "integer"
       }
     },
     "MONEY": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "argent"
+        "value": "money"
       }
     },
     "TEXT": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "texte"
+        "value": "text"
       }
     },
     "DECIMAL": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "décimal"
+        "value": "decimal"
       }
     },
     "DATE": {
@@ -3239,49 +3243,49 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "durée"
+        "value": "duration"
       }
     },
     "BOOLEAN": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "booléen"
+        "value": "boolean"
       }
     },
     "SUM": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "somme"
+        "value": "sum"
       }
     },
     "FILLED": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "rempli"
+        "value": "fulfilled"
       }
     },
     "DEFINITION": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "définition"
+        "value": "definition"
       }
     },
     "STATE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "état"
+        "value": "state"
       }
     },
     "LABEL": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "étiquette"
+        "value": "label"
       }
     },
     "EXCEPTION": {
@@ -3294,57 +3298,57 @@
     "DEFINED_AS": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "égal\\s+à"
+        "type": "STRING",
+        "value": "equals"
       }
     },
     "MATCH": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "selon"
+        "value": "match"
       }
     },
     "WILDCARD": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "n'importe\\s+quel"
+        "type": "STRING",
+        "value": "anything"
       }
     },
     "WITH_PATT": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "sous\\s+forme"
+        "value": "with\\s+pattern"
       }
     },
     "UNDER_CONDITION": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "sous\\s+condition"
+        "value": "under\\s+condition"
       }
     },
     "IF": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "si"
+        "value": "if"
       }
     },
     "THEN": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "alors"
+        "value": "then"
       }
     },
     "ELSE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "sinon"
+        "value": "else"
       }
     },
     "CONDITION": {
@@ -3358,7 +3362,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "contenu"
+        "value": "content"
       }
     },
     "STRUCT": {
@@ -3379,105 +3383,105 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "varie"
+        "value": "varies"
       }
     },
     "WITH": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "avec"
+        "value": "with"
       }
     },
     "FOR": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "pour"
+        "value": "for"
       }
     },
     "ALL": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "tout"
+        "value": "all"
       }
     },
     "WE_HAVE": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "on\\s+a"
+        "value": "we\\s+have"
       }
     },
     "FIXED": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "fixé"
+        "value": "fixed"
       }
     },
     "BY": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "par"
+        "value": "by"
       }
     },
     "RULE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "règle"
+        "value": "rule"
       }
     },
     "LET": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "soit"
+        "value": "let"
       }
     },
     "EXISTS": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "existe"
+        "value": "exists"
       }
     },
     "IN": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "dans"
+        "value": "in"
       }
     },
     "AMONG": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "parmi"
+        "value": "among"
       }
     },
     "SUCH": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "tel"
+        "value": "such"
       }
     },
     "THAT": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "que"
+        "value": "that"
       }
     },
     "NOT": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "non"
+        "value": "not"
       }
     },
     "MAXIMUM": {
@@ -3498,140 +3502,140 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "est"
+        "value": "is"
       }
     },
     "EMPTY": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "vide"
+        "value": "empty"
       }
     },
     "CARDINAL": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "nombre"
+        "value": "number"
       }
     },
     "YEAR": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "an"
+        "value": "year"
       }
     },
     "MONTH": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "mois"
+        "value": "month"
       }
     },
     "DAY": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "jour"
+        "value": "day"
       }
     },
     "TRUE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "vrai"
+        "value": "true"
       }
     },
     "FALSE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "faux"
+        "value": "false"
       }
     },
     "INPUT": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "entrée"
+        "value": "input"
       }
     },
     "OUTPUT": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "résultat"
+        "value": "output"
       }
     },
     "INTERNAL": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "interne"
+        "value": "internal"
       }
     },
     "Round": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "arrondi"
+        "value": "round"
       }
     },
     "GetDay": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "accès_jour"
+        "value": "get_day"
       }
     },
     "GetMonth": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "accès_mois"
+        "value": "get_month"
       }
     },
     "GetYear": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "accès_année"
+        "value": "get_year"
       }
     },
     "FirstDayOfMonth": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "premier_jour_du_mois"
+        "value": "first_day_of_month"
       }
     },
     "LastDayOfMonth": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "dernier_jour_du_mois"
+        "value": "last_day_of_month"
       }
     },
     "DECIMAL_LITERAL": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]+,[0-9]*"
+        "value": "[0-9]+\\.[0-9]*"
       }
     },
     "MONEY_AMOUNT": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€"
+        "value": "\\$[0-9]([0-9,]*[0-9])?(\\.[0-9]{0,2})?"
       }
     },
     "LAW_INCLUDE": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "Inclusion"
+        "value": "Include"
       }
     },
     "ALT": {
@@ -3862,7 +3866,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -3881,7 +3885,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -3900,7 +3904,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -3919,7 +3923,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -3952,7 +3956,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -3971,7 +3975,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -3990,7 +3994,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -4009,7 +4013,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "value": "[!.@^$]?"
             }
           }
         ]
@@ -4019,21 +4023,21 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "et"
+        "value": "and"
       }
     },
     "OR": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "ou"
+        "value": "or"
       }
     },
     "XOR": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "ou\\s+bien"
+        "type": "STRING",
+        "value": "xor"
       }
     }
   },
