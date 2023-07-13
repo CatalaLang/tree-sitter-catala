@@ -329,6 +329,7 @@ module.exports = grammar({
         $.code_block,
         $.law_heading,
         $.directive,
+        $.verb_block,
       )),
 
     COMMENT: $ => seq('#', /[^\n]*/),
@@ -642,6 +643,13 @@ module.exports = grammar({
         ),
         optional($._code),
         $.END_CODE
+      ),
+
+    verb_block: $ =>
+      seq(
+        prec(-2,token.immediate(/```[^\n]*\n/)),
+        repeat1(seq(prec(-1,token.immediate(/.*/)),$._newline)),
+        token.immediate('```\n')
       ),
 
     directive: $ =>
