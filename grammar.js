@@ -359,7 +359,8 @@ module.exports = grammar({
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
     _path: $ => choice(
-      seq($.module_name, $.DOT),
+      seq('XXXXX', $.module_name, $.DOT),
+      // FIXME: the module name would take precedence over a constructor name, which is not what we want
       seq($._path, $.module_name, $.DOT)
     ),
 
