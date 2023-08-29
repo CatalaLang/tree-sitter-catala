@@ -648,7 +648,7 @@ module.exports = grammar({
 
     verb_block: $ =>
       seq(
-        prec(-2,token.immediate(/```[^\n]*\n/)),
+        token.immediate(prec(-1,/```[^\n]*\n/)),
         repeat1(seq(prec(-1,token.immediate(/.*/)),$._newline)),
         token.immediate('```\n')
       ),
