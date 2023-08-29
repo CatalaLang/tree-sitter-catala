@@ -320,6 +320,12 @@ module.exports = grammar({
     'ALT',
     'top_expr',
   ]],
+  conflicts: $ => [
+    [$.module_name, $.enum_struct_name, $.constructor_name],
+    [$.module_name, $.enum_struct_name],
+    [$.enum_struct_name, $.constructor_name],
+    [$.module_name, $.scope_name]
+  ],
   rules: {
 
     source_file: $ =>
@@ -350,17 +356,16 @@ module.exports = grammar({
     label: $ => $._LIDENT,
     state_label: $ => $._LIDENT,
 
-    module_name: $ => prec('path', $._UIDENT),
-    scope_name: $ => prec('enum_scope', $._UIDENT),
-    enum_struct_name: $ => prec('enum_scope', $._UIDENT),
+    module_name: $ => $._UIDENT,
+    scope_name: $ => $._UIDENT,
+    enum_struct_name: $ => $._UIDENT,
 
-    constructor_name: $ => prec('constr', $._UIDENT),
+    constructor_name: $ => $._UIDENT,
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
     _path: $ => choice(
-      seq('XXXXX', $.module_name, $.DOT),
-      // FIXME: the module name would take precedence over a constructor name, which is not what we want
+      seq($.module_name, $.DOT),
       seq($._path, $.module_name, $.DOT)
     ),
 
@@ -368,11 +373,10 @@ module.exports = grammar({
     qenum_struct: $ => seq(optional($._path), $.enum_struct_name),
 
     qconstructor: $ =>
-      seq(optional(seq($.enum_struct_name, $.DOT)), $.constructor_name),
+      seq(optional(seq($.qenum_struct, $.DOT)), $.constructor_name),
 
     qfield: $ =>
-      seq(optional(seq($.enum_struct_name, $.DOT)), $.field_name),
-    // FIXME: for these two rules, should actually be qenum_struct_name
+      seq(optional(seq($.qenum_struct, $.DOT)), $.field_name),
 
     _expr: $ =>
       choice(
@@ -597,7 +601,7 @@ module.exports = grammar({
             choice(seq($.CONTENT, $.typ),$.CONDITION),
             optional($._depends_stance),
             repeat(seq($.STATE, $.state_label))),
-        seq($.variable, $.SCOPE, $.scope_name)
+        seq($.variable, $.SCOPE, $.qscope)
       ),
     scope_decl: $ =>
       seq($.DECLARATION, $.SCOPE, field('name', $.scope_name), $.COLON,

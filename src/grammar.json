@@ -26,6 +26,10 @@
           {
             "type": "SYMBOL",
             "name": "directive"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "verb_block"
           }
         ]
       }
@@ -137,36 +141,20 @@
       "name": "_LIDENT"
     },
     "module_name": {
-      "type": "PREC",
-      "value": "path",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_UIDENT"
-      }
+      "type": "SYMBOL",
+      "name": "_UIDENT"
     },
     "scope_name": {
-      "type": "PREC",
-      "value": "enum_scope",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_UIDENT"
-      }
+      "type": "SYMBOL",
+      "name": "_UIDENT"
     },
     "enum_struct_name": {
-      "type": "PREC",
-      "value": "enum_scope",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_UIDENT"
-      }
+      "type": "SYMBOL",
+      "name": "_UIDENT"
     },
     "constructor_name": {
-      "type": "PREC",
-      "value": "constr",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_UIDENT"
-      }
+      "type": "SYMBOL",
+      "name": "_UIDENT"
     },
     "scope_var": {
       "type": "SEQ",
@@ -281,7 +269,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "enum_struct_name"
+                  "name": "qenum_struct"
                 },
                 {
                   "type": "SYMBOL",
@@ -311,7 +299,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "enum_struct_name"
+                  "name": "qenum_struct"
                 },
                 {
                   "type": "SYMBOL",
@@ -2722,7 +2710,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "scope_name"
+              "name": "qscope"
             }
           ]
         }
@@ -3039,6 +3027,52 @@
         {
           "type": "SYMBOL",
           "name": "END_CODE"
+        }
+      ]
+    },
+    "verb_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": -1,
+            "content": {
+              "type": "PATTERN",
+              "value": "```[^\\n]*\\n"
+            }
+          }
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PREC",
+                "value": -1,
+                "content": {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": ".*"
+                  }
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_newline"
+              }
+            ]
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "```\n"
+          }
         }
       ]
     },
@@ -4051,7 +4085,25 @@
       "name": "COMMENT"
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    [
+      "module_name",
+      "enum_struct_name",
+      "constructor_name"
+    ],
+    [
+      "module_name",
+      "enum_struct_name"
+    ],
+    [
+      "enum_struct_name",
+      "constructor_name"
+    ],
+    [
+      "module_name",
+      "scope_name"
+    ]
+  ],
   "precedences": [
     [
       {

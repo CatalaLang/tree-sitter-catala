@@ -5162,7 +5162,7 @@
           "named": true
         },
         {
-          "type": "enum_struct_name",
+          "type": "qenum_struct",
           "named": true
         }
       ]
@@ -5204,11 +5204,11 @@
           "named": true
         },
         {
-          "type": "enum_struct_name",
+          "type": "field_name",
           "named": true
         },
         {
-          "type": "field_name",
+          "type": "qenum_struct",
           "named": true
         }
       ]
@@ -5520,11 +5520,11 @@
           "named": true
         },
         {
-          "type": "scope_decl_item_attribute",
+          "type": "qscope",
           "named": true
         },
         {
-          "type": "scope_name",
+          "type": "scope_decl_item_attribute",
           "named": true
         },
         {
@@ -5615,6 +5615,10 @@
         },
         {
           "type": "law_text",
+          "named": true
+        },
+        {
+          "type": "verb_block",
           "named": true
         }
       ]
@@ -5966,6 +5970,11 @@
   },
   {
     "type": "variable",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "verb_block",
     "named": true,
     "fields": {}
   },
@@ -6412,5 +6421,9 @@
   {
     "type": "YEAR",
     "named": true
+  },
+  {
+    "type": "```\n",
+    "named": false
   }
 ]
