@@ -85,6 +85,9 @@ const tokens_local = {
     MONEY_AMOUNT: /\$[0-9]([0-9,]*[0-9])?(\.[0-9]{0,2})?/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
+    MODULE_DEF: 'Module',
+    MODULE_USE: 'Using',
+    MODULE_ALIAS: 'as',
   },
   fr: {
     SCOPE: /champ\s+d'application/,
@@ -165,6 +168,9 @@ const tokens_local = {
     MONEY_AMOUNT: /[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
+    MODULE_DEF: 'Module',
+    MODULE_USE: /Usage\s+de/,
+    MODULE_ALIAS: /en\s+tant\s+que/,
   },
   pl: {
     SCOPE: "zakres",
@@ -245,6 +251,9 @@ const tokens_local = {
     MONEY_AMOUNT: /[0-9]([0-9,]*[0-9])?(\.[0-9]{0,2})? *PLN/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
+    MODULE_DEF: 'Module',
+    MODULE_USE: 'Using',
+    MODULE_ALIAS: 'as',
   }
 }
 
@@ -356,7 +365,7 @@ module.exports = grammar({
     label: $ => $._LIDENT,
     state_label: $ => $._LIDENT,
 
-    module_name: $ => $._UIDENT,
+    module_name: $ => prec.dynamic(1,$._UIDENT),
     scope_name: $ => $._UIDENT,
     enum_struct_name: $ => $._UIDENT,
 
@@ -658,11 +667,16 @@ module.exports = grammar({
       ),
 
     directive: $ =>
-      seq(
-        $.BEGIN_DIRECTIVE, $.LAW_INCLUDE, $.COLON,
-        repeat1($.DIRECTIVE_ARG), optional($.AT_PAGE),
-        $.END_DIRECTIVE
+    seq(
+      $.BEGIN_DIRECTIVE,
+      choice(
+        seq($.LAW_INCLUDE, $.COLON,
+            repeat1($.DIRECTIVE_ARG), optional($.AT_PAGE)),
+        seq($.MODULE_DEF, $.module_name),
+        seq($.MODULE_USE, $.module_name, optional(seq($.MODULE_ALIAS, $.module_name)))
       ),
+      $.END_DIRECTIVE
+    ),
 
     law_heading: $ =>
       prec(1, seq($.LAW_HEADING,
@@ -742,6 +756,9 @@ module.exports = grammar({
   DECIMAL_LITERAL: $ => token(tokens.DECIMAL_LITERAL),
   MONEY_AMOUNT: $ => token(tokens.MONEY_AMOUNT),
   LAW_INCLUDE: $ => token(tokens.LAW_INCLUDE),
+  MODULE_DEF: $ => token(tokens.MODULE_DEF),
+  MODULE_USE: $ => token(tokens.MODULE_USE),
+  MODULE_ALIAS: $ => token(tokens.MODULE_ALIAS),
 
   ALT: $ => token(tokens.ALT),
   AT_PAGE: $ => token(tokens.AT_PAGE),

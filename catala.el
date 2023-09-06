@@ -48,6 +48,11 @@
   "Face description for Catala code blocks."
   :group 'catala-faces)
 
+(defface catala-font-lock-verbatim-face
+  '((t (:inherit tree-sitter-hl-face:comment :extend t :background "grey15")))
+  "Face description for Catala verbatim blocks."
+  :group 'catala-faces)
+
 (defface catala-font-lock-comment-face
   '((t (:inherit tree-sitter-hl-face:comment)))
   "Face description for Catala comments."
@@ -209,13 +214,15 @@
      '((COMMENT) @catala-font-lock-comment-face)
    :language lang :feature 'all :override 'prepend
      "(code_block) @catala-font-lock-code-block-face"
+   :language lang :feature 'all :override t
+     "(verb_block) @catala-font-lock-verbatim-face"
    :language lang :feature 'all :override 'prepend
      "(ERROR . [(BEGIN_METADATA) (BEGIN_CODE)])  @catala-font-lock-code-block-face"
 ))
 
 (defun catala--treesit-indent-rules (lang)
   `((,lang
-     (no-node prev-line 0)
+     (no-node parent-bol catala-default-indent)
      ((query "(law_heading) @indent") parent-bol 0)
      ((query "(law_text (LAW_TEXT) @indent) @indent") prev-sibling 0)
      ((query "(code_block (_) @indent) @indent") column-0 0)

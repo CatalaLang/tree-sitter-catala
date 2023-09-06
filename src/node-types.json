@@ -260,6 +260,22 @@
         {
           "type": "LAW_INCLUDE",
           "named": true
+        },
+        {
+          "type": "MODULE_ALIAS",
+          "named": true
+        },
+        {
+          "type": "MODULE_DEF",
+          "named": true
+        },
+        {
+          "type": "MODULE_USE",
+          "named": true
+        },
+        {
+          "type": "module_name",
+          "named": true
         }
       ]
     }
@@ -6284,6 +6300,18 @@
   },
   {
     "type": "MINUS",
+    "named": true
+  },
+  {
+    "type": "MODULE_ALIAS",
+    "named": true
+  },
+  {
+    "type": "MODULE_DEF",
+    "named": true
+  },
+  {
+    "type": "MODULE_USE",
     "named": true
   },
   {
