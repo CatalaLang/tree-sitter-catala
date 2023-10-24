@@ -297,17 +297,17 @@
   (define-skeleton catala-insert-code-block
     "Insert a Catala code block"
     nil
-    \n "```catala" \n _ \n "```" \n \n)
+    "\n```catala\n" _ "\n```\n" \n)
 
   (define-skeleton catala-insert-metadata-block
     "Insert a Catala code block"
     nil
-    \n "```catala-metadata" \n _ \n "```" \n \n)
+    "\n```catala-metadata\n" _ "\n```\n" \n)
 
   (define-skeleton catala-insert-test-block
     "Insert a Catala code block"
     nil
-    \n "```catala-test-inline" \n "$ catala " _ \n "```" \n \n)
+    "\n```catala-test-inline\n$ catala " _ "\n```\n" \n)
 
   (define-key catala-ts-mode-map "\C-c.c" 'catala-insert-code-block)
   (define-key catala-ts-mode-map "\C-c.m" 'catala-insert-metadata-block)
