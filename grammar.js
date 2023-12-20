@@ -16,7 +16,7 @@ const tokens_local = {
     DECREASING: "decreasing",
     INCREASING: "increasing",
     OF: "of",
-    COLLECTION: "collection",
+    COLLECTION: /list\s+of/,
     CONTAINS: "contains",
     ENUM: "enumeration",
     INTEGER: "integer",
@@ -99,7 +99,7 @@ const tokens_local = {
     DECREASING: "décroissant",
     INCREASING: "croissant",
     OF: "de",
-    COLLECTION: "collection",
+    COLLECTION: /liste\s+de/,
     CONTAINS: "contient",
     ENUM: "énumération",
     INTEGER: "entier",
@@ -392,7 +392,7 @@ module.exports = grammar({
         $.e_variable,
         $.literal,
         $.builtin,
-        $.e_paren,
+        $.e_tuple,
         $.e_collection,
         $.e_apply,
         $.e_scope_apply,
@@ -419,7 +419,10 @@ module.exports = grammar({
     e_variable: $ =>
       seq(optional($._path), $.variable),
 
-    e_paren: $ => seq($.LPAREN, $._expr, $.RPAREN),
+    e_tuple: $ =>
+      seq($.LPAREN,
+          seq(repeat(seq($._expr, $.COMMA)), $._expr),
+          $.RPAREN),
 
     e_collection: $ =>
       seq($.LBRACKET,
@@ -637,7 +640,7 @@ module.exports = grammar({
       seq(
         $.DECLARATION, field('name', $.variable), $.CONTENT, $.typ,
         optional($._depends_stance),
-        $.DEFINED_AS, field('body', $.expression)
+        optional(seq($.DEFINED_AS, field('body', $.expression)))
       ),
 
     _code: $ =>
@@ -767,8 +770,8 @@ module.exports = grammar({
   BEGIN_METADATA: $ => token(tokens.BEGIN_METADATA),
   COLON: $ => token(tokens.COLON),
   _UIDENT: $ => token(tokens.UIDENT),
-  DIRECTIVE_ARG: $ => token(tokens.DIRECTIVE_ARG),
-  DOT: $ => token(tokens.DOT),
+  DIRECTIVE_ARG: $ => token(tokens.DIRECTIVE_ARG), 
+ DOT: $ => token(tokens.DOT),
   COMMA: $ => token(tokens.COMMA),
   END_CODE: $ => token(tokens.END_CODE),
   END_DIRECTIVE: $ => token(tokens.END_DIRECTIVE),

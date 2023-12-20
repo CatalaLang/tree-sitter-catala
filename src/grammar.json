@@ -339,7 +339,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "e_paren"
+          "name": "e_tuple"
         },
         {
           "type": "SYMBOL",
@@ -448,7 +448,7 @@
         }
       ]
     },
-    "e_paren": {
+    "e_tuple": {
       "type": "SEQ",
       "members": [
         {
@@ -456,8 +456,29 @@
           "name": "LPAREN"
         },
         {
-          "type": "SYMBOL",
-          "name": "_expr"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_expr"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "COMMA"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
@@ -2959,16 +2980,29 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "DEFINED_AS"
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "expression"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "DEFINED_AS"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "body",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -3281,8 +3315,8 @@
     "COLLECTION": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "collection"
+        "type": "PATTERN",
+        "value": "liste\\s+de"
       }
     },
     "CONTAINS": {
