@@ -357,8 +357,13 @@ module.exports = grammar({
     primitive_typ: $ =>
       choice($.INTEGER, $.BOOLEAN, $.MONEY, $.DURATION, $.TEXT, $.DECIMAL,
              $.DATE, $.qenum_struct),
-    typ: $ =>
-      seq(repeat($.COLLECTION), $.primitive_typ),
+    typ_list: $ =>
+      seq(repeat(seq($.typ, $.COMMA)), $.typ),
+    typ: $ => choice(
+      $.primitive_typ,
+      seq ($.COLLECTION, $.typ),
+      seq ($.LPAREN, $.typ_list, $.RPAREN)
+    ),
 
     variable: $ => $._LIDENT,
     field_name: $ => $._LIDENT,
@@ -386,6 +391,14 @@ module.exports = grammar({
 
     qfield: $ =>
       seq(optional(seq($.qenum_struct, $.DOT)), $.field_name),
+
+    var_list: $ =>
+      seq(repeat(seq($.variable, $.COMMA)), $.variable),
+
+    binder: $ => choice(
+      $.variable,
+      seq($.LPAREN, $.var_list, $.RPAREN),
+    ),
 
     _expr: $ =>
       choice(
@@ -417,17 +430,19 @@ module.exports = grammar({
       ),
 
     e_variable: $ =>
-      seq(optional($._path), $.variable),
+      prec.right(seq(optional($._path), $.variable)),
+
+    tuple_contents: $ =>
+      seq(repeat(seq($._expr, $.COMMA)), $._expr),
 
     e_tuple: $ =>
-      seq($.LPAREN,
-          seq(repeat(seq($._expr, $.COMMA)), $._expr),
-          $.RPAREN),
+      seq($.LPAREN, $.tuple_contents, $.RPAREN),
+
+    collection_elements: $ =>
+      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr),
 
     e_collection: $ =>
-      seq($.LBRACKET,
-          optional(seq(repeat(seq($._expr, $.SEMICOLON)), $._expr)),
-          $.RBRACKET),
+      seq($.LBRACKET, optional($.collection_elements), $.RBRACKET),
 
     fun_argument: $ => prec.right('apply', $._expr),
     fun_arguments: $ => prec.right(seq(repeat(seq($.fun_argument, $.COMMA)), $.fun_argument)),
@@ -449,7 +464,7 @@ module.exports = grammar({
       prec.right('apply', seq($.SUM, $.primitive_typ, $.OF, field('coll', $._expr))),
     e_coll_map: $ =>
       prec.right('apply', seq(field('mapf', $._expr),
-                              $.FOR, $.variable, $.AMONG,
+                              $.FOR, $.binder, $.AMONG,
                               field('coll', $._expr))),
     e_coll_extremum: $ =>
       prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
@@ -480,10 +495,10 @@ module.exports = grammar({
       ),
 
     e_coll_exists: $ =>
-      prec.right(seq($.EXISTS, $.variable, $.AMONG, field('coll', $._expr),
+      prec.right(seq($.EXISTS, $.binder, $.AMONG, field('coll', $._expr),
           $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_forall: $ =>
-      prec.right(seq($.FOR, $.ALL, $.variable, $.AMONG, field('coll', $._expr),
+      prec.right(seq($.FOR, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
         $.WE_HAVE, field('cond', $._expr))),
     e_match: $ =>
       prec.right(seq($.MATCH, field('arg', $._expr), $.WITH_PATT,
@@ -491,10 +506,10 @@ module.exports = grammar({
     e_ifthenelse: $ =>
       prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
     e_letin: $ =>
-      prec.right(seq($.LET, $.variable, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
+      prec.right(seq($.LET, $.binder, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
-      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.OF, $.variable)))),
+      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.OF, $.binder)))),
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
@@ -507,7 +522,7 @@ module.exports = grammar({
     e_coll_filter: $ =>
       prec.right(seq($.variable, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
-      prec.right(seq(field('mapf', $._expr), $.FOR, $.variable, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
+      prec.right(seq(field('mapf', $._expr), $.FOR, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_arg_extremum: $ =>
       prec.right(seq($.variable, $.AMONG, field('coll', $._expr),
                      $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
@@ -770,8 +785,8 @@ module.exports = grammar({
   BEGIN_METADATA: $ => token(tokens.BEGIN_METADATA),
   COLON: $ => token(tokens.COLON),
   _UIDENT: $ => token(tokens.UIDENT),
-  DIRECTIVE_ARG: $ => token(tokens.DIRECTIVE_ARG), 
- DOT: $ => token(tokens.DOT),
+  DIRECTIVE_ARG: $ => token(tokens.DIRECTIVE_ARG),
+  DOT: $ => token(tokens.DOT),
   COMMA: $ => token(tokens.COMMA),
   END_CODE: $ => token(tokens.END_CODE),
   END_DIRECTIVE: $ => token(tokens.END_DIRECTIVE),

@@ -49,6 +49,33 @@
     }
   },
   {
+    "type": "binder",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "LPAREN",
+          "named": true
+        },
+        {
+          "type": "RPAREN",
+          "named": true
+        },
+        {
+          "type": "var_list",
+          "named": true
+        },
+        {
+          "type": "variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "builtin",
     "named": true,
     "fields": {},
@@ -133,6 +160,121 @@
         },
         {
           "type": "toplevel_def",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "collection_elements",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "SEMICOLON",
+          "named": true
+        },
+        {
+          "type": "builtin",
+          "named": true
+        },
+        {
+          "type": "e_apply",
+          "named": true
+        },
+        {
+          "type": "e_binop",
+          "named": true
+        },
+        {
+          "type": "e_coll_arg_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_contains",
+          "named": true
+        },
+        {
+          "type": "e_coll_exists",
+          "named": true
+        },
+        {
+          "type": "e_coll_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_forall",
+          "named": true
+        },
+        {
+          "type": "e_coll_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_sum",
+          "named": true
+        },
+        {
+          "type": "e_collection",
+          "named": true
+        },
+        {
+          "type": "e_enum",
+          "named": true
+        },
+        {
+          "type": "e_fieldaccess",
+          "named": true
+        },
+        {
+          "type": "e_ifthenelse",
+          "named": true
+        },
+        {
+          "type": "e_letin",
+          "named": true
+        },
+        {
+          "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_scope_apply",
+          "named": true
+        },
+        {
+          "type": "e_struct",
+          "named": true
+        },
+        {
+          "type": "e_test_match",
+          "named": true
+        },
+        {
+          "type": "e_tuple",
+          "named": true
+        },
+        {
+          "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_variable",
+          "named": true
+        },
+        {
+          "type": "literal",
           "named": true
         }
       ]
@@ -1536,7 +1678,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
@@ -2382,7 +2524,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
@@ -2626,7 +2768,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
@@ -2862,7 +3004,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
@@ -3015,107 +3157,7 @@
           "named": true
         },
         {
-          "type": "SEMICOLON",
-          "named": true
-        },
-        {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_tuple",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
+          "type": "collection_elements",
           "named": true
         }
       ]
@@ -3935,7 +3977,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
@@ -4284,10 +4326,6 @@
       "required": true,
       "types": [
         {
-          "type": "COMMA",
-          "named": true
-        },
-        {
           "type": "LPAREN",
           "named": true
         },
@@ -4296,103 +4334,7 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
-          "type": "e_apply",
-          "named": true
-        },
-        {
-          "type": "e_binop",
-          "named": true
-        },
-        {
-          "type": "e_coll_arg_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_contains",
-          "named": true
-        },
-        {
-          "type": "e_coll_exists",
-          "named": true
-        },
-        {
-          "type": "e_coll_extremum",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter",
-          "named": true
-        },
-        {
-          "type": "e_coll_filter_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_forall",
-          "named": true
-        },
-        {
-          "type": "e_coll_map",
-          "named": true
-        },
-        {
-          "type": "e_coll_sum",
-          "named": true
-        },
-        {
-          "type": "e_collection",
-          "named": true
-        },
-        {
-          "type": "e_enum",
-          "named": true
-        },
-        {
-          "type": "e_fieldaccess",
-          "named": true
-        },
-        {
-          "type": "e_ifthenelse",
-          "named": true
-        },
-        {
-          "type": "e_letin",
-          "named": true
-        },
-        {
-          "type": "e_match",
-          "named": true
-        },
-        {
-          "type": "e_scope_apply",
-          "named": true
-        },
-        {
-          "type": "e_struct",
-          "named": true
-        },
-        {
-          "type": "e_test_match",
-          "named": true
-        },
-        {
-          "type": "e_tuple",
-          "named": true
-        },
-        {
-          "type": "e_unop",
-          "named": true
-        },
-        {
-          "type": "e_variable",
-          "named": true
-        },
-        {
-          "type": "literal",
+          "type": "tuple_contents",
           "named": true
         }
       ]
@@ -4965,6 +4907,10 @@
           "named": true
         },
         {
+          "type": "binder",
+          "named": true
+        },
+        {
           "type": "builtin",
           "named": true
         },
@@ -5066,10 +5012,6 @@
         },
         {
           "type": "qconstructor",
-          "named": true
-        },
-        {
-          "type": "variable",
           "named": true
         }
       ]
@@ -5943,6 +5885,121 @@
     }
   },
   {
+    "type": "tuple_contents",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COMMA",
+          "named": true
+        },
+        {
+          "type": "builtin",
+          "named": true
+        },
+        {
+          "type": "e_apply",
+          "named": true
+        },
+        {
+          "type": "e_binop",
+          "named": true
+        },
+        {
+          "type": "e_coll_arg_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_contains",
+          "named": true
+        },
+        {
+          "type": "e_coll_exists",
+          "named": true
+        },
+        {
+          "type": "e_coll_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_forall",
+          "named": true
+        },
+        {
+          "type": "e_coll_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_sum",
+          "named": true
+        },
+        {
+          "type": "e_collection",
+          "named": true
+        },
+        {
+          "type": "e_enum",
+          "named": true
+        },
+        {
+          "type": "e_fieldaccess",
+          "named": true
+        },
+        {
+          "type": "e_ifthenelse",
+          "named": true
+        },
+        {
+          "type": "e_letin",
+          "named": true
+        },
+        {
+          "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_scope_apply",
+          "named": true
+        },
+        {
+          "type": "e_struct",
+          "named": true
+        },
+        {
+          "type": "e_test_match",
+          "named": true
+        },
+        {
+          "type": "e_tuple",
+          "named": true
+        },
+        {
+          "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_variable",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "typ",
     "named": true,
     "fields": {},
@@ -5955,7 +6012,42 @@
           "named": true
         },
         {
+          "type": "LPAREN",
+          "named": true
+        },
+        {
+          "type": "RPAREN",
+          "named": true
+        },
+        {
           "type": "primitive_typ",
+          "named": true
+        },
+        {
+          "type": "typ",
+          "named": true
+        },
+        {
+          "type": "typ_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typ_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COMMA",
+          "named": true
+        },
+        {
+          "type": "typ",
           "named": true
         }
       ]
@@ -5983,6 +6075,25 @@
         },
         {
           "type": "YEAR",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "var_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COMMA",
+          "named": true
+        },
+        {
+          "type": "variable",
           "named": true
         }
       ]
