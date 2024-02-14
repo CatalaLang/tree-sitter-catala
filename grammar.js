@@ -16,7 +16,7 @@ const tokens_local = {
     DECREASING: "decreasing",
     INCREASING: "increasing",
     OF: "of",
-    COLLECTION: /list\s+of/,
+    LIST: "list",
     CONTAINS: "contains",
     ENUM: "enumeration",
     INTEGER: "integer",
@@ -99,7 +99,7 @@ const tokens_local = {
     DECREASING: "décroissant",
     INCREASING: "croissant",
     OF: "de",
-    COLLECTION: /liste\s+de/,
+    LIST: "liste",
     CONTAINS: "contient",
     ENUM: "énumération",
     INTEGER: "entier",
@@ -182,7 +182,7 @@ const tokens_local = {
     DECREASING: "malejacy",
     INCREASING: "rosnacy",
     OF: "z",
-    COLLECTION: "kolekcja",
+    LIST: "kolekcja",
     CONTAINS: "zawiera",
     ENUM: "enumeracja",
     INTEGER: "calkowita",
@@ -361,7 +361,7 @@ module.exports = grammar({
       seq(repeat(seq($.typ, $.COMMA)), $.typ),
     typ: $ => choice(
       $.primitive_typ,
-      seq ($.COLLECTION, $.typ),
+      seq ($.LIST, $.OF, $.typ),
       seq ($.LPAREN, $.typ_list, $.RPAREN)
     ),
 
@@ -468,7 +468,7 @@ module.exports = grammar({
                               field('coll', $._expr))),
     e_coll_extremum: $ =>
       prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
-                              $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, field('dft', $._expr))),
+                              $.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -526,7 +526,7 @@ module.exports = grammar({
     e_coll_arg_extremum: $ =>
       prec.right(seq($.variable, $.AMONG, field('coll', $._expr),
                      $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     $.OR, $.IF, $.COLLECTION, $.EMPTY, $.THEN, field('dft', $._expr))),
+                     $.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))),
 
     struct_content_field: $ =>
       seq($.qfield, $.COLON, $._expr),
@@ -709,7 +709,7 @@ module.exports = grammar({
   DECREASING: $ => token(tokens.DECREASING),
   INCREASING: $ => token(tokens.INCREASING),
   OF: $ => token(tokens.OF),
-  COLLECTION: $ => token(tokens.COLLECTION),
+  LIST: $ => token(tokens.LIST),
   CONTAINS: $ => token(tokens.CONTAINS),
   ENUM: $ => token(tokens.ENUM),
   INTEGER: $ => token(tokens.INTEGER),
