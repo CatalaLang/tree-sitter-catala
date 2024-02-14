@@ -145,7 +145,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "COLLECTION"
+              "name": "LIST"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "OF"
             },
             {
               "type": "SYMBOL",
@@ -949,7 +953,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "COLLECTION"
+            "name": "LIST"
           },
           {
             "type": "SYMBOL",
@@ -1829,6 +1833,14 @@
         "members": [
           {
             "type": "SYMBOL",
+            "name": "LIST"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "OF"
+          },
+          {
+            "type": "SYMBOL",
             "name": "variable"
           },
           {
@@ -1923,6 +1935,14 @@
         "members": [
           {
             "type": "SYMBOL",
+            "name": "CONTENT"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "OF"
+          },
+          {
+            "type": "SYMBOL",
             "name": "variable"
           },
           {
@@ -1980,7 +2000,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "COLLECTION"
+            "name": "LIST"
           },
           {
             "type": "SYMBOL",
@@ -3423,11 +3443,11 @@
         "value": "de"
       }
     },
-    "COLLECTION": {
+    "LIST": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "liste\\s+de"
+        "type": "STRING",
+        "value": "liste"
       }
     },
     "CONTAINS": {

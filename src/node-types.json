@@ -1166,7 +1166,7 @@
           "named": true
         },
         {
-          "type": "COLLECTION",
+          "type": "CONTENT",
           "named": true
         },
         {
@@ -1182,11 +1182,19 @@
           "named": true
         },
         {
+          "type": "LIST",
+          "named": true
+        },
+        {
           "type": "MAXIMUM",
           "named": true
         },
         {
           "type": "MINIMUM",
+          "named": true
+        },
+        {
+          "type": "OF",
           "named": true
         },
         {
@@ -1906,15 +1914,15 @@
       "required": true,
       "types": [
         {
-          "type": "COLLECTION",
-          "named": true
-        },
-        {
           "type": "EMPTY",
           "named": true
         },
         {
           "type": "IF",
+          "named": true
+        },
+        {
+          "type": "LIST",
           "named": true
         },
         {
@@ -2163,6 +2171,14 @@
       "types": [
         {
           "type": "AMONG",
+          "named": true
+        },
+        {
+          "type": "LIST",
+          "named": true
+        },
+        {
+          "type": "OF",
           "named": true
         },
         {
@@ -6008,11 +6024,15 @@
       "required": true,
       "types": [
         {
-          "type": "COLLECTION",
+          "type": "LIST",
           "named": true
         },
         {
           "type": "LPAREN",
+          "named": true
+        },
+        {
+          "type": "OF",
           "named": true
         },
         {
@@ -6159,10 +6179,6 @@
   },
   {
     "type": "CARDINAL",
-    "named": true
-  },
-  {
-    "type": "COLLECTION",
     "named": true
   },
   {
@@ -6391,6 +6407,10 @@
   },
   {
     "type": "LET",
+    "named": true
+  },
+  {
+    "type": "LIST",
     "named": true
   },
   {
