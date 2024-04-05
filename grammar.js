@@ -623,13 +623,14 @@ module.exports = grammar({
       seq($.DEPENDS, choice(seq($.LPAREN, $.params_decl, $.RPAREN),
                             $.params_decl)),
     scope_decl_item: $ =>
-      choice(
-        seq($.scope_decl_item_attribute, $.variable,
-            choice(seq($.CONTENT, $.typ),$.CONDITION),
-            optional($._depends_stance),
-            repeat(seq($.STATE, $.state_label))),
-        seq($.variable, $.SCOPE, $.qscope)
-      ),
+      seq(optional($.scope_decl_item_attribute),
+          choice(
+            seq($.variable,
+                choice(seq($.CONTENT, $.typ),$.CONDITION),
+                optional($._depends_stance),
+                repeat(seq($.STATE, $.state_label))),
+            seq($.variable, $.SCOPE, $.qscope)
+          )),
     scope_decl: $ =>
       seq($.DECLARATION, $.SCOPE, field('name', $.scope_name), $.COLON,
           field('body', repeat($.scope_decl_item))),
