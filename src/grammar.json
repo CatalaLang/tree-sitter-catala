@@ -434,6 +434,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "e_var_state"
+        },
+        {
+          "type": "SYMBOL",
           "name": "literal"
         },
         {
@@ -459,6 +463,10 @@
         {
           "type": "SYMBOL",
           "name": "e_test_match"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "e_but_replace"
         },
         {
           "type": "SYMBOL",
@@ -554,6 +562,23 @@
           }
         ]
       }
+    },
+    "e_var_state": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "variable"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "STATE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "state_label"
+        }
+      ]
     },
     "tuple_contents": {
       "type": "SEQ",
@@ -813,6 +838,35 @@
                 "type": "BLANK"
               }
             ]
+          }
+        ]
+      }
+    },
+    "e_but_replace": {
+      "type": "PREC_RIGHT",
+      "value": "apply",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expr"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "BUT_REPLACE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "LBRACE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "struct_content_fields"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "RBRACE"
           }
         ]
       }
@@ -1764,8 +1818,17 @@
             "name": "DOT"
           },
           {
-            "type": "SYMBOL",
-            "name": "qfield"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "qfield"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[0-9]+"
+              }
+            ]
           }
         ]
       }
@@ -3785,6 +3848,13 @@
         "value": "vide"
       }
     },
+    "BUT_REPLACE": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "mais\\s+en\\s+remplaçant"
+      }
+    },
     "CARDINAL": {
       "type": "TOKEN",
       "content": {
@@ -4036,7 +4106,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]+"
+        "value": "-?[0-9]+"
       }
     },
     "DATE_LITERAL": {

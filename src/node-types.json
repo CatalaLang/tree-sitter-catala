@@ -190,6 +190,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -267,6 +271,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -453,6 +461,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -530,6 +542,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -575,6 +591,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -652,6 +672,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -743,6 +767,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -823,6 +851,10 @@
             "named": true
           },
           {
+            "type": "e_var_state",
+            "named": true
+          },
+          {
             "type": "e_variable",
             "named": true
           },
@@ -832,6 +864,141 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "e_but_replace",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "BUT_REPLACE",
+          "named": true
+        },
+        {
+          "type": "LBRACE",
+          "named": true
+        },
+        {
+          "type": "RBRACE",
+          "named": true
+        },
+        {
+          "type": "builtin",
+          "named": true
+        },
+        {
+          "type": "e_apply",
+          "named": true
+        },
+        {
+          "type": "e_binop",
+          "named": true
+        },
+        {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
+          "type": "e_coll_arg_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_contains",
+          "named": true
+        },
+        {
+          "type": "e_coll_exists",
+          "named": true
+        },
+        {
+          "type": "e_coll_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_forall",
+          "named": true
+        },
+        {
+          "type": "e_coll_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_sum",
+          "named": true
+        },
+        {
+          "type": "e_collection",
+          "named": true
+        },
+        {
+          "type": "e_enum",
+          "named": true
+        },
+        {
+          "type": "e_fieldaccess",
+          "named": true
+        },
+        {
+          "type": "e_ifthenelse",
+          "named": true
+        },
+        {
+          "type": "e_letin",
+          "named": true
+        },
+        {
+          "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_scope_apply",
+          "named": true
+        },
+        {
+          "type": "e_struct",
+          "named": true
+        },
+        {
+          "type": "e_test_match",
+          "named": true
+        },
+        {
+          "type": "e_tuple",
+          "named": true
+        },
+        {
+          "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
+          "named": true
+        },
+        {
+          "type": "e_variable",
+          "named": true
+        },
+        {
+          "type": "literal",
+          "named": true
+        },
+        {
+          "type": "struct_content_fields",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -855,6 +1022,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -932,6 +1103,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -961,6 +1136,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1038,6 +1217,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1067,6 +1250,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1144,6 +1331,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1241,6 +1432,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1318,6 +1513,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1347,6 +1546,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1424,6 +1627,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1469,6 +1676,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1546,6 +1757,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1575,6 +1790,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1652,6 +1871,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1713,6 +1936,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1790,6 +2017,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1819,6 +2050,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -1896,6 +2131,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -1969,6 +2208,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2046,6 +2289,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2075,6 +2322,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2152,6 +2403,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2217,6 +2472,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2294,6 +2553,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2323,6 +2586,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2400,6 +2667,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2429,6 +2700,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2506,6 +2781,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2567,6 +2846,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2644,6 +2927,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2673,6 +2960,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2750,6 +3041,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2811,6 +3106,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2888,6 +3187,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -2917,6 +3220,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -2994,6 +3301,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -3047,6 +3358,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -3124,6 +3439,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -3204,6 +3523,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -3281,6 +3604,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -3323,6 +3650,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -3403,6 +3734,10 @@
           "named": true
         },
         {
+          "type": "e_var_state",
+          "named": true
+        },
+        {
           "type": "e_variable",
           "named": true
         },
@@ -3438,6 +3773,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -3515,6 +3854,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -3544,6 +3887,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -3621,6 +3968,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -3650,6 +4001,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -3727,6 +4082,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -3780,6 +4139,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -3857,6 +4220,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -3886,6 +4253,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -3963,6 +4334,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -4020,6 +4395,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -4097,6 +4476,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -4220,6 +4603,10 @@
             "named": true
           },
           {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
             "type": "e_coll_arg_extremum",
             "named": true
           },
@@ -4297,6 +4684,10 @@
           },
           {
             "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
             "named": true
           },
           {
@@ -4385,6 +4776,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -4465,11 +4860,38 @@
           "named": true
         },
         {
+          "type": "e_var_state",
+          "named": true
+        },
+        {
           "type": "e_variable",
           "named": true
         },
         {
           "type": "literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "e_var_state",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "STATE",
+          "named": true
+        },
+        {
+          "type": "state_label",
+          "named": true
+        },
+        {
+          "type": "variable",
           "named": true
         }
       ]
@@ -4595,6 +5017,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -4672,6 +5098,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -4711,6 +5141,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -4788,6 +5222,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -4939,6 +5377,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -5016,6 +5458,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -5632,6 +6078,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -5709,6 +6159,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -5925,6 +6379,10 @@
           "named": true
         },
         {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
           "type": "e_coll_arg_extremum",
           "named": true
         },
@@ -6002,6 +6460,10 @@
         },
         {
           "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
           "named": true
         },
         {
@@ -6175,6 +6637,10 @@
   },
   {
     "type": "BOOLEAN",
+    "named": true
+  },
+  {
+    "type": "BUT_REPLACE",
     "named": true
   },
   {

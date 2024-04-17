@@ -66,6 +66,7 @@ const tokens_local = {
     MINIMUM: "minimum",
     IS: "is",
     EMPTY: "empty",
+    BUT_REPLACE: /but\s+replace/,
     CARDINAL: "number",
     YEAR: "year",
     MONTH: "month",
@@ -149,6 +150,7 @@ const tokens_local = {
     MINIMUM: "minimum",
     IS: "est",
     EMPTY: "vide",
+    BUT_REPLACE: /mais\s+en\s+remplaçant/,
     CARDINAL: "nombre",
     YEAR: "an",
     MONTH: "mois",
@@ -230,8 +232,9 @@ const tokens_local = {
     NOT: "nie",
     MAXIMUM: "maximum",
     MINIMUM: "minimum",
-    MS_IS: "jest",
-    MS_EMPTY: "pusty",
+    IS: "jest",
+    EMPTY: "pusty",
+    BUT_REPLACE: /ale\s+zastąpić/,
     CARDINAL: "liczba",
     YEAR: "rok",
     MONTH: "miesiac",
@@ -277,7 +280,7 @@ const tokens_international = {
   GREATER: '>',
   GREATER_EQUAL: '>=',
   LIDENT: /\p{Ll}(\p{L}|\p{N}|[_'])*/,
-  INT_LITERAL: /[0-9]+/,
+  INT_LITERAL: /-?[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
   LAW_HEADING: token.immediate(/#+\s*[^\n|]+/),
   LAW_LABEL: /\S[^\n]*/,
@@ -403,6 +406,7 @@ module.exports = grammar({
     _expr: $ =>
       choice(
         $.e_variable,
+        $.e_var_state,
         $.literal,
         $.builtin,
         $.e_tuple,
@@ -410,6 +414,7 @@ module.exports = grammar({
         $.e_apply,
         $.e_scope_apply,
         $.e_test_match,
+        $.e_but_replace,
         $.e_coll_contains,
         $.e_coll_sum,
         $.e_coll_map,
@@ -431,6 +436,9 @@ module.exports = grammar({
 
     e_variable: $ =>
       prec.right(seq(optional($._path), $.variable)),
+
+    e_var_state: $ =>
+      seq($.variable, $.STATE, $.state_label),
 
     tuple_contents: $ =>
       seq(repeat(seq($._expr, $.COMMA)), $._expr),
@@ -458,6 +466,9 @@ module.exports = grammar({
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
                               $.WITH_PATT, $.qconstructor, optional(seq($.OF, $.variable)))),
+    e_but_replace: $ =>
+      prec.right('apply', seq($._expr, $.BUT_REPLACE,
+                              $.LBRACE, $.struct_content_fields, $.RBRACE)),
     e_coll_contains: $ =>
       prec.right('apply', seq(field('coll', $._expr), $.CONTAINS, field('elt', $._expr))),
     e_coll_sum: $ =>
@@ -513,7 +524,7 @@ module.exports = grammar({
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
-      prec.left('DOT', seq($._expr, $.DOT, $.qfield)),
+      prec.left('DOT', seq($._expr, $.DOT, choice($.qfield, /[0-9]+/))),
 
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
@@ -757,6 +768,7 @@ module.exports = grammar({
   MINIMUM: $ => token(tokens.MINIMUM),
   IS: $ => token(tokens.IS),
   EMPTY: $ => token(tokens.EMPTY),
+  BUT_REPLACE: $ => token(tokens.BUT_REPLACE),
   CARDINAL: $ => token(tokens.CARDINAL),
   YEAR: $ => token(tokens.YEAR),
   MONTH: $ => token(tokens.MONTH),
