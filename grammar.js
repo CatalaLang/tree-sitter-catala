@@ -283,7 +283,7 @@ const tokens_international = {
   INT_LITERAL: /-?[0-9]+/,
   TUPLE_INDEX: /[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
-  LAW_HEADING: token.immediate(/#+\s*[^\n|]+/),
+  LAW_HEADING: token.immediate(/#+[ \t]*[^\n|]*/),
   LAW_LABEL: /\S[^\n]*/,
   LAW_TEXT: prec(-1,token.immediate(/\S[^\n]*/)),
   LBRACE: '{',
