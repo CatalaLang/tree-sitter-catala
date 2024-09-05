@@ -274,7 +274,6 @@ const tokens_international = {
   DOT: '.',
   COMMA: ',',
   END_CODE: '```',
-  END_DIRECTIVE: '\n',
   EQUAL: '=',
   NOT_EQUAL: '!=',
   GREATER: '>',
@@ -340,7 +339,6 @@ module.exports = grammar({
     [$.module_name, $.scope_name]
   ],
   rules: {
-
     source_file: $ =>
       repeat(choice(
         $._newline,
@@ -705,7 +703,7 @@ module.exports = grammar({
         seq($.MODULE_DEF, $.module_name),
         seq($.MODULE_USE, $.module_name, optional(seq($.MODULE_ALIAS, $.module_name)))
       ),
-      $.END_DIRECTIVE
+      $._newline
     ),
 
     law_heading: $ =>
@@ -807,7 +805,6 @@ module.exports = grammar({
   DOT: $ => token(tokens.DOT),
   COMMA: $ => token(tokens.COMMA),
   END_CODE: $ => token(tokens.END_CODE),
-  END_DIRECTIVE: $ => token(tokens.END_DIRECTIVE),
   _LIDENT: $ => token(tokens.LIDENT),
   INT_LITERAL: $ => token(tokens.INT_LITERAL),
   TUPLE_INDEX: $ => token(tokens.TUPLE_INDEX),
