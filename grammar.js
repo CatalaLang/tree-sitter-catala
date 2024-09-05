@@ -281,6 +281,7 @@ const tokens_international = {
   GREATER_EQUAL: '>=',
   LIDENT: /\p{Ll}(\p{L}|\p{N}|[_'])*/,
   INT_LITERAL: /-?[0-9]+/,
+  TUPLE_INDEX: /[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
   LAW_HEADING: token.immediate(/#+\s*[^\n|]+/),
   LAW_LABEL: /\S[^\n]*/,
@@ -343,9 +344,8 @@ module.exports = grammar({
     source_file: $ =>
       repeat(choice(
         $._newline,
-        $.law_text,
+        $.law_block,
         $.code_block,
-        $.law_heading,
         $.directive,
         $.verb_block,
       )),
@@ -524,7 +524,7 @@ module.exports = grammar({
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
-      prec.left('DOT', seq($._expr, $.DOT, choice($.qfield, /[0-9]+/))),
+      prec.left('DOT', seq($._expr, $.DOT, choice($.qfield, $.TUPLE_INDEX))),
 
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
@@ -712,6 +712,11 @@ module.exports = grammar({
       prec(1, seq($.LAW_HEADING,
                   prec(1, optional(seq($.BAR, $.LAW_LABEL))))),
 
+    law_block: $ =>
+      prec.right(-1, repeat1(
+          choice($.law_text, $.law_heading,
+                 prec.right(-1, $._newline)))),
+
   SCOPE: $ => token(tokens.SCOPE),
   CONSEQUENCE: $ => token(tokens.CONSEQUENCE),
   DATA: $ => token(tokens.DATA),
@@ -805,6 +810,7 @@ module.exports = grammar({
   END_DIRECTIVE: $ => token(tokens.END_DIRECTIVE),
   _LIDENT: $ => token(tokens.LIDENT),
   INT_LITERAL: $ => token(tokens.INT_LITERAL),
+  TUPLE_INDEX: $ => token(tokens.TUPLE_INDEX),
   DATE_LITERAL: $ => token(tokens.DATE_LITERAL),
   LAW_HEADING: $ => token(tokens.LAW_HEADING),
   LAW_LABEL: $ => token(tokens.LAW_LABEL),
