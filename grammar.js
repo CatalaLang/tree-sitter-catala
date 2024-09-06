@@ -603,10 +603,14 @@ module.exports = grammar({
     assertion: $ =>
       seq(
         $.ASSERTION,
-        optional(seq($.UNDER_CONDITION, field('condition', $.expression), $.CONSEQUENCE)),
-        field('body', $.expression)
+          choice(
+              (optional(seq($.UNDER_CONDITION, field('condition', $.expression),
+                            $.CONSEQUENCE)), field('body', $.expression)),
+              seq($.FIXED, $.scope_var, $.BY, $.variable),
+              seq($.VARIES, $.scope_var, $.WITH, $.expression,
+                  optional(choice($.INCREASING, $.DECREASING)))
+          )
       ),
-    // Note: not handling FIXED, VARIES
 
     rounding_mode: $ =>
       seq($.DATE, $.Round, choice($.INCREASING, $.DECREASING)),
