@@ -1,26 +1,28 @@
 TREESITTER_CATALA_LANG ?= en
 export TREESITTER_CATALA_LANG
 
-default: Cargo.toml libtree-sitter-catala-$(TREESITTER_CATALA_LANG).so
-.PHONY: default all
+LANGS = en fr pl
+LIB = $(TREESITTER_CATALA_LANG)/libtree-sitter-catala-$(TREESITTER_CATALA_LANG).so
+
+.PHONY: generate lib all dist-clean ALWAYS
 
 all:
-	$(MAKE) default TREESITTER_CATALA_LANG=en
-	$(MAKE) default TREESITTER_CATALA_LANG=fr
+	@for lang in $(LANGS); do $(MAKE) generate lib TREESITTER_CATALA_LANG=$$lang ; done
 
-src/parser.c: grammar.js
-	tree-sitter generate
+$(LANGS): Cargo.toml.in grammar.js ALWAYS
+	$(MAKE) generate lib TREESITTER_CATALA_LANG=$@
 
-.PHONY: ALWAYS
-ifneq "$(TREESITTER_CATALA_LANG)" "$(shell cat _lang)"
-_lang: ALWAYS
-	@echo "Selected lang: $(TREESITTER_CATALA_LANG)"
-	@echo $(TREESITTER_CATALA_LANG) >$@
-endif
+lib: $(LIB)
+$(LIB): generate
+	@echo "Compiling $@ library"
+	@gcc -shared -fPIC -fno-exceptions -g -O2 -I $(TREESITTER_CATALA_LANG)/src $(TREESITTER_CATALA_LANG)/src/parser.c -o $@
 
-Cargo.toml: Cargo.toml.in _lang
-	sed 's/$${TREESITTER_CATALA_LANG}/'$(TREESITTER_CATALA_LANG)'/g' $< >$@
+generate: Cargo.toml.in grammar.js ALWAYS
+	@echo "Generating tree-sitter-catala-$(TREESITTER_CATALA_LANG)"
+	@mkdir -p $(TREESITTER_CATALA_LANG)
+	@sed 's/$${TREESITTER_CATALA_LANG}/'$(TREESITTER_CATALA_LANG)'/g' $< > $(TREESITTER_CATALA_LANG)/Cargo.toml
+	@cp grammar.js $(TREESITTER_CATALA_LANG)
+	@cd $(TREESITTER_CATALA_LANG) && tree-sitter generate
 
-libtree-sitter-catala-${TREESITTER_CATALA_LANG}.so: grammar.js _lang
-	tree-sitter generate
-	gcc -shared -fPIC -fno-exceptions -g -O2 -I src src/parser.c -o $@
+dist-clean:
+	rm -rf $(LANGS) $(LIBS)
