@@ -335,7 +335,6 @@ module.exports = grammar({
   conflicts: $ => [
     [$.module_name, $.enum_struct_name, $.constructor_name],
     [$.module_name, $.enum_struct_name],
-    [$.enum_struct_name, $.constructor_name],
     [$.module_name, $.scope_name]
   ],
   rules: {
