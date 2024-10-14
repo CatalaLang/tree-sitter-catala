@@ -3408,6 +3408,18 @@
                 {
                   "type": "SYMBOL",
                   "name": "module_name"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "MODULE_EXTERNAL"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
               ]
             },
@@ -4063,6 +4075,13 @@
       "content": {
         "type": "STRING",
         "value": "as"
+      }
+    },
+    "MODULE_EXTERNAL": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "external"
       }
     },
     "ALT": {

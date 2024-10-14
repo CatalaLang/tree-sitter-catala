@@ -434,6 +434,10 @@
           "named": true
         },
         {
+          "type": "MODULE_EXTERNAL",
+          "named": true
+        },
+        {
           "type": "MODULE_USE",
           "named": true
         },
@@ -6946,6 +6950,10 @@
   },
   {
     "type": "MODULE_DEF",
+    "named": true
+  },
+  {
+    "type": "MODULE_EXTERNAL",
     "named": true
   },
   {
