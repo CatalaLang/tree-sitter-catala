@@ -89,6 +89,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: 'Using',
     MODULE_ALIAS: 'as',
+    MODULE_EXTERNAL: 'external',
   },
   fr: {
     SCOPE: /champ\s+d'application/,
@@ -173,6 +174,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: /Usage\s+de/,
     MODULE_ALIAS: /en\s+tant\s+que/,
+    MODULE_EXTERNAL: 'externe',
   },
   pl: {
     SCOPE: "zakres",
@@ -257,6 +259,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: 'Using',
     MODULE_ALIAS: 'as',
+    MODULE_EXTERNAL: 'external',
   }
 }
 
@@ -703,7 +706,7 @@ module.exports = grammar({
       choice(
         seq($.LAW_INCLUDE, $.COLON,
             repeat1($.DIRECTIVE_ARG), optional($.AT_PAGE)),
-        seq($.MODULE_DEF, $.module_name),
+        seq($.MODULE_DEF, $.module_name, optional($.MODULE_EXTERNAL)),
         seq($.MODULE_USE, $.module_name, optional(seq($.MODULE_ALIAS, $.module_name)))
       ),
       $._newline
@@ -796,6 +799,7 @@ module.exports = grammar({
   MODULE_DEF: $ => token(tokens.MODULE_DEF),
   MODULE_USE: $ => token(tokens.MODULE_USE),
   MODULE_ALIAS: $ => token(tokens.MODULE_ALIAS),
+  MODULE_EXTERNAL: $ => token(tokens.MODULE_EXTERNAL),
 
   ALT: $ => token(tokens.ALT),
   AT_PAGE: $ => token(tokens.AT_PAGE),
