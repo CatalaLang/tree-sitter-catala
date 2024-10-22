@@ -531,6 +531,10 @@
         {
           "type": "SYMBOL",
           "name": "e_coll_arg_extremum"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "e_coll_fold"
         }
       ]
     },
@@ -931,6 +935,67 @@
       "content": {
         "type": "SEQ",
         "members": [
+          {
+            "type": "FIELD",
+            "name": "mapf",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "FOR"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "binder"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "AMONG"
+          },
+          {
+            "type": "FIELD",
+            "name": "coll",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          }
+        ]
+      }
+    },
+    "e_coll_fold": {
+      "type": "PREC_RIGHT",
+      "value": "fold",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "COMBINE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "binder"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "INITIALLY"
+          },
+          {
+            "type": "FIELD",
+            "name": "acc",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "WITH"
+          },
           {
             "type": "FIELD",
             "name": "mapf",
@@ -3909,6 +3974,20 @@
         "value": "minimum"
       }
     },
+    "COMBINE": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "combine"
+      }
+    },
+    "INITIALLY": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "initially"
+      }
+    },
     "IS": {
       "type": "TOKEN",
       "content": {
@@ -4549,6 +4628,10 @@
       {
         "type": "STRING",
         "value": "COMMA"
+      },
+      {
+        "type": "STRING",
+        "value": "fold"
       },
       {
         "type": "STRING",
