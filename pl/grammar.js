@@ -293,7 +293,7 @@ const tokens_international = {
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
   LAW_HEADING: token.immediate(/#+[ \t]*[^\n|]*/),
   LAW_LABEL: /\S[^\n]*/,
-  LAW_TEXT: prec(-1,token.immediate(/\S[^\n]*/)),
+  LAW_WORD: prec(-1,token.immediate(/\S*/)),
   LBRACE: '{',
   LESSER: '<',
   LESSER_EQUAL: '<=',
@@ -362,7 +362,12 @@ module.exports = grammar({
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
     // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
-    law_text: $ => prec.right(repeat1(seq($.LAW_TEXT,$._newline))),
+    law_text: $ => prec.right(choice(
+      $.LAW_WORD,
+      seq($.law_text, /\s+/, $.LAW_WORD)
+    )),
+    // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
+    // law_text: $ => prec.right(repeat1($._law_line)),
 
     primitive_typ: $ =>
       choice($.INTEGER, $.BOOLEAN, $.MONEY, $.DURATION, $.TEXT, $.DECIMAL,
@@ -833,7 +838,7 @@ module.exports = grammar({
   DATE_LITERAL: $ => token(tokens.DATE_LITERAL),
   LAW_HEADING: $ => token(tokens.LAW_HEADING),
   LAW_LABEL: $ => token(tokens.LAW_LABEL),
-  LAW_TEXT: $ => token(tokens.LAW_TEXT),
+  LAW_WORD: $ => token(tokens.LAW_WORD),
   LBRACE: $ => token(tokens.LBRACE),
   LPAREN: $ => token(tokens.LPAREN),
   LBRACKET: $ => token(tokens.LBRACKET),
