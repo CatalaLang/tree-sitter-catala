@@ -3426,7 +3426,7 @@
           "type": "IMMEDIATE_TOKEN",
           "content": {
             "type": "STRING",
-            "value": "```"
+            "value": "```\n"
           }
         }
       ]
@@ -4256,7 +4256,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "```"
+        "value": "```\n"
       }
     },
     "_LIDENT": {
