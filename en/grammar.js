@@ -282,7 +282,7 @@ const tokens_international = {
   DIV: '/',
   DOT: '.',
   COMMA: ',',
-  END_CODE: '```',
+  END_CODE: '```\n',
   EQUAL: '=',
   NOT_EQUAL: '!=',
   GREATER: '>',
@@ -715,7 +715,7 @@ module.exports = grammar({
       seq(
         token.immediate(prec(-1,/```[^\n]*\n/)),
         repeat1(seq(prec(-1,token.immediate(/.*/)),$._newline)),
-        token.immediate('```')
+        token.immediate('```\n')
       ),
 
     directive: $ =>
