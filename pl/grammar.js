@@ -492,7 +492,7 @@ module.exports = grammar({
                              field('coll', $._expr))),
     e_coll_extremum: $ =>
       prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
-                              $.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))),
+                              optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -550,7 +550,7 @@ module.exports = grammar({
     e_coll_arg_extremum: $ =>
       prec.right(seq($.CONTENT, $.OF, $.variable, $.AMONG, field('coll', $._expr),
                      $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     $.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))),
+                     optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
 
     struct_content_field: $ =>
       seq($.qfield, $.COLON, $._expr),
