@@ -51,20 +51,30 @@
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "LAW_TEXT"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_newline"
-            }
-          ]
-        }
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "LAW_WORD"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "law_text"
+              },
+              {
+                "type": "PATTERN",
+                "value": "\\s+"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "LAW_WORD"
+              }
+            ]
+          }
+        ]
       }
     },
     "primitive_typ": {
@@ -1059,32 +1069,45 @@
             }
           },
           {
-            "type": "SYMBOL",
-            "name": "OR"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "IF"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "LIST"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "EMPTY"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "THEN"
-          },
-          {
-            "type": "FIELD",
-            "name": "dft",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "OR"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "IF"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "LIST"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "EMPTY"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "THEN"
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "dft",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_expr"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -2115,32 +2138,45 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "OR"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "IF"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "LIST"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "EMPTY"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "THEN"
-          },
-          {
-            "type": "FIELD",
-            "name": "dft",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "OR"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "IF"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "LIST"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "EMPTY"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "THEN"
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "dft",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_expr"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -3416,7 +3452,7 @@
           "type": "IMMEDIATE_TOKEN",
           "content": {
             "type": "STRING",
-            "value": "```"
+            "value": "```\n"
           }
         }
       ]
@@ -4246,7 +4282,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "```"
+        "value": "```\n"
       }
     },
     "_LIDENT": {
@@ -4294,7 +4330,7 @@
         "value": "\\S[^\\n]*"
       }
     },
-    "LAW_TEXT": {
+    "LAW_WORD": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
@@ -4303,7 +4339,7 @@
           "type": "IMMEDIATE_TOKEN",
           "content": {
             "type": "PATTERN",
-            "value": "\\S[^\\n]*"
+            "value": "\\S*"
           }
         }
       }
