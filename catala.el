@@ -58,6 +58,11 @@
   "Face description for Catala comments."
   :group 'catala-faces)
 
+(defface catala-font-lock-attribute-face
+  '((t (:inherit tree-sitter-hl-face:doc)))
+  "Face description for Catala attributes."
+  :group 'catala-faces)
+
 (defface catala-font-lock-scope-face
   '((t (:inherit tree-sitter-hl-face:function)))
   "Face description for Catala scope names."
@@ -212,6 +217,8 @@
      "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (CONTAINS) (ENUM) (INTEGER) (MONEY) (TEXT) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (COMBINE) (INITIALLY) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
    :language lang :feature 'all :override t
      '((COMMENT) @catala-font-lock-comment-face)
+   :language lang :feature 'all :override t
+     '((ATTRIBUTE) @catala-font-lock-attribute-face)
    :language lang :feature 'all :override 'prepend
      "(code_block) @catala-font-lock-code-block-face"
    :language lang :feature 'all :override t

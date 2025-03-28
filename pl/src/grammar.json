@@ -30,6 +30,19 @@
         ]
       }
     },
+    "ATTRIBUTE": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#["
+        },
+        {
+          "type": "PATTERN",
+          "value": "([^\\]\\\\]|\\\\(.|\\n))*]"
+        }
+      ]
+    },
     "COMMENT": {
       "type": "SEQ",
       "members": [
@@ -4610,6 +4623,10 @@
     {
       "type": "SYMBOL",
       "name": "COMMENT"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "ATTRIBUTE"
     }
   ],
   "conflicts": [

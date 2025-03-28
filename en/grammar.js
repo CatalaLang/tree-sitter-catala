@@ -321,7 +321,7 @@ module.exports = grammar({
   name: name,
   inline: inline,
   word: $ => $._LIDENT,
-  extras: $ => [ /\s/, $.COMMENT ],
+  extras: $ => [ /\s/, $.COMMENT, $.ATTRIBUTE ],
   precedences: $ => [[
     'keyword',
     'path',
@@ -357,6 +357,7 @@ module.exports = grammar({
         $.verb_block,
       )),
 
+    ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
     COMMENT: $ => seq('#', /[^\n]*/),
     _newline: $ => /[ \t]*\r?\n[ \t]*/,
     // newline tokens need to be explicit outside of code blocks, to properly
