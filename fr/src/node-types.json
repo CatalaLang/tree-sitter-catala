@@ -1,5 +1,10 @@
 [
   {
+    "type": "ATTRIBUTE",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "COMMENT",
     "named": true,
     "fields": {}
@@ -7180,6 +7185,10 @@
   },
   {
     "type": "#",
+    "named": false
+  },
+  {
+    "type": "#[",
     "named": false
   },
   {
