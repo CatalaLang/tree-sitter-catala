@@ -58,6 +58,11 @@
   "Face description for Catala comments."
   :group 'catala-faces)
 
+(defface catala-font-lock-attribute-face
+  '((t (:inherit tree-sitter-hl-face:doc)))
+  "Face description for Catala attributes."
+  :group 'catala-faces)
+
 (defface catala-font-lock-scope-face
   '((t (:inherit tree-sitter-hl-face:function)))
   "Face description for Catala scope names."
@@ -209,9 +214,11 @@
    :language lang :feature 'all :override 'keep
      "[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @catala-font-lock-declaration-face"
    :language lang :feature 'all :override 'prepend
-     "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (CONTAINS) (ENUM) (INTEGER) (MONEY) (TEXT) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
+     "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (CONTAINS) (ENUM) (INTEGER) (MONEY) (TEXT) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (VARIES) (WITH) (FOR) (ALL) (WE_HAVE) (FIXED) (BY) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (COMBINE) (INITIALLY) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
    :language lang :feature 'all :override t
      '((COMMENT) @catala-font-lock-comment-face)
+   :language lang :feature 'all :override t
+     '((ATTRIBUTE) @catala-font-lock-attribute-face)
    :language lang :feature 'all :override 'prepend
      "(code_block) @catala-font-lock-code-block-face"
    :language lang :feature 'all :override t
@@ -224,11 +231,12 @@
   `((,lang
      (no-node parent-bol catala-default-indent)
      ((query "(law_heading) @indent") parent-bol 0)
-     ((query "(law_text (LAW_TEXT) @indent) @indent") prev-sibling 0)
+     ((query "(law_text (LAW_WORD) @indent) @indent") prev-sibling 0)
      ((query "(code_block (_) @indent) @indent") column-0 0)
      ((query "(e_binop op: (_) @indent)") first-sibling 0)
      ((query "(e_binop op: [(AND) (OR) (XOR)] rhs: (_)? @indent)") first-sibling 0)
      ((query "(e_binop rhs: (_) @ident)") first-sibling catala-default-indent)
+     ((query "((_) (DOT) @indent)") first-sibling 0)
      ((query "(e_fieldaccess (_) @indent)") first-sibling 2)
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
@@ -247,12 +255,17 @@
      ((query "(struct_content_fields (ALT) @indent)") first-sibling 0)
      ((query "(e_apply (_) @indent)") first-sibling catala-default-indent)
      ((query "(fun_arguments (_) @indent)") first-sibling 0)
+     ((query "(e_coll_fold [(COMBINE) (WITH) (AMONG) (FOR)] @indent)") first-sibling 0)
+     ((query "(e_coll_fold acc: (_) @indent)") first-sibling ,(* 2 catala-default-indent))
+     ((query "(e_coll_fold (_) @indent)") first-sibling catala-default-indent)
      ((query "(_ condition: (_) @indent)") first-sibling ,(* 2 catala-default-indent))
-     ((query "(rule [(RULE) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
-     ((query "(rule [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
+     ((query "(rule [(RULE) (EXCEPTION) (LABEL) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling 0)
+     ((query "(rule (UNDER_CONDITION) @indent)") first-sibling catala-default-indent)
      ((query "(rule (_) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(definition [(DEFINITION) (EXCEPTION) (LABEL)] @indent)") first-sibling 0)
-     ((query "(definition [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling catala-default-indent)
+     ((query "(definition [(UNDER_CONDITION) (CONSEQUENCE) (DEFINED_AS)] @indent)") first-sibling 0)
+     ((query "(definition [(OF) (STATE)] @indent)") first-sibling catala-default-indent)
+     ((query "(definition body: (_) @indent)") first-sibling catala-default-indent)
      ((query "(definition (_) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(toplevel_def name: (_) @indent (typ) @indent)") first-sibling ,(* 2 catala-default-indent))
      ((query "(_ (_) @indent)") parent-bol catala-default-indent)
@@ -339,5 +352,5 @@
 
 ;; Debugging
 ;(setq treesit--font-lock-verbose t)
-(setq treesit--indent-verbose t)
+;(setq treesit--indent-verbose t)
 ;(add-hook 'catala-mode-hook 'prettify-symbols-mode)

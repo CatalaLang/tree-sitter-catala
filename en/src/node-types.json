@@ -1,5 +1,10 @@
 [
   {
+    "type": "ATTRIBUTE",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "COMMENT",
     "named": true,
     "fields": {}
@@ -5870,7 +5875,11 @@
       "required": true,
       "types": [
         {
-          "type": "LAW_TEXT",
+          "type": "LAW_WORD",
+          "named": true
+        },
+        {
+          "type": "law_text",
           "named": true
         }
       ]
@@ -7179,6 +7188,10 @@
     "named": false
   },
   {
+    "type": "#[",
+    "named": false
+  },
+  {
     "type": "ALL",
     "named": true
   },
@@ -7447,7 +7460,7 @@
     "named": true
   },
   {
-    "type": "LAW_TEXT",
+    "type": "LAW_WORD",
     "named": true
   },
   {
@@ -7659,7 +7672,7 @@
     "named": true
   },
   {
-    "type": "```",
+    "type": "```\n",
     "named": false
   }
 ]
