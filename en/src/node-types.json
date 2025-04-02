@@ -1163,7 +1163,7 @@
       },
       "dft": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "builtin",
@@ -2105,7 +2105,7 @@
       },
       "dft": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "builtin",
