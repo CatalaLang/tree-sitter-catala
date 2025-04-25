@@ -84,7 +84,7 @@ const tokens_local = {
     GetYear: "get_year",
     FirstDayOfMonth: "first_day_of_month",
     LastDayOfMonth: "last_day_of_month",
-    DECIMAL_LITERAL: /[0-9]+\.[0-9]*/,
+    DECIMAL_LITERAL: /-?[0-9]+\.[0-9]*/,
     MONEY_AMOUNT: /\$[0-9]([0-9,]*[0-9])?(\.[0-9]{0,2})?/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
@@ -171,7 +171,7 @@ const tokens_local = {
     GetYear: "accès_année",
     FirstDayOfMonth: "premier_jour_du_mois",
     LastDayOfMonth: "dernier_jour_du_mois",
-    DECIMAL_LITERAL: /[0-9]+,[0-9]*/,
+    DECIMAL_LITERAL: /-?[0-9]+,[0-9]*/,
     MONEY_AMOUNT: /[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
@@ -258,7 +258,7 @@ const tokens_local = {
     GetYear: "dostęp_rok",
     FirstDayOfMonth: "pierwszy_dzień_miesiąca",
     LastDayOfMonth: "ostatni_dzień_miesiąca",
-    DECIMAL_LITERAL: /[0-9]+\.[0-9]*/,
+    DECIMAL_LITERAL: /-?[0-9]+\.[0-9]*/,
     MONEY_AMOUNT: /[0-9]([0-9,]*[0-9])?(\.[0-9]{0,2})? *PLN/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
@@ -273,16 +273,19 @@ const tokens_local = {
 const tokens_international = {
   ALT: '--',
   AT_PAGE: /@\s*p.\s*[0-9]+/,
-  BEGIN_CODE: token.immediate('```catala\n'),
-  BEGIN_DIRECTIVE: token.immediate(/>\s*/),
-  BEGIN_METADATA: token.immediate(/```catala-metadata[^\n]*\n/),
+  // No need for immediate tokens for fences/directives: by
+  // construction, it can only start after a newline and we force a
+  // following newline in the grammar
+  BEGIN_CODE: '```catala',
+  BEGIN_DIRECTIVE: '>',
+  BEGIN_METADATA: '```catala-metadata',
+  END_CODE: '```',
   COLON: ':',
   UIDENT: /[\p{Lu}](\p{L}|\p{N}|[_'])*/,
   DIRECTIVE_ARG: /\S+/,
   DIV: '/',
   DOT: '.',
   COMMA: ',',
-  END_CODE: '```\n',
   EQUAL: '=',
   NOT_EQUAL: '!=',
   GREATER: '>',
@@ -497,8 +500,8 @@ module.exports = grammar({
                              $.FOR, $.binder, $.AMONG,
                              field('coll', $._expr))),
     e_coll_extremum: $ =>
-      prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
-                              optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
+      prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
+                     optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -707,7 +710,7 @@ module.exports = grammar({
         choice(
           $.BEGIN_CODE,
           $.BEGIN_METADATA
-        ),
+        ), $._newline,
         optional($._code),
         $.END_CODE
       ),
