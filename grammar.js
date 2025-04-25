@@ -500,8 +500,8 @@ module.exports = grammar({
                              $.FOR, $.binder, $.AMONG,
                              field('coll', $._expr))),
     e_coll_extremum: $ =>
-      prec.right('apply', seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
-                              optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
+      prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
+                     optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
