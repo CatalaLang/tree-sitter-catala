@@ -1052,7 +1052,7 @@
     },
     "e_coll_extremum": {
       "type": "PREC_RIGHT",
-      "value": "apply",
+      "value": 0,
       "content": {
         "type": "SEQ",
         "members": [
@@ -3407,6 +3407,10 @@
           ]
         },
         {
+          "type": "SYMBOL",
+          "name": "_newline"
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -4167,7 +4171,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]+,[0-9]*"
+        "value": "-?[0-9]+,[0-9]*"
       }
     },
     "MONEY_AMOUNT": {
@@ -4229,31 +4233,22 @@
     "BEGIN_CODE": {
       "type": "TOKEN",
       "content": {
-        "type": "IMMEDIATE_TOKEN",
-        "content": {
-          "type": "STRING",
-          "value": "```catala\n"
-        }
+        "type": "STRING",
+        "value": "```catala"
       }
     },
     "BEGIN_DIRECTIVE": {
       "type": "TOKEN",
       "content": {
-        "type": "IMMEDIATE_TOKEN",
-        "content": {
-          "type": "PATTERN",
-          "value": ">\\s*"
-        }
+        "type": "STRING",
+        "value": ">"
       }
     },
     "BEGIN_METADATA": {
       "type": "TOKEN",
       "content": {
-        "type": "IMMEDIATE_TOKEN",
-        "content": {
-          "type": "PATTERN",
-          "value": "```catala-metadata[^\\n]*\\n"
-        }
+        "type": "STRING",
+        "value": "```catala-metadata"
       }
     },
     "COLON": {
@@ -4295,7 +4290,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "```\n"
+        "value": "```"
       }
     },
     "_LIDENT": {
