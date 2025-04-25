@@ -273,16 +273,19 @@ const tokens_local = {
 const tokens_international = {
   ALT: '--',
   AT_PAGE: /@\s*p.\s*[0-9]+/,
-  BEGIN_CODE: token.immediate('```catala\n'),
-  BEGIN_DIRECTIVE: token.immediate(/>\s*/),
-  BEGIN_METADATA: token.immediate(/```catala-metadata[^\n]*\n/),
+  // No need for immediate tokens for fences/directives: by
+  // construction, it can only start after a newline and we force a
+  // following newline in the grammar
+  BEGIN_CODE: '```catala',
+  BEGIN_DIRECTIVE: '>',
+  BEGIN_METADATA: '```catala-metadata',
+  END_CODE: '```',
   COLON: ':',
   UIDENT: /[\p{Lu}](\p{L}|\p{N}|[_'])*/,
   DIRECTIVE_ARG: /\S+/,
   DIV: '/',
   DOT: '.',
   COMMA: ',',
-  END_CODE: '```\n',
   EQUAL: '=',
   NOT_EQUAL: '!=',
   GREATER: '>',
@@ -707,7 +710,7 @@ module.exports = grammar({
         choice(
           $.BEGIN_CODE,
           $.BEGIN_METADATA
-        ),
+        ), $._newline,
         optional($._code),
         $.END_CODE
       ),
