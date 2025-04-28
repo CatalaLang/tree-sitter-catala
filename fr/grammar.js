@@ -705,14 +705,23 @@ module.exports = grammar({
         $.toplevel_def
       )),
 
+    begin_code_fence: $ =>
+      seq($.BEGIN_CODE, token.immediate(/[ \t]*\n/)),
+
+    begin_metadata_fence: $ =>
+      seq($.BEGIN_METADATA, token.immediate(/[ \t]*\n/)),
+
+    end_block_fence: $ =>
+        seq($.END_CODE, token.immediate(/[ \t]*\n/)),
+
     code_block: $ =>
       seq(
         choice(
-          $.BEGIN_CODE,
-          $.BEGIN_METADATA
-        ), $._newline,
+          $.begin_code_fence,
+          $.begin_metadata_fence,
+        ),
         optional($._code),
-        $.END_CODE
+        $.end_block_fence
       ),
 
     verb_block: $ =>
