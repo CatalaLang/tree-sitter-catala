@@ -202,7 +202,7 @@
    :language lang :feature 'all :override t
      "(e_binop [(MULT) (DIV) (PLUS) (MINUS) (PLUSPLUS) (LESSER) (LESSER_EQUAL) (GREATER) (GREATER_EQUAL) (EQUAL) (NOT_EQUAL) (AND) (OR) (XOR)] @catala-font-lock-operator-face)"
    :language lang :feature 'all :override t
-     "[(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @catala-font-lock-code-delimiter-face"
+     "[(begin_metadata_fence) (begin_code_fence) (end_block_fence)] @catala-font-lock-code-delimiter-face"
   :language lang :feature 'all :override 'keep
     "(ERROR) @catala-font-lock-error-face"
    :language lang :feature 'all :override 'keep
