@@ -65,6 +65,8 @@ const tokens_local = {
     MAXIMUM: "maximum",
     MINIMUM: "minimum",
     COMBINE: "combine",
+    MAP_EACH: /map\s+each/,
+    TO: /to/,
     INITIALLY: "initially",
     IS: "is",
     EMPTY: "empty",
@@ -151,7 +153,9 @@ const tokens_local = {
     NOT: "non",
     MAXIMUM: "maximum",
     MINIMUM: "minimum",
-    COMBINE: /combinaison\s+de/,
+    COMBINE: /combine/,
+    MAP_EACH: /transforme\s+chaque/,
+    TO: /en/,
     INITIALLY: "initialement",
     IS: "est",
     EMPTY: "vide",
@@ -239,6 +243,8 @@ const tokens_local = {
     MAXIMUM: "maximum",
     MINIMUM: "minimum",
     COMBINE: "łączyć",
+    MAP_EACH: "plan każdy",
+    TO: "do",
     INITIALLY: "początkowo",
     IS: "jest",
     EMPTY: "pusty",
@@ -335,7 +341,6 @@ module.exports = grammar({
     'CONTENT',
     'unop_expr',
     'COMMA',
-    'fold',
     'apply',
     'MULT',
     'PLUS',
@@ -491,14 +496,12 @@ module.exports = grammar({
     e_coll_sum: $ =>
       prec.right('apply', seq($.SUM, $.primitive_typ, $.OF, field('coll', $._expr))),
     e_coll_map: $ =>
-      prec.right('apply', seq(field('mapf', $._expr),
-                              $.FOR, $.binder, $.AMONG,
-                              field('coll', $._expr))),
+      prec.right(seq($.MAP_EACH, $.binder, $.AMONG,
+                     field('coll', $._expr), $.TO, field('mapf', $._expr))),
     e_coll_fold: $ =>
-      prec.right('fold', seq($.COMBINE, $.binder, $.INITIALLY, field('acc', $._expr), $.WITH,
-                             field('mapf', $._expr),
-                             $.FOR, $.binder, $.AMONG,
-                             field('coll', $._expr))),
+      prec.right('top_expr', seq($.COMBINE, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
+                             $.IN, $.binder, $.INITIALLY, field('acc', $._expr),
+                             $.WITH, field('mapf', $._expr))),
     e_coll_extremum: $ =>
       prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
                      optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
@@ -555,7 +558,10 @@ module.exports = grammar({
     e_coll_filter: $ =>
       prec.right(seq($.LIST, $.OF, $.variable, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
-      prec.right(seq(field('mapf', $._expr), $.FOR, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
+      prec.right(
+          seq($.MAP_EACH, $.binder, $.AMONG, field('coll', $._expr),
+              $.SUCH, $.THAT, field('cond', $._expr), $.TO, field('mapf', $._expr))
+      ),
     e_coll_arg_extremum: $ =>
       prec.right(seq($.CONTENT, $.OF, $.variable, $.AMONG, field('coll', $._expr),
                      $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
@@ -807,6 +813,8 @@ module.exports = grammar({
   MAXIMUM: $ => token(tokens.MAXIMUM),
   MINIMUM: $ => token(tokens.MINIMUM),
   COMBINE: $ => token(tokens.COMBINE),
+  MAP_EACH: $ => token(tokens.MAP_EACH),
+  TO: $ => token(tokens.TO),
   INITIALLY: $ => token(tokens.INITIALLY),
   IS: $ => token(tokens.IS),
   EMPTY: $ => token(tokens.EMPTY),

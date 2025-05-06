@@ -954,21 +954,13 @@
     },
     "e_coll_map": {
       "type": "PREC_RIGHT",
-      "value": "apply",
+      "value": 0,
       "content": {
         "type": "SEQ",
         "members": [
           {
-            "type": "FIELD",
-            "name": "mapf",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
-          },
-          {
             "type": "SYMBOL",
-            "name": "FOR"
+            "name": "MAP_EACH"
           },
           {
             "type": "SYMBOL",
@@ -985,19 +977,55 @@
               "type": "SYMBOL",
               "name": "_expr"
             }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "TO"
+          },
+          {
+            "type": "FIELD",
+            "name": "mapf",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
           }
         ]
       }
     },
     "e_coll_fold": {
       "type": "PREC_RIGHT",
-      "value": "fold",
+      "value": "top_expr",
       "content": {
         "type": "SEQ",
         "members": [
           {
             "type": "SYMBOL",
             "name": "COMBINE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "ALL"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "binder"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "AMONG"
+          },
+          {
+            "type": "FIELD",
+            "name": "coll",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "IN"
           },
           {
             "type": "SYMBOL",
@@ -1022,26 +1050,6 @@
           {
             "type": "FIELD",
             "name": "mapf",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
-          },
-          {
-            "type": "SYMBOL",
-            "name": "FOR"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "binder"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "AMONG"
-          },
-          {
-            "type": "FIELD",
-            "name": "coll",
             "content": {
               "type": "SYMBOL",
               "name": "_expr"
@@ -2041,16 +2049,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "FIELD",
-            "name": "mapf",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
-          },
-          {
             "type": "SYMBOL",
-            "name": "FOR"
+            "name": "MAP_EACH"
           },
           {
             "type": "SYMBOL",
@@ -2079,6 +2079,18 @@
           {
             "type": "FIELD",
             "name": "cond",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "TO"
+          },
+          {
+            "type": "FIELD",
+            "name": "mapf",
             "content": {
               "type": "SYMBOL",
               "name": "_expr"
@@ -4078,6 +4090,20 @@
         "value": "łączyć"
       }
     },
+    "MAP_EACH": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "plan każdy"
+      }
+    },
+    "TO": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "do"
+      }
+    },
     "INITIALLY": {
       "type": "TOKEN",
       "content": {
@@ -4720,10 +4746,6 @@
       {
         "type": "STRING",
         "value": "COMMA"
-      },
-      {
-        "type": "STRING",
-        "value": "fold"
       },
       {
         "type": "STRING",

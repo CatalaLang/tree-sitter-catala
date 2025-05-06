@@ -2936,7 +2936,7 @@
           "named": true
         },
         {
-          "type": "FOR",
+          "type": "MAP_EACH",
           "named": true
         },
         {
@@ -2945,6 +2945,10 @@
         },
         {
           "type": "THAT",
+          "named": true
+        },
+        {
+          "type": "TO",
           "named": true
         },
         {
@@ -3318,6 +3322,10 @@
       "required": true,
       "types": [
         {
+          "type": "ALL",
+          "named": true
+        },
+        {
           "type": "AMONG",
           "named": true
         },
@@ -3326,7 +3334,7 @@
           "named": true
         },
         {
-          "type": "FOR",
+          "type": "IN",
           "named": true
         },
         {
@@ -3862,7 +3870,11 @@
           "named": true
         },
         {
-          "type": "FOR",
+          "type": "MAP_EACH",
+          "named": true
+        },
+        {
+          "type": "TO",
           "named": true
         },
         {
@@ -7541,6 +7553,10 @@
     "named": true
   },
   {
+    "type": "MAP_EACH",
+    "named": true
+  },
+  {
     "type": "MATCH",
     "named": true
   },
@@ -7674,6 +7690,10 @@
   },
   {
     "type": "THEN",
+    "named": true
+  },
+  {
+    "type": "TO",
     "named": true
   },
   {
