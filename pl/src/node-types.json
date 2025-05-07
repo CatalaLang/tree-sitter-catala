@@ -102,6 +102,21 @@
     }
   },
   {
+    "type": "begin_verb_block_fence",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "BEGIN_VERB_BLOCK",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binder",
     "named": true,
     "fields": {},
@@ -7238,7 +7253,21 @@
   {
     "type": "verb_block",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "begin_verb_block_fence",
+          "named": true
+        },
+        {
+          "type": "end_block_fence",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "#",
@@ -7286,6 +7315,10 @@
   },
   {
     "type": "BEGIN_METADATA",
+    "named": true
+  },
+  {
+    "type": "BEGIN_VERB_BLOCK",
     "named": true
   },
   {
@@ -7735,9 +7768,5 @@
   {
     "type": "YEAR",
     "named": true
-  },
-  {
-    "type": "```\n",
-    "named": false
   }
 ]

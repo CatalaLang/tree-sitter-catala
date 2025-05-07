@@ -286,6 +286,7 @@ const tokens_international = {
   BEGIN_DIRECTIVE: '>',
   BEGIN_METADATA: '```catala-metadata',
   END_CODE: '```',
+  BEGIN_VERB_BLOCK: /```[^\n]*/,
   COLON: ':',
   UIDENT: /[\p{Lu}](\p{L}|\p{N}|[_'])*/,
   DIRECTIVE_ARG: /\S+/,
@@ -730,11 +731,14 @@ module.exports = grammar({
         $.end_block_fence
       ),
 
+    begin_verb_block_fence: $ =>
+      seq($.BEGIN_VERB_BLOCK, token.immediate(/[ \t]*\n/)),
+
     verb_block: $ =>
       seq(
-        token.immediate(prec(-1,/```[^\n]*\n/)),
+        $.begin_verb_block_fence,
         repeat1(seq(prec(-1,token.immediate(/.*/)),$._newline)),
-        token.immediate('```\n')
+        $.end_block_fence
       ),
 
     directive: $ =>
@@ -847,6 +851,7 @@ module.exports = grammar({
   BEGIN_CODE: $ => token(tokens.BEGIN_CODE),
   BEGIN_DIRECTIVE: $ => token(tokens.BEGIN_DIRECTIVE),
   BEGIN_METADATA: $ => token(tokens.BEGIN_METADATA),
+  BEGIN_VERB_BLOCK: $ => token(tokens.BEGIN_VERB_BLOCK),
   COLON: $ => token(tokens.COLON),
   _UIDENT: $ => token(tokens.UIDENT),
   DIRECTIVE_ARG: $ => token(tokens.DIRECTIVE_ARG),
