@@ -10,6 +10,16 @@
     "fields": {}
   },
   {
+    "type": "CONTENT",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "TYPE",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "assertion",
     "named": true,
     "fields": {
@@ -6191,7 +6201,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -6219,11 +6229,27 @@
           "named": true
         },
         {
+          "type": "OF",
+          "named": true
+        },
+        {
           "type": "TEXT",
           "named": true
         },
         {
+          "type": "TYPE",
+          "named": true
+        },
+        {
+          "type": "WILDCARD",
+          "named": true
+        },
+        {
           "type": "qenum_struct",
+          "named": true
+        },
+        {
+          "type": "type_variable",
           "named": true
         }
       ]
@@ -7200,6 +7226,11 @@
     }
   },
   {
+    "type": "type_variable",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "unit_literal",
     "named": true,
     "fields": {},
@@ -7359,10 +7390,6 @@
   },
   {
     "type": "CONTAINS",
-    "named": true
-  },
-  {
-    "type": "CONTENT",
     "named": true
   },
   {
@@ -7768,5 +7795,9 @@
   {
     "type": "YEAR",
     "named": true
+  },
+  {
+    "type": "typu",
+    "named": false
   }
 ]

@@ -35,6 +35,7 @@ const tokens_local = {
     DEFINED_AS: "equals",
     MATCH: "match",
     WILDCARD: "anything",
+    TYPE: "type",
     WITH_PATT: /with\s+pattern/,
     UNDER_CONDITION: /under\s+condition/,
     IF: "if",
@@ -124,6 +125,7 @@ const tokens_local = {
     DEFINED_AS: /égal\s+à/,
     MATCH: "selon",
     WILDCARD: /n'importe\s+quel/,
+    TYPE: "type",
     WITH_PATT: /sous\s+forme/,
     UNDER_CONDITION: /sous\s+condition/,
     IF: "si",
@@ -213,6 +215,7 @@ const tokens_local = {
     DEFINED_AS: "wynosi",
     MATCH: "pasuje",
     WILDCARD: "cokolwiek",
+    TYPE: "typu",
     WITH_PATT: /ze\s+wzorem/,
     UNDER_CONDITION: /pod\s+warunkiem/,
     IF: "jezeli",
@@ -379,9 +382,11 @@ module.exports = grammar({
     // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
     // law_text: $ => prec.right(repeat1($._law_line)),
 
+    type_variable: $ => $._LIDENT,
     primitive_typ: $ =>
-      choice($.INTEGER, $.BOOLEAN, $.MONEY, $.DURATION, $.TEXT, $.DECIMAL,
-             $.DATE, $.qenum_struct),
+      prec.right(
+        choice($.INTEGER, $.BOOLEAN, $.MONEY, $.DURATION, $.TEXT, $.DECIMAL,
+               $.DATE, $.qenum_struct, $.WILDCARD, seq($.WILDCARD, $.OF, $.TYPE, $.type_variable))),
     typ_list: $ =>
       seq(repeat(seq($.typ, $.COMMA)), $.typ),
     typ: $ => choice(
@@ -790,6 +795,7 @@ module.exports = grammar({
   DEFINED_AS: $ => token(tokens.DEFINED_AS),
   MATCH: $ => token(tokens.MATCH),
   WILDCARD: $ => token(tokens.WILDCARD),
+  TYPE: $ => token(tokens.TYPE),
   WITH_PATT: $ => token(tokens.WITH_PATT),
   UNDER_CONDITION: $ => token(tokens.UNDER_CONDITION),
   IF: $ => token(tokens.IF),

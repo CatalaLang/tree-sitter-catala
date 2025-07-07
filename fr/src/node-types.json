@@ -6191,7 +6191,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -6219,11 +6219,27 @@
           "named": true
         },
         {
+          "type": "OF",
+          "named": true
+        },
+        {
           "type": "TEXT",
           "named": true
         },
         {
+          "type": "TYPE",
+          "named": true
+        },
+        {
+          "type": "WILDCARD",
+          "named": true
+        },
+        {
           "type": "qenum_struct",
+          "named": true
+        },
+        {
+          "type": "type_variable",
           "named": true
         }
       ]
@@ -7200,6 +7216,11 @@
     }
   },
   {
+    "type": "type_variable",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "unit_literal",
     "named": true,
     "fields": {},
@@ -7735,6 +7756,10 @@
   },
   {
     "type": "TUPLE_INDEX",
+    "named": true
+  },
+  {
+    "type": "TYPE",
     "named": true
   },
   {

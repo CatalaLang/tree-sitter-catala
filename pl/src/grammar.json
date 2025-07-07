@@ -90,42 +90,75 @@
         ]
       }
     },
+    "type_variable": {
+      "type": "SYMBOL",
+      "name": "_LIDENT"
+    },
     "primitive_typ": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "INTEGER"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "BOOLEAN"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "MONEY"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "DURATION"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "TEXT"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "DECIMAL"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "DATE"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "qenum_struct"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "INTEGER"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "BOOLEAN"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "MONEY"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "DURATION"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "TEXT"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "DECIMAL"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "DATE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "qenum_struct"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "WILDCARD"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "WILDCARD"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "OF"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "TYPE"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "type_variable"
+              }
+            ]
+          }
+        ]
+      }
     },
     "typ_list": {
       "type": "SEQ",
@@ -3905,6 +3938,13 @@
       "content": {
         "type": "STRING",
         "value": "cokolwiek"
+      }
+    },
+    "TYPE": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "typu"
       }
     },
     "WITH_PATT": {
