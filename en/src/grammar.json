@@ -4322,14 +4322,14 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "-?[0-9]+\\.[0-9]*"
+        "value": "-?[0-9]+\\.[0-9]+"
       }
     },
     "MONEY_AMOUNT": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "\\$[0-9]([0-9,]*[0-9])?(\\.[0-9]{0,2})?"
+        "value": "\\$[0-9]([0-9,]*[0-9])?(\\.[0-9]{1,2})?"
       }
     },
     "LAW_INCLUDE": {
@@ -4873,3 +4873,4 @@
   "inline": [],
   "supertypes": []
 }
+
