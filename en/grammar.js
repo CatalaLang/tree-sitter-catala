@@ -17,6 +17,7 @@ const tokens_local = {
     INCREASING: "increasing",
     OF: "of",
     LIST: "list",
+    OPTION: "optional",
     CONTAINS: "contains",
     ENUM: "enumeration",
     INTEGER: "integer",
@@ -69,6 +70,7 @@ const tokens_local = {
     MAP_EACH: /map\s+each/,
     TO: /to/,
     INITIALLY: "initially",
+    IMPOSSIBLE: "impossible",
     IS: "is",
     EMPTY: "empty",
     BUT_REPLACE: /but\s+replace/,
@@ -107,6 +109,7 @@ const tokens_local = {
     INCREASING: "croissant",
     OF: "de",
     LIST: "liste",
+    OPTION: "optionnel",
     CONTAINS: "contient",
     ENUM: "énumération",
     INTEGER: "entier",
@@ -159,6 +162,7 @@ const tokens_local = {
     MAP_EACH: /transforme\s+chaque/,
     TO: /en/,
     INITIALLY: "initialement",
+    IMPOSSIBLE: "impossible",
     IS: "est",
     EMPTY: "vide",
     BUT_REPLACE: /mais\s+en\s+remplaçant/,
@@ -197,6 +201,7 @@ const tokens_local = {
     INCREASING: "rosnacy",
     OF: "z",
     LIST: "kolekcja",
+    OPTION: "opcjonalny",
     CONTAINS: "zawiera",
     ENUM: "enumeracja",
     INTEGER: "calkowita",
@@ -249,6 +254,7 @@ const tokens_local = {
     MAP_EACH: "plan każdy",
     TO: "do",
     INITIALLY: "początkowo",
+    IMPOSSIBLE: "niemożliwe",
     IS: "jest",
     EMPTY: "pusty",
     BUT_REPLACE: /ale\s+zastąpić/,
@@ -392,6 +398,7 @@ module.exports = grammar({
     typ: $ => choice(
       $.primitive_typ,
       seq ($.LIST, $.OF, $.typ),
+      seq ($.OPTION, $.OF, $.typ),
       seq ($.LPAREN, $.typ_list, $.RPAREN)
     ),
 
@@ -493,7 +500,7 @@ module.exports = grammar({
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
-                              $.WITH_PATT, $.qconstructor, optional(seq($.OF, $.variable)))),
+                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.variable)))),
     e_but_replace: $ =>
       prec.right('apply', seq($._expr, $.BUT_REPLACE,
                               $.LBRACE, $.struct_content_fields, $.RBRACE)),
@@ -551,7 +558,7 @@ module.exports = grammar({
       prec.right(seq($.LET, $.binder, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
-      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.OF, $.binder)))),
+      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>
@@ -596,6 +603,7 @@ module.exports = grammar({
       ),
     builtin: $ =>
       choice(
+        $.IMPOSSIBLE,
         $.CARDINAL,
         $.DECIMAL,
         $.MONEY,
@@ -777,6 +785,7 @@ module.exports = grammar({
   INCREASING: $ => token(tokens.INCREASING),
   OF: $ => token(tokens.OF),
   LIST: $ => token(tokens.LIST),
+  OPTION: $ => token(tokens.OPTION),
   CONTAINS: $ => token(tokens.CONTAINS),
   ENUM: $ => token(tokens.ENUM),
   INTEGER: $ => token(tokens.INTEGER),
@@ -826,6 +835,7 @@ module.exports = grammar({
   MAP_EACH: $ => token(tokens.MAP_EACH),
   TO: $ => token(tokens.TO),
   INITIALLY: $ => token(tokens.INITIALLY),
+  IMPOSSIBLE: $ => token(tokens.IMPOSSIBLE),
   IS: $ => token(tokens.IS),
   EMPTY: $ => token(tokens.EMPTY),
   BUT_REPLACE: $ => token(tokens.BUT_REPLACE),

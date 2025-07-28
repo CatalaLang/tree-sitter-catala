@@ -186,6 +186,10 @@
           "named": true
         },
         {
+          "type": "IMPOSSIBLE",
+          "named": true
+        },
+        {
           "type": "LastDayOfMonth",
           "named": true
         },
@@ -5322,7 +5326,7 @@
       "required": true,
       "types": [
         {
-          "type": "OF",
+          "type": "CONTENT",
           "named": true
         },
         {
@@ -6019,7 +6023,7 @@
           "named": true
         },
         {
-          "type": "OF",
+          "type": "CONTENT",
           "named": true
         },
         {
@@ -7188,6 +7192,10 @@
           "named": true
         },
         {
+          "type": "OPTION",
+          "named": true
+        },
+        {
           "type": "RPAREN",
           "named": true
         },
@@ -7529,6 +7537,10 @@
     "named": true
   },
   {
+    "type": "IMPOSSIBLE",
+    "named": true
+  },
+  {
     "type": "IN",
     "named": true
   },
@@ -7674,6 +7686,10 @@
   },
   {
     "type": "OF",
+    "named": true
+  },
+  {
+    "type": "OPTION",
     "named": true
   },
   {
