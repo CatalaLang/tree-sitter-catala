@@ -214,6 +214,23 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "OPTION"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "OF"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "typ"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "LPAREN"
             },
             {
@@ -882,7 +899,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "OF"
+                    "name": "CONTENT"
                   },
                   {
                     "type": "SYMBOL",
@@ -1913,7 +1930,7 @@
                         "members": [
                           {
                             "type": "SYMBOL",
-                            "name": "OF"
+                            "name": "CONTENT"
                           },
                           {
                             "type": "SYMBOL",
@@ -2359,6 +2376,10 @@
     "builtin": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "IMPOSSIBLE"
+        },
         {
           "type": "SYMBOL",
           "name": "CARDINAL"
@@ -3814,6 +3835,13 @@
         "value": "kolekcja"
       }
     },
+    "OPTION": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "opcjonalny"
+      }
+    },
     "CONTAINS": {
       "type": "TOKEN",
       "content": {
@@ -4155,6 +4183,13 @@
       "content": {
         "type": "STRING",
         "value": "początkowo"
+      }
+    },
+    "IMPOSSIBLE": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "niemożliwe"
       }
     },
     "IS": {
