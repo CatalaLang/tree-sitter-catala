@@ -2,11 +2,13 @@
   {
     "type": "ATTRIBUTE",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
     "type": "COMMENT",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
@@ -160,27 +162,7 @@
           "named": true
         },
         {
-          "type": "FirstDayOfMonth",
-          "named": true
-        },
-        {
-          "type": "GetDay",
-          "named": true
-        },
-        {
-          "type": "GetMonth",
-          "named": true
-        },
-        {
-          "type": "GetYear",
-          "named": true
-        },
-        {
           "type": "IMPOSSIBLE",
-          "named": true
-        },
-        {
-          "type": "LastDayOfMonth",
           "named": true
         },
         {
@@ -6227,7 +6209,7 @@
           "named": true
         },
         {
-          "type": "TEXT",
+          "type": "POSITION",
           "named": true
         },
         {
@@ -6700,6 +6682,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -7503,27 +7486,11 @@
     "named": true
   },
   {
-    "type": "FirstDayOfMonth",
-    "named": true
-  },
-  {
     "type": "GREATER",
     "named": true
   },
   {
     "type": "GREATER_EQUAL",
-    "named": true
-  },
-  {
-    "type": "GetDay",
-    "named": true
-  },
-  {
-    "type": "GetMonth",
-    "named": true
-  },
-  {
-    "type": "GetYear",
     "named": true
   },
   {
@@ -7615,10 +7582,6 @@
     "named": true
   },
   {
-    "type": "LastDayOfMonth",
-    "named": true
-  },
-  {
     "type": "MAP_EACH",
     "named": true
   },
@@ -7707,6 +7670,10 @@
     "named": true
   },
   {
+    "type": "POSITION",
+    "named": true
+  },
+  {
     "type": "RBRACE",
     "named": true
   },
@@ -7748,10 +7715,6 @@
   },
   {
     "type": "SUM",
-    "named": true
-  },
-  {
-    "type": "TEXT",
     "named": true
   },
   {

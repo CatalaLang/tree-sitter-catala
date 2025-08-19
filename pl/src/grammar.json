@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "catala_pl",
   "word": "_LIDENT",
   "rules": {
@@ -106,6 +107,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "DECIMAL"
+          },
+          {
+            "type": "SYMBOL",
             "name": "BOOLEAN"
           },
           {
@@ -118,15 +123,11 @@
           },
           {
             "type": "SYMBOL",
-            "name": "TEXT"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "DECIMAL"
-          },
-          {
-            "type": "SYMBOL",
             "name": "DATE"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "POSITION"
           },
           {
             "type": "SYMBOL",
@@ -2395,26 +2396,6 @@
         {
           "type": "SYMBOL",
           "name": "Round"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "GetDay"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "GetMonth"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "GetYear"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "FirstDayOfMonth"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "LastDayOfMonth"
         }
       ]
     },
@@ -3811,14 +3792,14 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "malejacy"
+        "value": "dół"
       }
     },
     "INCREASING": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "rosnacy"
+        "value": "górę"
       }
     },
     "OF": {
@@ -3903,6 +3884,13 @@
       "content": {
         "type": "STRING",
         "value": "zerojedynkowy"
+      }
+    },
+    "POSITION": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "code_location"
       }
     },
     "SUM": {
@@ -4283,53 +4271,18 @@
         "value": "zaokrąglony"
       }
     },
-    "GetDay": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "dostęp_dzień"
-      }
-    },
-    "GetMonth": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "dostęp_miesiąc"
-      }
-    },
-    "GetYear": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "dostęp_rok"
-      }
-    },
-    "FirstDayOfMonth": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "pierwszy_dzień_miesiąca"
-      }
-    },
-    "LastDayOfMonth": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "ostatni_dzień_miesiąca"
-      }
-    },
     "DECIMAL_LITERAL": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "-?[0-9]+\\.[0-9]+"
+        "value": "-?[0-9]+\\.[0-9]*"
       }
     },
     "MONEY_AMOUNT": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]([0-9,]*[0-9])?(\\.[0-9]{1,2})? *PLN"
+        "value": "[0-9]([0-9,]*[0-9])?(\\.[0-9]{0,2})? *PLN"
       }
     },
     "LAW_INCLUDE": {
@@ -4871,6 +4824,6 @@
   ],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }
-
