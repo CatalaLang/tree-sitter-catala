@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "catala_fr",
   "word": "_LIDENT",
   "rules": {
@@ -4282,7 +4281,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€"
+        "value": "-?[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€"
       }
     },
     "LAW_INCLUDE": {
@@ -4824,6 +4823,5 @@
   ],
   "externals": [],
   "inline": [],
-  "supertypes": [],
-  "reserved": {}
+  "supertypes": []
 }
