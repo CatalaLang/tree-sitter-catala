@@ -2059,7 +2059,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "variable"
+            "name": "binder"
           },
           {
             "type": "SYMBOL",
@@ -2165,7 +2165,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "variable"
+            "name": "binder"
           },
           {
             "type": "SYMBOL",
