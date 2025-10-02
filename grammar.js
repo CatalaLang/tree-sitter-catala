@@ -557,14 +557,14 @@ module.exports = grammar({
     e_enum: $ =>
       prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
-      prec.right(seq($.LIST, $.OF, $.variable, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
+      prec.right(seq($.LIST, $.OF, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
       prec.right(
           seq($.MAP_EACH, $.binder, $.AMONG, field('coll', $._expr),
               $.SUCH, $.THAT, field('cond', $._expr), $.TO, field('mapf', $._expr))
       ),
     e_coll_arg_extremum: $ =>
-      prec.right(seq($.CONTENT, $.OF, $.variable, $.AMONG, field('coll', $._expr),
+      prec.right(seq($.CONTENT, $.OF, $.binder, $.AMONG, field('coll', $._expr),
                      $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
                      optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
 

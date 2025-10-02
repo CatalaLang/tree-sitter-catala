@@ -1499,7 +1499,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
@@ -2571,7 +2571,7 @@
           "named": true
         },
         {
-          "type": "variable",
+          "type": "binder",
           "named": true
         }
       ]
