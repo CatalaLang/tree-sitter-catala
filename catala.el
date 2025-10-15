@@ -346,6 +346,12 @@
 
 (provide 'catala-ts-mode)
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(catala-ts-mode . ("catala-lsp"))))
+
+(add-hook 'catala-mode-hook 'eglot-ensure)
+
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.catala_\\(fr\\|en\\|pl\\)" . catala-ts-mode))
 
