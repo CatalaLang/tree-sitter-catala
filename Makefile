@@ -24,7 +24,7 @@ generate: Cargo.toml.in grammar.js ALWAYS
 	@mkdir -p $(TREESITTER_CATALA_LANG)
 	@sed 's/$${TREESITTER_CATALA_LANG}/'$(TREESITTER_CATALA_LANG)'/g' $< > $(TREESITTER_CATALA_LANG)/Cargo.toml
 	@cp grammar.js $(TREESITTER_CATALA_LANG)
-	@cd $(TREESITTER_CATALA_LANG) && tree-sitter generate
+	@cd $(TREESITTER_CATALA_LANG) && tree-sitter generate --abi=14 # emacs requires <15
 
 dist-clean:
 	rm -rf $(LANGS) $(LIBS)
