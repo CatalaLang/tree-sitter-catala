@@ -520,6 +520,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "e_paren"
+        },
+        {
+          "type": "SYMBOL",
           "name": "e_tuple"
         },
         {
@@ -658,11 +662,28 @@
         }
       ]
     },
+    "e_paren": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "LPAREN"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "RPAREN"
+        }
+      ]
+    },
     "tuple_contents": {
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT",
+          "type": "REPEAT1",
           "content": {
             "type": "SEQ",
             "members": [

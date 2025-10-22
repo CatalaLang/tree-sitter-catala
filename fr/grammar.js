@@ -432,6 +432,7 @@ module.exports = grammar({
         $.e_var_state,
         $.literal,
         $.builtin,
+        $.e_paren,
         $.e_tuple,
         $.e_collection,
         $.e_apply,
@@ -464,8 +465,11 @@ module.exports = grammar({
     e_var_state: $ =>
       seq($.variable, $.STATE, $.state_label),
 
+    e_paren: $ =>
+      seq($.LPAREN, $._expr, $.RPAREN),
+
     tuple_contents: $ =>
-      seq(repeat(seq($._expr, $.COMMA)), $._expr),
+      seq(repeat1(seq($._expr, $.COMMA)), $._expr),
 
     e_tuple: $ =>
       seq($.LPAREN, $.tuple_contents, $.RPAREN),
