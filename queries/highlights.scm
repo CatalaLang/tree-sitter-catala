@@ -13,14 +13,14 @@
 
 ;(IDENT) @variable.builtin
 
-(path ((DOT) @punctuation.delimiter)*) @module
+;(path ((DOT) @punctuation.delimiter)*) @module
 ((variable) @variable)
 
 (typ) @type
 
 (module_name) @type
 (scope_name) @keyword.def
-[(constructor_name) (struct_name)] @type
+[(constructor_name) (enum_struct_name)] @type
 
 (label) @tag
 

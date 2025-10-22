@@ -2,11 +2,13 @@
   {
     "type": "ATTRIBUTE",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
     "type": "COMMENT",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
@@ -6690,6 +6692,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
