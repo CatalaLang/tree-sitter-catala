@@ -61,7 +61,7 @@
       "type": "PATTERN",
       "value": "[ \\t]*\\r?\\n[ \\t]*"
     },
-    "law_text": {
+    "_law_text": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -76,7 +76,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "law_text"
+                "name": "_law_text"
               },
               {
                 "type": "PATTERN",
@@ -90,6 +90,10 @@
           }
         ]
       }
+    },
+    "law_text": {
+      "type": "SYMBOL",
+      "name": "_law_text"
     },
     "type_variable": {
       "type": "SYMBOL",

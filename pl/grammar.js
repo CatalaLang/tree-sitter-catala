@@ -369,10 +369,11 @@ module.exports = grammar({
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
     // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
-    law_text: $ => prec.right(choice(
+    _law_text: $ => prec.right(choice(
       $.LAW_WORD,
-      seq($.law_text, /\s+/, $.LAW_WORD)
+      seq($._law_text, /\s+/, $.LAW_WORD)
     )),
+    law_text: $ => $._law_text,
     // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
     // law_text: $ => prec.right(repeat1($._law_line)),
 

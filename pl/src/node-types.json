@@ -5945,10 +5945,6 @@
         {
           "type": "LAW_WORD",
           "named": true
-        },
-        {
-          "type": "law_text",
-          "named": true
         }
       ]
     }
