@@ -173,7 +173,7 @@ const tokens_local = {
     OUTPUT: "résultat",
     INTERNAL: "interne",
     Round: "arrondi",
-    DECIMAL_LITERAL: /-?[0-9]+,[0-9]*/,
+    DECIMAL_LITERAL: /-?[0-9]+,[0-9]+/,
     MONEY_AMOUNT: /-?[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
