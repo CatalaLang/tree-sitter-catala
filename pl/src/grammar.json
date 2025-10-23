@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "catala_pl",
   "word": "_LIDENT",
   "rules": {
@@ -60,7 +61,7 @@
       "type": "PATTERN",
       "value": "[ \\t]*\\r?\\n[ \\t]*"
     },
-    "law_text": {
+    "_law_text": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -75,7 +76,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "law_text"
+                "name": "_law_text"
               },
               {
                 "type": "PATTERN",
@@ -89,6 +90,10 @@
           }
         ]
       }
+    },
+    "law_text": {
+      "type": "SYMBOL",
+      "name": "_law_text"
     },
     "type_variable": {
       "type": "SYMBOL",
@@ -515,6 +520,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "e_paren"
+        },
+        {
+          "type": "SYMBOL",
           "name": "e_tuple"
         },
         {
@@ -653,11 +662,28 @@
         }
       ]
     },
+    "e_paren": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "LPAREN"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "RPAREN"
+        }
+      ]
+    },
     "tuple_contents": {
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT",
+          "type": "REPEAT1",
           "content": {
             "type": "SEQ",
             "members": [
@@ -4823,5 +4849,6 @@
   ],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

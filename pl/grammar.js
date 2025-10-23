@@ -173,7 +173,7 @@ const tokens_local = {
     OUTPUT: "résultat",
     INTERNAL: "interne",
     Round: "arrondi",
-    DECIMAL_LITERAL: /-?[0-9]+,[0-9]*/,
+    DECIMAL_LITERAL: /-?[0-9]+,[0-9]+/,
     MONEY_AMOUNT: /-?[0-9]([0-9 ]*[0-9])?(,[0-9]{0,2})? *€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
@@ -369,10 +369,11 @@ module.exports = grammar({
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
     // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
-    law_text: $ => prec.right(choice(
+    _law_text: $ => prec.right(choice(
       $.LAW_WORD,
-      seq($.law_text, /\s+/, $.LAW_WORD)
+      seq($._law_text, /\s+/, $.LAW_WORD)
     )),
+    law_text: $ => $._law_text,
     // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
     // law_text: $ => prec.right(repeat1($._law_line)),
 
@@ -431,6 +432,7 @@ module.exports = grammar({
         $.e_var_state,
         $.literal,
         $.builtin,
+        $.e_paren,
         $.e_tuple,
         $.e_collection,
         $.e_apply,
@@ -463,8 +465,11 @@ module.exports = grammar({
     e_var_state: $ =>
       seq($.variable, $.STATE, $.state_label),
 
+    e_paren: $ =>
+      seq($.LPAREN, $._expr, $.RPAREN),
+
     tuple_contents: $ =>
-      seq(repeat(seq($._expr, $.COMMA)), $._expr),
+      seq(repeat1(seq($._expr, $.COMMA)), $._expr),
 
     e_tuple: $ =>
       seq($.LPAREN, $.tuple_contents, $.RPAREN),

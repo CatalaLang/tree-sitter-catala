@@ -1,0 +1,39 @@
+{
+  "grammars": [
+    {
+      "name": "catala_en",
+      "camelcase": "CatalaEn",
+      "scope": "source.catala_en",
+      "file-types": [
+        "catala_en"
+      ],
+      "highlights": "../queries/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "license": "Apache 2",
+    "description": "Catala grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Louis Gesbert",
+        "email": "louis.gesbert@inria.fr"
+      },
+      {
+        "name": "Vincent Botbol",
+        "email": "vincent.botbol@inria.fr"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/CatalaLang/tree-sitter-catala"
+    }
+  },
+  "bindings": {
+    "c": false,
+    "go": false,
+    "node": false,
+    "python": false,
+    "rust": false,
+    "swift": false
+  }
+}

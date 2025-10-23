@@ -2,11 +2,13 @@
   {
     "type": "ATTRIBUTE",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
     "type": "COMMENT",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
@@ -310,6 +312,10 @@
           "named": true
         },
         {
+          "type": "e_paren",
+          "named": true
+        },
+        {
           "type": "e_scope_apply",
           "named": true
         },
@@ -585,6 +591,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -716,6 +726,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -899,6 +913,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -1035,6 +1053,10 @@
           "named": true
         },
         {
+          "type": "e_paren",
+          "named": true
+        },
+        {
           "type": "e_scope_apply",
           "named": true
         },
@@ -1162,6 +1184,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -1280,6 +1306,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -1395,6 +1425,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -1584,6 +1618,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -1699,6 +1737,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -1836,6 +1878,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -1951,6 +1997,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -2104,6 +2154,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -2219,6 +2273,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -2384,6 +2442,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -2499,6 +2561,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -2656,6 +2722,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -2774,6 +2844,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -2889,6 +2963,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -3046,6 +3124,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -3164,6 +3246,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -3279,6 +3365,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -3440,6 +3530,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -3555,6 +3649,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -3708,6 +3806,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -3823,6 +3925,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -3969,6 +4075,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -4141,6 +4251,10 @@
           "named": true
         },
         {
+          "type": "e_paren",
+          "named": true
+        },
+        {
           "type": "e_scope_apply",
           "named": true
         },
@@ -4276,6 +4390,10 @@
           "named": true
         },
         {
+          "type": "e_paren",
+          "named": true
+        },
+        {
           "type": "e_scope_apply",
           "named": true
         },
@@ -4403,6 +4521,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -4521,6 +4643,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -4636,6 +4762,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -4781,6 +4911,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -4896,6 +5030,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -5045,6 +5183,10 @@
             "named": true
           },
           {
+            "type": "e_paren",
+            "named": true
+          },
+          {
             "type": "e_scope_apply",
             "named": true
           },
@@ -5097,6 +5239,141 @@
         },
         {
           "type": "match_case",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "e_paren",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "LPAREN",
+          "named": true
+        },
+        {
+          "type": "RPAREN",
+          "named": true
+        },
+        {
+          "type": "builtin",
+          "named": true
+        },
+        {
+          "type": "e_apply",
+          "named": true
+        },
+        {
+          "type": "e_binop",
+          "named": true
+        },
+        {
+          "type": "e_but_replace",
+          "named": true
+        },
+        {
+          "type": "e_coll_arg_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_contains",
+          "named": true
+        },
+        {
+          "type": "e_coll_exists",
+          "named": true
+        },
+        {
+          "type": "e_coll_extremum",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter",
+          "named": true
+        },
+        {
+          "type": "e_coll_filter_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_fold",
+          "named": true
+        },
+        {
+          "type": "e_coll_forall",
+          "named": true
+        },
+        {
+          "type": "e_coll_map",
+          "named": true
+        },
+        {
+          "type": "e_coll_sum",
+          "named": true
+        },
+        {
+          "type": "e_collection",
+          "named": true
+        },
+        {
+          "type": "e_enum",
+          "named": true
+        },
+        {
+          "type": "e_fieldaccess",
+          "named": true
+        },
+        {
+          "type": "e_ifthenelse",
+          "named": true
+        },
+        {
+          "type": "e_letin",
+          "named": true
+        },
+        {
+          "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_paren",
+          "named": true
+        },
+        {
+          "type": "e_scope_apply",
+          "named": true
+        },
+        {
+          "type": "e_struct",
+          "named": true
+        },
+        {
+          "type": "e_test_match",
+          "named": true
+        },
+        {
+          "type": "e_tuple",
+          "named": true
+        },
+        {
+          "type": "e_unop",
+          "named": true
+        },
+        {
+          "type": "e_var_state",
+          "named": true
+        },
+        {
+          "type": "e_variable",
+          "named": true
+        },
+        {
+          "type": "literal",
           "named": true
         }
       ]
@@ -5254,6 +5531,10 @@
           },
           {
             "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
             "named": true
           },
           {
@@ -5431,6 +5712,10 @@
         },
         {
           "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_paren",
           "named": true
         },
         {
@@ -5694,6 +5979,10 @@
           "named": true
         },
         {
+          "type": "e_paren",
+          "named": true
+        },
+        {
           "type": "e_scope_apply",
           "named": true
         },
@@ -5822,6 +6111,10 @@
           "named": true
         },
         {
+          "type": "e_paren",
+          "named": true
+        },
+        {
           "type": "e_scope_apply",
           "named": true
         },
@@ -5932,10 +6225,6 @@
       "types": [
         {
           "type": "LAW_WORD",
-          "named": true
-        },
-        {
-          "type": "law_text",
           "named": true
         }
       ]
@@ -6082,6 +6371,10 @@
         },
         {
           "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_paren",
           "named": true
         },
         {
@@ -6680,6 +6973,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -6799,6 +7093,10 @@
         },
         {
           "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_paren",
           "named": true
         },
         {
@@ -7104,6 +7402,10 @@
         },
         {
           "type": "e_match",
+          "named": true
+        },
+        {
+          "type": "e_paren",
           "named": true
         },
         {
