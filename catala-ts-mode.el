@@ -27,7 +27,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-law-heading-face
-  '((t (:inherit catala-font-lock-law-text-face :weight bold :foreground "LightSkyBlue" :height 1.05)))
+  '((t (:inherit catala-font-lock-law-text-face :weight bold :foreground "SteelBlue" :height 1.05)))
   "Face description for Catala law."
   :group 'catala-faces)
 
@@ -37,7 +37,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-code-block-face
-  '((t (:extend t :background "grey15")))
+  '((t (:extend t :background "grey90")))
   "Face description for Catala code blocks."
   :group 'catala-faces)
 
@@ -47,7 +47,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-verbatim-face
-  '((t (:inherit font-lock-comment-face :extend t :background "grey15")))
+  '((t (:inherit font-lock-comment-face :extend t :background "grey90")))
   "Face description for Catala verbatim blocks."
   :group 'catala-faces)
 
@@ -67,7 +67,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-expression-face
-  '((t (:foreground "turquoise")))
+  '((t (:foreground "DarkCyan")))
   "Face description for base Catala expression structures."
   :group 'catala-faces)
 
@@ -77,7 +77,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-constructor-face
-  '((t (:foreground "LightSeaGreen")))
+  '((t (:foreground "DarkCyan")))
   "Face description for Catala constructors."
   :group 'catala-faces)
 
@@ -87,7 +87,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-state-face
-  '((t (:inherit font-lock-variable-name-face :slant italic)))
+  '((t (:inherit font-lock-variable-name-face)))
   "Face description for Catala state labels."
   :group 'catala-faces)
 
@@ -97,7 +97,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-operator-face
-  '((t (:foreground "DeepSkyBlue" :weight bold)))
+  '((t (:inherit tree-sitter-hl-face:keyword :weight light)))
   "Face description for Catala operators."
   :group 'catala-faces)
 
@@ -117,7 +117,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-type-face
-  '((t (:foreground "PaleGreen")))
+  '((t (:foreground "ForestGreen")))
   "Face description for Catala types."
   :group 'catala-faces)
 
@@ -127,17 +127,17 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-declaration-face
-  '((t (:foreground "plum")))
+  '((t (:foreground "HotPink")))
   "Face description for Catala declarations (top-level structure)."
   :group 'catala-faces)
 
 (defface catala-font-lock-definition-face
-  '((t (:foreground "orange" :weight normal)))
+  '((t (:foreground "DarkCyan" :weight normal)))
   "Face description for Catala definitionss (scope elements, etc.)."
   :group 'catala-faces)
 
 (defface catala-font-lock-field-face
-  '((t (:foreground "LightSeaGreen" :slant italic)))
+  '((t (:foreground "DarkCyan")))
   "Face description for Catala fields."
   :group 'catala-faces)
 
@@ -162,7 +162,7 @@
    :language lang :feature 'all :override t
      "(literal) @catala-font-lock-literal-face"
    ;; :language lang :feature 'all :override t
-   ;;   "(path_dot) @catala-font-lock-punctuation-face"
+     ;;   "(path_dot) @catala-font-lock-punctuation-face"
    :language lang :feature 'all :override t
      "(variable) @catala-font-lock-variable-face"
    :language lang :feature 'all :override t
@@ -327,9 +327,9 @@
         (indent-according-to-mode)
       (markdown-cycle)))
 
-  (define-key catala-ts-mode-map "\C-c.c" 'catala-insert-code-block)
-  (define-key catala-ts-mode-map "\C-c.m" 'catala-insert-metadata-block)
-  (define-key catala-ts-mode-map "\C-c.t" 'catala-insert-test-block)
+  (define-key catala-ts-mode-map (kbd "C-c c") 'catala-insert-code-block)
+  (define-key catala-ts-mode-map (kbd "C-c m") 'catala-insert-metadata-block)
+  (define-key catala-ts-mode-map (kbd "C-c t") 'catala-insert-test-block)
   (define-key catala-ts-mode-map [tab] 'indent-or-cycle)
 
   ; activate prettify-symbols-mode to use. Note: affects indentation
@@ -347,17 +347,19 @@
 
 (provide 'catala-ts-mode)
 
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '(catala-ts-mode . ("catala-lsp"))))
-
-(add-hook 'catala-mode-hook 'eglot-ensure)
-
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.catala_\\(fr\\|en\\|pl\\)" . catala-ts-mode))
-
 
 ;; Debugging
 ;(setq treesit--font-lock-verbose t)
 ;(setq treesit--indent-verbose t)
-;(add-hook 'catala-mode-hook 'prettify-symbols-mode)
+;(add-hook 'catala-ts-mode-hook 'prettify-symbols-mode)
+
+;; Catala LSP
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               `(catala-ts-mode . ,(eglot-alternatives
+                               '(("catala-lsp"))))))
+
+(add-hook 'catala-ts-mode-hook 'eglot-ensure)
