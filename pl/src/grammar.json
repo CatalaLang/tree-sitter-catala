@@ -10,7 +10,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_newline"
+            "name": "_hardnl"
           },
           {
             "type": "SYMBOL",
@@ -57,9 +57,26 @@
         }
       ]
     },
+    "_hspace": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[\\p{Zs}\\t]+"
+      }
+    },
     "_newline": {
-      "type": "PATTERN",
-      "value": "[ \\t]*\\r?\\n[ \\t]*"
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[\\p{Zs}\\t]*\\r?\\n[\\p{Zs}\\t]*"
+      }
+    },
+    "_hardnl": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[\\p{Zs}\\t]*\\r?\\n"
+      }
     },
     "_law_text": {
       "type": "PREC_RIGHT",
@@ -79,12 +96,29 @@
                 "name": "_law_text"
               },
               {
-                "type": "PATTERN",
-                "value": "\\s+"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_hspace"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
               },
               {
-                "type": "SYMBOL",
-                "name": "LAW_WORD"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "LAW_WORD"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "LAW_SHARP"
+                  }
+                ]
               }
             ]
           }
@@ -92,8 +126,37 @@
       }
     },
     "law_text": {
-      "type": "SYMBOL",
-      "name": "_law_text"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_law_text"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "type_variable": {
       "type": "SYMBOL",
@@ -2774,80 +2837,12 @@
           "name": "ASSERTION"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "body",
-              "content": {
-                "type": "SYMBOL",
-                "name": "expression"
-              }
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "FIXED"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "scope_var"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "BY"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "variable"
-                }
-              ]
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "VARIES"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "scope_var"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "WITH"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "expression"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "INCREASING"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "DECREASING"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         }
       ]
     },
@@ -3470,11 +3465,8 @@
           "name": "BEGIN_CODE"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]*\\n"
-          }
+          "type": "SYMBOL",
+          "name": "_hardnl"
         }
       ]
     },
@@ -3486,11 +3478,8 @@
           "name": "BEGIN_METADATA"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]*\\n"
-          }
+          "type": "SYMBOL",
+          "name": "_hardnl"
         }
       ]
     },
@@ -3502,17 +3491,26 @@
           "name": "END_CODE"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]*\\n"
-          }
+          "type": "SYMBOL",
+          "name": "_hardnl"
         }
       ]
     },
     "code_block": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "CHOICE",
           "members": [
@@ -3552,17 +3550,26 @@
           "name": "BEGIN_VERB_BLOCK"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]*\\n"
-          }
+          "type": "SYMBOL",
+          "name": "_hardnl"
         }
       ]
     },
     "verb_block": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "SYMBOL",
           "name": "begin_verb_block_fence"
@@ -3706,42 +3713,94 @@
       ]
     },
     "law_heading": {
-      "type": "PREC",
-      "value": 1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "LAW_HEADING"
-          },
-          {
-            "type": "PREC",
-            "value": 1,
-            "content": {
-              "type": "CHOICE",
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "LAW_SHARP"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_hspace"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "LAW_WORD"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "LAW_SHARP"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
               "members": [
                 {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "BAR"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "LAW_LABEL"
-                    }
-                  ]
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": "|"
+                  }
                 },
                 {
-                  "type": "BLANK"
+                  "type": "SYMBOL",
+                  "name": "LAW_LABEL"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
-          }
-        ]
-      }
+          ]
+        }
+      ]
     },
     "law_block": {
       "type": "PREC_RIGHT",
@@ -3749,22 +3808,30 @@
       "content": {
         "type": "REPEAT1",
         "content": {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "law_text"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "law_text"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "law_heading"
+                }
+              ]
             },
             {
-              "type": "SYMBOL",
-              "name": "law_heading"
-            },
-            {
-              "type": "PREC_RIGHT",
+              "type": "PREC",
               "value": -1,
               "content": {
-                "type": "SYMBOL",
-                "name": "_newline"
+                "type": "REPEAT1",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_hardnl"
+                }
               }
             }
           ]
@@ -3874,13 +3941,6 @@
       "content": {
         "type": "STRING",
         "value": "pieniądze"
-      }
-    },
-    "TEXT": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "tekst"
       }
     },
     "DECIMAL": {
@@ -4051,13 +4111,6 @@
         "value": "asercja"
       }
     },
-    "VARIES": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "rozna"
-      }
-    },
     "WITH": {
       "type": "TOKEN",
       "content": {
@@ -4084,20 +4137,6 @@
       "content": {
         "type": "STRING",
         "value": "mamy"
-      }
-    },
-    "FIXED": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "staloprzecinkowa"
-      }
-    },
-    "BY": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "przez"
       }
     },
     "RULE": {
@@ -4307,7 +4346,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[0-9]([0-9,]*[0-9])?(\\.[0-9]{1,2})? *PLN"
+        "value": "-?[0-9]([0-9,]*[0-9])?(\\.[0-9]{1,2})?\\p{Zs}*PLN"
       }
     },
     "LAW_INCLUDE": {
@@ -4457,16 +4496,6 @@
         "value": "[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]"
       }
     },
-    "LAW_HEADING": {
-      "type": "TOKEN",
-      "content": {
-        "type": "IMMEDIATE_TOKEN",
-        "content": {
-          "type": "PATTERN",
-          "value": "#+[ \\t]*[^\\n|]*"
-        }
-      }
-    },
     "LAW_LABEL": {
       "type": "TOKEN",
       "content": {
@@ -4477,13 +4506,27 @@
     "LAW_WORD": {
       "type": "TOKEN",
       "content": {
-        "type": "PREC",
-        "value": -1,
+        "type": "IMMEDIATE_TOKEN",
         "content": {
-          "type": "IMMEDIATE_TOKEN",
+          "type": "PREC",
+          "value": -1,
           "content": {
             "type": "PATTERN",
-            "value": "\\S*"
+            "value": "\\S+"
+          }
+        }
+      }
+    },
+    "LAW_SHARP": {
+      "type": "TOKEN",
+      "content": {
+        "type": "IMMEDIATE_TOKEN",
+        "content": {
+          "type": "PREC",
+          "value": 1,
+          "content": {
+            "type": "PATTERN",
+            "value": "#+"
           }
         }
       }
@@ -4549,13 +4592,6 @@
       "content": {
         "type": "STRING",
         "value": ";"
-      }
-    },
-    "BAR": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "|"
       }
     },
     "PLUS": {
