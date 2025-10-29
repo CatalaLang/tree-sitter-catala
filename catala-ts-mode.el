@@ -21,8 +21,6 @@
   "Special faces for the Catala mode."
   :group 'catala)
 
-(require 'tree-sitter-hl)
-
 (defface catala-font-lock-law-text-face
   '((t (:family "DejaVu Serif" :height 1.15)))
   "Face description for Catala law."
@@ -49,22 +47,22 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-verbatim-face
-  '((t (:inherit tree-sitter-hl-face:comment :extend t :background "grey15")))
+  '((t (:inherit font-lock-comment-face :extend t :background "grey15")))
   "Face description for Catala verbatim blocks."
   :group 'catala-faces)
 
 (defface catala-font-lock-comment-face
-  '((t (:inherit tree-sitter-hl-face:comment)))
+  '((t (:inherit font-lock-comment-face)))
   "Face description for Catala comments."
   :group 'catala-faces)
 
 (defface catala-font-lock-attribute-face
-  '((t (:inherit tree-sitter-hl-face:doc)))
+  '((t (:inherit font-lock-doc-face)))
   "Face description for Catala attributes."
   :group 'catala-faces)
 
 (defface catala-font-lock-scope-face
-  '((t (:inherit tree-sitter-hl-face:function)))
+  '((t (:inherit font-lock-function-name-face)))
   "Face description for Catala scope names."
   :group 'catala-faces)
 
@@ -74,7 +72,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-builtin-face
-  '((t (:inherit tree-sitter-hl-face:function.builtin)))
+  '((t (:inherit font-lock-function-name-face)))
   "Face description for Catala builtins."
   :group 'catala-faces)
 
@@ -84,17 +82,17 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-label-face
-  '((t (:inherit tree-sitter-hl-face:label :underline t)))
+  '((t (:inherit font-lock-label-face :underline t)))
   "Face description for Catala labels."
   :group 'catala-faces)
 
 (defface catala-font-lock-state-face
-  '((t (:inherit tree-sitter-hl-face:variable :slant italic)))
+  '((t (:inherit font-lock-variable-name-face :slant italic)))
   "Face description for Catala state labels."
   :group 'catala-faces)
 
 (defface catala-font-lock-punctuation-face
-  '((t (:inherit tree-sitter-hl-face:punctuation)))
+  '((t (:inherit font-lock-doc-markup-face)))
   "Face description for Catala punctuation."
   :group 'catala-faces)
 
@@ -104,7 +102,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-literal-face
-  '((t (:inherit tree-sitter-hl-face:constant)))
+  '((t (:inherit font-lock-constant-face)))
   "Face description for Catala literals."
   :group 'catala-faces)
 
@@ -114,7 +112,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-variable-face
-  '((t (:inherit tree-sitter-hl-face:variable)))
+  '((t (:inherit font-lock-variable-name-face)))
   "Face description for Catala variables."
   :group 'catala-faces)
 
@@ -124,7 +122,7 @@
   :group 'catala-faces)
 
 (defface catala-font-lock-module-face
-  '((t (:inherit tree-sitter-hl-face:doc)))
+  '((t (:inherit font-lock-doc-face)))
   "Face description for Catala modules."
   :group 'catala-faces)
 
@@ -146,11 +144,6 @@
 (defface catala-font-lock-error-face
   `((t (:foreground ,(face-attribute 'default :foreground))))
   "Face description for Catala parse errors."
-  :group 'catala-faces)
-
-(defface catala-font-lock-x-face
-  '((t (:inherit tree-sitter-hl-face:x)))
-  "Face description for Catala xs."
   :group 'catala-faces)
 
 
