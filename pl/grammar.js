@@ -22,7 +22,6 @@ const tokens_local = {
     ENUM: "enumeration",
     INTEGER: "integer",
     MONEY: "money",
-    TEXT: "text",
     DECIMAL: "decimal",
     DATE: "date",
     DURATION: "duration",
@@ -47,13 +46,10 @@ const tokens_local = {
     CONTENT: "content",
     STRUCT: "structure",
     ASSERTION: "assertion",
-    VARIES: "varies",
     WITH: "with",
     FOR: "for",
     ALL: "all",
     WE_HAVE: /we\s+have/,
-    FIXED: "fixed",
-    BY: "by",
     RULE: "rule",
     LET: "let",
     EXISTS: "exists",
@@ -86,7 +82,7 @@ const tokens_local = {
     INTERNAL: "internal",
     Round: "round",
     DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
-    MONEY_AMOUNT: /\$[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?/,
+    MONEY_AMOUNT: /-?\$[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
     MODULE_DEF: 'Module',
@@ -110,7 +106,6 @@ const tokens_local = {
     ENUM: "énumération",
     INTEGER: "entier",
     MONEY: "argent",
-    TEXT: "texte",
     DECIMAL: "décimal",
     DATE: "date",
     DURATION: "durée",
@@ -135,13 +130,10 @@ const tokens_local = {
     CONTENT: "contenu",
     STRUCT: "structure",
     ASSERTION: "assertion",
-    VARIES: "varie",
     WITH: "avec",
     FOR: "pour",
     ALL: "tout",
     WE_HAVE: /on\s+a/,
-    FIXED: "fixé",
-    BY: "par",
     RULE: "règle",
     LET: "soit",
     EXISTS: "existe",
@@ -174,7 +166,7 @@ const tokens_local = {
     INTERNAL: "interne",
     Round: "arrondi",
     DECIMAL_LITERAL: /-?[0-9]+,[0-9]+/,
-    MONEY_AMOUNT: /[0-9]([0-9 ]*[0-9])?(,[0-9]{1,2})? *€/,
+    MONEY_AMOUNT: /-?[0-9]([0-9\p{Zs}]*[0-9])?(,[0-9]{1,2})?\p{Zs}*€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
     MODULE_DEF: 'Module',
@@ -198,7 +190,6 @@ const tokens_local = {
     ENUM: "enumeracja",
     INTEGER: "calkowita",
     MONEY: "pieniądze",
-    TEXT: "tekst",
     DECIMAL: "dziesiętny",
     DATE: "czas",
     DURATION: /czas\s+trwania/,
@@ -223,13 +214,10 @@ const tokens_local = {
     CONTENT: "typu",
     STRUCT: "struktura",
     ASSERTION: "asercja",
-    VARIES: "rozna",
     WITH: /wraz\s+z/,
     FOR: "dla",
     ALL: "wszystkie",
     WE_HAVE: "mamy",
-    FIXED: "staloprzecinkowa",
-    BY: "przez",
     RULE: "zasada",
     LET: "niech",
     EXISTS: "istnieje",
@@ -262,7 +250,7 @@ const tokens_local = {
     INTERNAL: "wewnętrzny",
     Round: "zaokrąglony",
     DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
-    MONEY_AMOUNT: /[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})? *PLN/,
+    MONEY_AMOUNT: /-?[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?\p{Zs}*PLN/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
     MODULE_DEF: 'Module',
@@ -298,9 +286,9 @@ const tokens_international = {
   INT_LITERAL: /-?[0-9]+/,
   TUPLE_INDEX: /[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
-  LAW_HEADING: token.immediate(/#+[ \t]*[^\n|]*/),
   LAW_LABEL: /\S[^\n]*/,
-  LAW_WORD: prec(-1,token.immediate(/\S*/)),
+  LAW_WORD: token.immediate(prec(-1,/\S+/)),
+  LAW_SHARP: token.immediate(prec(1,/#+/)),
   LBRACE: '{',
   LESSER: '<',
   LESSER_EQUAL: '<=',
@@ -315,7 +303,6 @@ const tokens_international = {
   RPAREN: ')',
   RBRACKET: ']',
   SEMICOLON: ';',
-  BAR: '|',
 }
 
 const tokens = Object.assign({}, tokens_local[lang], tokens_international)
@@ -356,7 +343,7 @@ module.exports = grammar({
   rules: {
     source_file: $ =>
       repeat(choice(
-        $._newline,
+        $._hardnl,
         $.law_block,
         $.code_block,
         $.directive,
@@ -365,17 +352,16 @@ module.exports = grammar({
 
     ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
     COMMENT: $ => seq('#', /[^\n]*/),
-    _newline: $ => /[ \t]*\r?\n[ \t]*/,
+    _hspace: $ => token.immediate(/[\p{Zs}\t]+/),
+    _newline: $ => token.immediate(/[\p{Zs}\t]*\r?\n[\p{Zs}\t]*/),
+    _hardnl: $ => token.immediate(/[\p{Zs}\t]*\r?\n/),
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
-    // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
     _law_text: $ => prec.right(choice(
       $.LAW_WORD,
-      seq($._law_text, /\s+/, $.LAW_WORD)
+      seq($._law_text, optional($._hspace), choice($.LAW_WORD, $.LAW_SHARP))
     )),
-    law_text: $ => $._law_text,
-    // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
-    // law_text: $ => prec.right(repeat1($._law_line)),
+    law_text: $ => seq(optional($._hspace), $._law_text, optional($._hspace)),
 
     type_variable: $ => $._LIDENT,
     primitive_typ: $ =>
@@ -635,13 +621,9 @@ module.exports = grammar({
     assertion: $ =>
       seq(
         $.ASSERTION,
-          choice(
-              (optional(seq($.UNDER_CONDITION, field('condition', $.expression),
-                            $.CONSEQUENCE)), field('body', $.expression)),
-              seq($.FIXED, $.scope_var, $.BY, $.variable),
-              seq($.VARIES, $.scope_var, $.WITH, $.expression,
-                  optional(choice($.INCREASING, $.DECREASING)))
-          )
+        (optional(seq($.UNDER_CONDITION, field('condition', $.expression),
+                      $.CONSEQUENCE)),
+         field('body', $.expression)),
       ),
 
     rounding_mode: $ =>
@@ -714,16 +696,17 @@ module.exports = grammar({
       )),
 
     begin_code_fence: $ =>
-      seq($.BEGIN_CODE, token.immediate(/[ \t]*\n/)),
+      seq($.BEGIN_CODE, $._hardnl),
 
     begin_metadata_fence: $ =>
-      seq($.BEGIN_METADATA, token.immediate(/[ \t]*\n/)),
+      seq($.BEGIN_METADATA, $._hardnl),
 
     end_block_fence: $ =>
-        seq($.END_CODE, token.immediate(/[ \t]*\n/)),
+        seq($.END_CODE, $._hardnl),
 
     code_block: $ =>
       seq(
+        optional($._hspace),
         choice(
           $.begin_code_fence,
           $.begin_metadata_fence,
@@ -733,10 +716,11 @@ module.exports = grammar({
       ),
 
     begin_verb_block_fence: $ =>
-      seq($.BEGIN_VERB_BLOCK, token.immediate(/[ \t]*\n/)),
+      seq($.BEGIN_VERB_BLOCK, $._hardnl),
 
     verb_block: $ =>
       seq(
+        optional($._hspace),
         $.begin_verb_block_fence,
         repeat1(seq(prec(-1,token.immediate(/.*/)),$._newline)),
         $.end_block_fence
@@ -755,13 +739,17 @@ module.exports = grammar({
     ),
 
     law_heading: $ =>
-      prec(1, seq($.LAW_HEADING,
-                  prec(1, optional(seq($.BAR, $.LAW_LABEL))))),
+    seq(optional($._hspace),
+        $.LAW_SHARP,
+        repeat(seq(optional($._hspace), choice($.LAW_WORD, $.LAW_SHARP))),
+        optional($._hspace),
+        optional(seq(token.immediate('|'), $.LAW_LABEL))
+       ),
 
     law_block: $ =>
-      prec.right(-1, repeat1(
-          choice($.law_text, $.law_heading,
-                 prec.right(-1, $._newline)))),
+    prec.right(-1, repeat1(
+      seq(choice($.law_text, $.law_heading),
+          prec(-1,repeat1($._hardnl))))),
 
   SCOPE: $ => token(tokens.SCOPE),
   CONSEQUENCE: $ => token(tokens.CONSEQUENCE),
@@ -778,7 +766,6 @@ module.exports = grammar({
   ENUM: $ => token(tokens.ENUM),
   INTEGER: $ => token(tokens.INTEGER),
   MONEY: $ => token(tokens.MONEY),
-  TEXT: $ => token(tokens.TEXT),
   DECIMAL: $ => token(tokens.DECIMAL),
   DATE: $ => token(tokens.DATE),
   DURATION: $ => token(tokens.DURATION),
@@ -803,13 +790,10 @@ module.exports = grammar({
   CONTENT: $ => token(tokens.CONTENT),
   STRUCT: $ => token(tokens.STRUCT),
   ASSERTION: $ => token(tokens.ASSERTION),
-  VARIES: $ => token(tokens.VARIES),
   WITH: $ => token(tokens.WITH),
   FOR: $ => token(tokens.FOR),
   ALL: $ => token(tokens.ALL),
   WE_HAVE: $ => token(tokens.WE_HAVE),
-  FIXED: $ => token(tokens.FIXED),
-  BY: $ => token(tokens.BY),
   RULE: $ => token(tokens.RULE),
   LET: $ => token(tokens.LET),
   EXISTS: $ => token(tokens.EXISTS),
@@ -862,9 +846,9 @@ module.exports = grammar({
   INT_LITERAL: $ => token(tokens.INT_LITERAL),
   TUPLE_INDEX: $ => token(tokens.TUPLE_INDEX),
   DATE_LITERAL: $ => token(tokens.DATE_LITERAL),
-  LAW_HEADING: $ => token(tokens.LAW_HEADING),
   LAW_LABEL: $ => token(tokens.LAW_LABEL),
   LAW_WORD: $ => token(tokens.LAW_WORD),
+  LAW_SHARP: $ => token(tokens.LAW_SHARP),
   LBRACE: $ => token(tokens.LBRACE),
   LPAREN: $ => token(tokens.LPAREN),
   LBRACKET: $ => token(tokens.LBRACKET),
@@ -874,7 +858,6 @@ module.exports = grammar({
   RPAREN: $ => token(tokens.RPAREN),
   RBRACKET: $ => token(tokens.RBRACKET),
   SEMICOLON: $ => token(tokens.SEMICOLON),
-  BAR: $ => token(tokens.BAR),
 
   PLUS: $ => token(seq(tokens.PLUS, token.immediate(tokens.OP_KIND_SUFFIX))),
   MINUS: $ => token(seq(tokens.MINUS, token.immediate(tokens.OP_KIND_SUFFIX))),

@@ -27,7 +27,7 @@
     "fields": {
       "body": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "expression",
@@ -37,47 +37,11 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "ASSERTION",
-          "named": true
-        },
-        {
-          "type": "BY",
-          "named": true
-        },
-        {
-          "type": "DECREASING",
-          "named": true
-        },
-        {
-          "type": "FIXED",
-          "named": true
-        },
-        {
-          "type": "INCREASING",
-          "named": true
-        },
-        {
-          "type": "VARIES",
-          "named": true
-        },
-        {
-          "type": "WITH",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "scope_var",
-          "named": true
-        },
-        {
-          "type": "variable",
           "named": true
         }
       ]
@@ -6189,7 +6153,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "law_heading",
@@ -6211,15 +6175,15 @@
       "required": true,
       "types": [
         {
-          "type": "BAR",
-          "named": true
-        },
-        {
-          "type": "LAW_HEADING",
-          "named": true
-        },
-        {
           "type": "LAW_LABEL",
+          "named": true
+        },
+        {
+          "type": "LAW_SHARP",
+          "named": true
+        },
+        {
+          "type": "LAW_WORD",
           "named": true
         }
       ]
@@ -6233,6 +6197,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "LAW_SHARP",
+          "named": true
+        },
         {
           "type": "LAW_WORD",
           "named": true
@@ -7623,10 +7591,6 @@
     "named": true
   },
   {
-    "type": "BAR",
-    "named": true
-  },
-  {
     "type": "BEGIN_CODE",
     "named": true
   },
@@ -7648,10 +7612,6 @@
   },
   {
     "type": "BUT_REPLACE",
-    "named": true
-  },
-  {
-    "type": "BY",
     "named": true
   },
   {
@@ -7783,10 +7743,6 @@
     "named": true
   },
   {
-    "type": "FIXED",
-    "named": true
-  },
-  {
     "type": "FOR",
     "named": true
   },
@@ -7843,15 +7799,15 @@
     "named": true
   },
   {
-    "type": "LAW_HEADING",
-    "named": true
-  },
-  {
     "type": "LAW_INCLUDE",
     "named": true
   },
   {
     "type": "LAW_LABEL",
+    "named": true
+  },
+  {
+    "type": "LAW_SHARP",
     "named": true
   },
   {
@@ -8047,10 +8003,6 @@
     "named": true
   },
   {
-    "type": "VARIES",
-    "named": true
-  },
-  {
     "type": "WE_HAVE",
     "named": true
   },
@@ -8076,6 +8028,10 @@
   },
   {
     "type": "typu",
+    "named": false
+  },
+  {
+    "type": "|",
     "named": false
   }
 ]
