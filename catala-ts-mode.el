@@ -320,9 +320,16 @@
     nil
     "\n```catala-test-cli\n$ catala " _ "\n```\n" \n)
 
+  (defun indent-or-cycle ()
+    (interactive nil)
+    (if (eq (face-at-point) 'catala-font-lock-code-block-face)
+        (indent-according-to-mode)
+      (markdown-cycle)))
+
   (define-key catala-ts-mode-map "\C-c.c" 'catala-insert-code-block)
   (define-key catala-ts-mode-map "\C-c.m" 'catala-insert-metadata-block)
   (define-key catala-ts-mode-map "\C-c.t" 'catala-insert-test-block)
+  (define-key catala-ts-mode-map [tab] 'indent-or-cycle)
 
   ; activate prettify-symbols-mode to use. Note: affects indentation
   ; You can use: (add-hook 'catala-mode-hook 'prettify-symbols-mode)
