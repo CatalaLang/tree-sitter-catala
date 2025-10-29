@@ -286,9 +286,9 @@ const tokens_international = {
   INT_LITERAL: /-?[0-9]+/,
   TUPLE_INDEX: /[0-9]+/,
   DATE_LITERAL: /[|][0-9]{4}-[0-9]{2}-[0-9]{2}[|]/,
-  LAW_HEADING: token.immediate(/#+[ \t]*[^\n|]*/),
   LAW_LABEL: /\S[^\n]*/,
-  LAW_WORD: prec(-1,token.immediate(/\S*/)),
+  LAW_WORD: token.immediate(prec(-1,/\S+/)),
+  LAW_SHARP: token.immediate(prec(1,/#+/)),
   LBRACE: '{',
   LESSER: '<',
   LESSER_EQUAL: '<=',
@@ -359,7 +359,7 @@ module.exports = grammar({
     // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
     _law_text: $ => prec.right(choice(
       $.LAW_WORD,
-      seq($._law_text, /\s+/, $.LAW_WORD)
+      seq($._law_text, /[ \t]*/, choice($.LAW_WORD, $.LAW_SHARP))
     )),
     law_text: $ => $._law_text,
     // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
@@ -739,13 +739,16 @@ module.exports = grammar({
     ),
 
     law_heading: $ =>
-      prec(1, seq($.LAW_HEADING,
-                  prec(1, optional(seq($.BAR, $.LAW_LABEL))))),
+    seq(optional($._hspace),
+        $.LAW_SHARP,
+        repeat(seq(/[ \t]*/, choice($.LAW_WORD, $.LAW_SHARP))),
+        prec(2, optional(seq($.BAR, $.LAW_LABEL)))
+       ),
 
     law_block: $ =>
-      prec.right(-1, repeat1(
-          choice($.law_text, $.law_heading,
-                 prec.right(-1, $._newline)))),
+    prec.right(-1, repeat1(
+      seq(choice($.law_text, $.law_heading),
+          ($._newline)))),
 
   SCOPE: $ => token(tokens.SCOPE),
   CONSEQUENCE: $ => token(tokens.CONSEQUENCE),
@@ -842,9 +845,9 @@ module.exports = grammar({
   INT_LITERAL: $ => token(tokens.INT_LITERAL),
   TUPLE_INDEX: $ => token(tokens.TUPLE_INDEX),
   DATE_LITERAL: $ => token(tokens.DATE_LITERAL),
-  LAW_HEADING: $ => token(tokens.LAW_HEADING),
   LAW_LABEL: $ => token(tokens.LAW_LABEL),
   LAW_WORD: $ => token(tokens.LAW_WORD),
+  LAW_SHARP: $ => token(tokens.LAW_SHARP),
   LBRACE: $ => token(tokens.LBRACE),
   LPAREN: $ => token(tokens.LPAREN),
   LBRACKET: $ => token(tokens.LBRACKET),

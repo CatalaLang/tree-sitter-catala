@@ -154,7 +154,8 @@
      "(law_text) @catala-font-lock-law-text-face"
    :language lang :feature 'all :override t
      "(law_heading
-        (LAW_HEADING) @catala-font-lock-law-heading-face
+        (LAW_SHARP) @catala-font-lock-law-heading-face
+        (LAW_WORD)? @catala-font-lock-law-heading-face
         (LAW_LABEL)? @catala-font-lock-label-face)"
    :language lang :feature 'all :override t
      "(directive) @catala-font-lock-directive-face"
