@@ -1,7 +1,7 @@
 ; highlights.scm
 
 (COMMENT) @comment
-(LAW_HEADING) @property
+(law_heading) @property
 
 
 ; (law_text) @string

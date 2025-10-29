@@ -154,9 +154,9 @@
      "(law_text) @catala-font-lock-law-text-face"
    :language lang :feature 'all :override t
      "(law_heading
-        (LAW_SHARP) @catala-font-lock-law-heading-face
-        (LAW_WORD)? @catala-font-lock-law-heading-face
-        (LAW_LABEL)? @catala-font-lock-label-face)"
+        (\"|\")? @catala-font-lock-punctuation-face
+        (LAW_LABEL)? @catala-font-lock-label-face)
+      @catala-font-lock-law-heading-face"
    :language lang :feature 'all :override t
      "(directive) @catala-font-lock-directive-face"
    :language lang :feature 'all :override t
@@ -197,8 +197,8 @@
      "(e_binop [(MULT) (DIV) (PLUS) (MINUS) (PLUSPLUS) (LESSER) (LESSER_EQUAL) (GREATER) (GREATER_EQUAL) (EQUAL) (NOT_EQUAL) (AND) (OR) (XOR)] @catala-font-lock-operator-face)"
    :language lang :feature 'all :override t
      "[(begin_metadata_fence) (begin_code_fence) (end_block_fence)] @catala-font-lock-code-delimiter-face"
-  :language lang :feature 'all :override 'keep
-    "(ERROR) @catala-font-lock-error-face"
+   :language lang :feature 'all :override 'keep
+     "(ERROR) @catala-font-lock-error-face"
    :language lang :feature 'all :override 'keep
      "(expression) @catala-font-lock-expression-face"
    :language lang :feature 'all :override 'keep

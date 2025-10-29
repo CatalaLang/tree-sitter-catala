@@ -166,7 +166,7 @@ const tokens_local = {
     INTERNAL: "interne",
     Round: "arrondi",
     DECIMAL_LITERAL: /-?[0-9]+,[0-9]+/,
-    MONEY_AMOUNT: /-?[0-9]([0-9 ]*[0-9])?(,[0-9]{1,2})? *€/,
+    MONEY_AMOUNT: /-?[0-9]([0-9\p{Zs}]*[0-9])?(,[0-9]{1,2})?\p{Zs}*€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
     LAW_INCLUDE: 'Inclusion',
     MODULE_DEF: 'Module',
@@ -250,7 +250,7 @@ const tokens_local = {
     INTERNAL: "wewnętrzny",
     Round: "zaokrąglony",
     DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
-    MONEY_AMOUNT: /-?[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})? *PLN/,
+    MONEY_AMOUNT: /-?[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?\p{Zs}*PLN/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
     LAW_INCLUDE: 'Include',
     MODULE_DEF: 'Module',
@@ -303,7 +303,6 @@ const tokens_international = {
   RPAREN: ')',
   RBRACKET: ']',
   SEMICOLON: ';',
-  BAR: '|',
 }
 
 const tokens = Object.assign({}, tokens_local[lang], tokens_international)
@@ -344,7 +343,7 @@ module.exports = grammar({
   rules: {
     source_file: $ =>
       repeat(choice(
-        $._newline,
+        $._hardnl,
         $.law_block,
         $.code_block,
         $.directive,
@@ -353,17 +352,16 @@ module.exports = grammar({
 
     ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
     COMMENT: $ => seq('#', /[^\n]*/),
-    _newline: $ => /[ \t]*\r?\n[ \t]*/,
+    _hspace: $ => token.immediate(/[\p{Zs}\t]+/),
+    _newline: $ => token.immediate(/[\p{Zs}\t]*\r?\n[\p{Zs}\t]*/),
+    _hardnl: $ => token.immediate(/[\p{Zs}\t]*\r?\n/),
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
-    // _law_line: $ => prec(0,seq($.LAW_TEXT, $._newline)),
     _law_text: $ => prec.right(choice(
       $.LAW_WORD,
-      seq($._law_text, /[ \t]*/, choice($.LAW_WORD, $.LAW_SHARP))
+      seq($._law_text, optional($._hspace), choice($.LAW_WORD, $.LAW_SHARP))
     )),
-    law_text: $ => $._law_text,
-    // _law_line: $ => prec(-1,seq(repeat(seq($.LAW_WORD,/[ \t]*/)),$._newline)),
-    // law_text: $ => prec.right(repeat1($._law_line)),
+    law_text: $ => seq(optional($._hspace), $._law_text, optional($._hspace)),
 
     type_variable: $ => $._LIDENT,
     primitive_typ: $ =>
@@ -698,16 +696,17 @@ module.exports = grammar({
       )),
 
     begin_code_fence: $ =>
-      seq($.BEGIN_CODE, token.immediate(/[ \t]*\n/)),
+      seq($.BEGIN_CODE, $._hardnl),
 
     begin_metadata_fence: $ =>
-      seq($.BEGIN_METADATA, token.immediate(/[ \t]*\n/)),
+      seq($.BEGIN_METADATA, $._hardnl),
 
     end_block_fence: $ =>
-        seq($.END_CODE, token.immediate(/[ \t]*\n/)),
+        seq($.END_CODE, $._hardnl),
 
     code_block: $ =>
       seq(
+        optional($._hspace),
         choice(
           $.begin_code_fence,
           $.begin_metadata_fence,
@@ -717,10 +716,11 @@ module.exports = grammar({
       ),
 
     begin_verb_block_fence: $ =>
-      seq($.BEGIN_VERB_BLOCK, token.immediate(/[ \t]*\n/)),
+      seq($.BEGIN_VERB_BLOCK, $._hardnl),
 
     verb_block: $ =>
       seq(
+        optional($._hspace),
         $.begin_verb_block_fence,
         repeat1(seq(prec(-1,token.immediate(/.*/)),$._newline)),
         $.end_block_fence
@@ -741,14 +741,15 @@ module.exports = grammar({
     law_heading: $ =>
     seq(optional($._hspace),
         $.LAW_SHARP,
-        repeat(seq(/[ \t]*/, choice($.LAW_WORD, $.LAW_SHARP))),
-        prec(2, optional(seq($.BAR, $.LAW_LABEL)))
+        repeat(seq(optional($._hspace), choice($.LAW_WORD, $.LAW_SHARP))),
+        optional($._hspace),
+        optional(seq(token.immediate('|'), $.LAW_LABEL))
        ),
 
     law_block: $ =>
     prec.right(-1, repeat1(
       seq(choice($.law_text, $.law_heading),
-          ($._newline)))),
+          prec(-1,repeat1($._hardnl))))),
 
   SCOPE: $ => token(tokens.SCOPE),
   CONSEQUENCE: $ => token(tokens.CONSEQUENCE),
@@ -857,7 +858,6 @@ module.exports = grammar({
   RPAREN: $ => token(tokens.RPAREN),
   RBRACKET: $ => token(tokens.RBRACKET),
   SEMICOLON: $ => token(tokens.SEMICOLON),
-  BAR: $ => token(tokens.BAR),
 
   PLUS: $ => token(seq(tokens.PLUS, token.immediate(tokens.OP_KIND_SUFFIX))),
   MINUS: $ => token(seq(tokens.MINUS, token.immediate(tokens.OP_KIND_SUFFIX))),
