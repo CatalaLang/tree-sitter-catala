@@ -1,62 +1,71 @@
 ; highlights.scm
 
 (COMMENT) @comment
-(law_heading) @property
-
-
-; (law_text) @string
-; (expression) @attribute
-
-;(expression) @string
+(law_heading) @module
+(verb_block) @comment
 
 (literal) @constant
 
-;(IDENT) @variable.builtin
+(variable) @variable
 
-;(path ((DOT) @punctuation.delimiter)*) @module
-((variable) @variable)
-
-(typ) @type
-
-(module_name) @type
+(module_name) @module
 (scope_name) @keyword.def
-[(constructor_name) (enum_struct_name)] @type
+(constructor_name) @constructor
+(enum_struct_name) @type
 
 (label) @tag
 
 [(LBRACE) (RBRACE) (LPAREN) (RPAREN) (LBRACKET) (RBRACKET)] @punctuation.bracket
 
-[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @keyword.def
+(toplevel_def [(DECLARATION) (CONTENT) (DEFINED_AS)]* @keyword.def)
 
-[(rule) (definition)] @keyword.struct
-[(struct_decl_item) (enum_decl_item) (scope_decl_item)] @keyword.struct
+[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (OF) (CONTAINS) (ENUM) (SUM) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (WITH) (RULE) (LET) (IN) (NOT) (INPUT) (OUTPUT) (INTERNAL) (TO)] @keyword
 
-(expression) @keyword
+[(DECREASING) (INCREASING)] @constant
+
+(rule (NOT)? @constant (FILLED) @constant)
+
+(rounding_mode (_)* @keyword . (_) @constant .)
+
+(primitive_typ (WILDCARD) @type (OF)? @type)
+
+(type_variable) @variable.parameter
+
+(match_case (WILDCARD) @constructor)
 
 (e_fieldaccess (DOT)* @operator)
 
-;;(typ) @type
+[(field_name) (TUPLE_INDEX)] @constructor
 
-;; (scope_decl_item
-;;  (scope_decl_item_attribute) @keyword
-;;  (LIDENT) @variable) @keyword.struct
+(state_label) @string
 
-[(YEAR) (MONTH) (DAY)] @keyword
+[(primitive_typ)] @type.builtin
+(typ [(OPTION) (LIST)] @type.builtin)
 
 (builtin) @function.builtin
-(literal) @constant
+
+(e_coll_filter [(LIST) (OF) (AMONG) (SUCH) (THAT)] @function.builtin)
+(e_coll_sum [(SUM) (primitive_typ)] @function.builtin)
+(e_coll_contains (CONTAINS) @operator)
+(e_coll_map [(MAP_EACH) (AMONG) (TO)] @function.builtin)
+(e_coll_fold [(COMBINE) (ALL) (AMONG) (IN) (INITIALLY) (WITH)] @function.builtin)
+(e_coll_extremum [(MINIMUM) (MAXIMUM) (OF) (OR_EMPTY) (THEN)] @function.builtin)
+(e_coll_exists [(EXISTS) (AMONG) (SUCH) (THAT)] @function.builtin)
+(e_coll_forall [(FOR) (ALL) (AMONG) (WE_HAVE)] @function.builtin)
+(e_coll_filter_map [(MAP_EACH) (AMONG) (SUCH) (THAT) (TO)] @function.builtin)
+(e_coll_arg_extremum [(CONTENT) (OF) (AMONG) (SUCH) (THAT) (IS) (MINIMUM) (MAXIMUM) (OR_EMPTY) (THEN)] @function.builtin)
+
+(literal) @number
+[(YEAR) (MONTH) (DAY)] @constant.builtin
 (e_unop . (_) @operator)
 (e_binop . _ . (_) @operator)
-  ;;   (PLUS) (MINUS) (MULT) (DIV)
-  ;;   (EQUAL) (NOT_EQUAL) (GREATER) (GREATER_EQUAL) (LESSER) (LESSER_EQUAL)
-  ;;   (AND) (OR) (XOR)
-  ;; ] @operator)
+
+(ATTRIBUTE) @attribute
 
 [(BEGIN_METADATA) (BEGIN_CODE) (END_CODE)] @punctuation.delimiter
 
-(code_block) @block
+[(COMMA) (DOT) (SEMICOLON)] @punctuation
+
+[(ALT) (COLON)] @punctuation
 
 (law_text) @law_text
-
-;(code_block) @keyword.def
-;(ERROR) @error
