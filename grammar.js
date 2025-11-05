@@ -69,7 +69,7 @@ const tokens_local = {
     INITIALLY: "initially",
     IMPOSSIBLE: "impossible",
     IS: "is",
-    EMPTY: "empty",
+    OR_EMPTY: /or\s+if\s+list\s+empty/,
     BUT_REPLACE: /but\s+replace/,
     CARDINAL: "number",
     YEAR: "year",
@@ -153,7 +153,7 @@ const tokens_local = {
     INITIALLY: "initialement",
     IMPOSSIBLE: "impossible",
     IS: "est",
-    EMPTY: "vide",
+    OR_EMPTY: /ou\s+si\s+liste\s+vide/,
     BUT_REPLACE: /mais\s+en\s+remplaçant/,
     CARDINAL: "nombre",
     YEAR: "an",
@@ -237,7 +237,7 @@ const tokens_local = {
     INITIALLY: "początkowo",
     IMPOSSIBLE: "niemożliwe",
     IS: "jest",
-    EMPTY: "pusty",
+    OR_EMPTY: /lub\s+jezeli\s+kolekcja\s+pusty/,
     BUT_REPLACE: /ale\s+zastąpić/,
     CARDINAL: "liczba",
     YEAR: "rok",
@@ -496,7 +496,7 @@ module.exports = grammar({
                              $.WITH, field('mapf', $._expr))),
     e_coll_extremum: $ =>
       prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
-                     optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
+                     optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -557,7 +557,7 @@ module.exports = grammar({
     e_coll_arg_extremum: $ =>
       prec.right(seq($.CONTENT, $.OF, $.binder, $.AMONG, field('coll', $._expr),
                      $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     optional(seq($.OR, $.IF, $.LIST, $.EMPTY, $.THEN, field('dft', $._expr))))),
+                     optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
 
     struct_content_field: $ =>
       seq($.qfield, $.COLON, $._expr),
@@ -810,7 +810,7 @@ module.exports = grammar({
   INITIALLY: $ => token(tokens.INITIALLY),
   IMPOSSIBLE: $ => token(tokens.IMPOSSIBLE),
   IS: $ => token(tokens.IS),
-  EMPTY: $ => token(tokens.EMPTY),
+  OR_EMPTY: $ => token(tokens.OR_EMPTY),
   BUT_REPLACE: $ => token(tokens.BUT_REPLACE),
   CARDINAL: $ => token(tokens.CARDINAL),
   YEAR: $ => token(tokens.YEAR),

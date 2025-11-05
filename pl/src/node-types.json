@@ -1453,19 +1453,7 @@
           "named": true
         },
         {
-          "type": "EMPTY",
-          "named": true
-        },
-        {
-          "type": "IF",
-          "named": true
-        },
-        {
           "type": "IS",
-          "named": true
-        },
-        {
-          "type": "LIST",
           "named": true
         },
         {
@@ -1481,7 +1469,7 @@
           "named": true
         },
         {
-          "type": "OR",
+          "type": "OR_EMPTY",
           "named": true
         },
         {
@@ -2293,18 +2281,6 @@
       "required": true,
       "types": [
         {
-          "type": "EMPTY",
-          "named": true
-        },
-        {
-          "type": "IF",
-          "named": true
-        },
-        {
-          "type": "LIST",
-          "named": true
-        },
-        {
           "type": "MAXIMUM",
           "named": true
         },
@@ -2317,7 +2293,7 @@
           "named": true
         },
         {
-          "type": "OR",
+          "type": "OR_EMPTY",
           "named": true
         },
         {
@@ -7711,10 +7687,6 @@
     "named": true
   },
   {
-    "type": "EMPTY",
-    "named": true
-  },
-  {
     "type": "END_CODE",
     "named": true
   },
@@ -7912,6 +7884,10 @@
   },
   {
     "type": "OR",
+    "named": true
+  },
+  {
+    "type": "OR_EMPTY",
     "named": true
   },
   {

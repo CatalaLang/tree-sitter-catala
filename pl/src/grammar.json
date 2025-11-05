@@ -1236,19 +1236,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "OR"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "IF"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "LIST"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "EMPTY"
+                    "name": "OR_EMPTY"
                   },
                   {
                     "type": "SYMBOL",
@@ -2309,19 +2297,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "OR"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "IF"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "LIST"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "EMPTY"
+                    "name": "OR_EMPTY"
                   },
                   {
                     "type": "SYMBOL",
@@ -4251,11 +4227,11 @@
         "value": "jest"
       }
     },
-    "EMPTY": {
+    "OR_EMPTY": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "pusty"
+        "type": "PATTERN",
+        "value": "lub\\s+jezeli\\s+kolekcja\\s+pusty"
       }
     },
     "BUT_REPLACE": {
