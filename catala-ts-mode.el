@@ -327,10 +327,19 @@
         (indent-according-to-mode)
       (markdown-cycle)))
 
+  (defun complete-or-stab ()
+    (interactive nil)
+    (if (eq (face-at-point) 'catala-font-lock-code-block-face)
+        (dabbrev-expand nil) ; until the lsp gives us better
+      (markdown-shifttab)))
+
   (define-key catala-ts-mode-map "\C-c.c" 'catala-insert-code-block)
   (define-key catala-ts-mode-map "\C-c.m" 'catala-insert-metadata-block)
   (define-key catala-ts-mode-map "\C-c.t" 'catala-insert-test-block)
   (define-key catala-ts-mode-map [tab] 'indent-or-cycle)
+  (define-key catala-ts-mode-map [backtab] 'complete-or-stab)
+  (define-key catala-ts-mode-map "\M-n" 'flymake-goto-next-error)
+  (define-key catala-ts-mode-map "\M-\S-n" 'flymake-goto-prev-error)
 
   ; activate prettify-symbols-mode to use. Note: affects indentation
   ; You can use: (add-hook 'catala-mode-hook 'prettify-symbols-mode)
