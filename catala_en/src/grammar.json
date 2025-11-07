@@ -659,6 +659,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "e_assert"
+        },
+        {
+          "type": "SYMBOL",
           "name": "e_fieldaccess"
         },
         {
@@ -1963,6 +1967,39 @@
           {
             "type": "FIELD",
             "name": "def",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "IN"
+          },
+          {
+            "type": "FIELD",
+            "name": "body",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expr"
+            }
+          }
+        ]
+      }
+    },
+    "e_assert": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "ASSERTION"
+          },
+          {
+            "type": "FIELD",
+            "name": "cond",
             "content": {
               "type": "SYMBOL",
               "name": "_expr"

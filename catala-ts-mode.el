@@ -201,6 +201,10 @@
      "[(begin_metadata_fence) (begin_code_fence) (end_block_fence)] @catala-font-lock-code-delimiter-face"
    :language lang :feature 'all :override 'keep
      "(ERROR) @catala-font-lock-error-face"
+   :language lang :feature 'all :override t
+     '((COMMENT) @catala-font-lock-comment-face)
+   :language lang :feature 'all :override t
+     '((ATTRIBUTE) @catala-font-lock-attribute-face)
    :language lang :feature 'all :override 'keep
      "(expression) @catala-font-lock-expression-face"
    :language lang :feature 'all :override 'keep
@@ -211,10 +215,6 @@
      "[(scope) (scope_decl) (struct_decl) (enum_decl) (abstract_decl) (toplevel_def)] @catala-font-lock-declaration-face"
    :language lang :feature 'all :override 'prepend
      "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (OPTION) (CONTAINS) (ENUM) (INTEGER) (MONEY) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (POSITION) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (WITH) (FOR) (ALL) (WE_HAVE) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (COMBINE) (INITIALLY) (IMPOSSIBLE) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
-   :language lang :feature 'all :override t
-     '((COMMENT) @catala-font-lock-comment-face)
-   :language lang :feature 'all :override t
-     '((ATTRIBUTE) @catala-font-lock-attribute-face)
    :language lang :feature 'all :override 'prepend
      "(code_block) @catala-font-lock-code-block-face"
    :language lang :feature 'all :override t
@@ -237,7 +237,9 @@
      ((query "(e_ifthenelse [(THEN) (ELSE)] @indent)") parent-bol 0)
      ((query "([(RPAREN) (RBRACKET) (RBRACE)] @indent)") parent-bol 0)
      ((query "(e_letin (binder) @indent def: (_) @indent)") first-sibling catala-default-indent)
-     ((query "(e_letin [(DEFINED_AS) (IN)] @indent body: (_) @indent)") first-sibling 0)
+     ((query "(e_letin (_) @indent)") first-sibling 0)
+     ((query "(e_assert cond: (_) @indent)") first-sibling catala-default-indent)
+     ((query "(e_assert (_) @indent)") first-sibling 0)
      ((query "(var_list (_) @indent)") first-sibling 0)
      ((query "(typ_list (_) @indent)") first-sibling 0)
      ((query "(collection_elements (_) @indent)") first-sibling 0)
