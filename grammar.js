@@ -3,7 +3,12 @@ if ('TREESITTER_CATALA_LANG' in process.env) {
   lang = process.env.TREESITTER_CATALA_LANG
 }
 
-const name = ("catala_"+lang)
+var variant = "catala"
+if ('TREESITTER_CATALA_VARIANT' in process.env) {
+  variant = process.env.TREESITTER_CATALA_VARIANT
+}
+
+const name = (variant+"_"+lang)
 
 const tokens_local = {
   en: {
@@ -340,15 +345,21 @@ module.exports = grammar({
     [$.module_name, $.enum_struct_name],
     [$.module_name, $.scope_name]
   ],
-  rules: {
-    source_file: $ =>
-      repeat(choice(
-        $._hardnl,
-        $.law_block,
-        $.code_block,
-        $.directive,
-        $.verb_block,
-      )),
+  rules:
+  {
+    source_file: (
+      variant == "catala" ? ($ =>
+        repeat(choice(
+          $._hardnl,
+          $.law_block,
+          $.code_block,
+          $.directive,
+          $.verb_block))
+      ) :
+      variant == "catala_code" ? ($ => $._code) :
+      variant == "catala_expr" ? ($ => $._expr) :
+        console.error("Unknown variant "+ variant)
+    ),
 
     ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
     COMMENT: $ => seq('#', /[^\n]*/),

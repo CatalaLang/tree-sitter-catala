@@ -1,5 +1,5 @@
 [package]
-name = "tree-sitter-catala-${TREESITTER_CATALA_LANG}"
+name = "tree-sitter-${TREESITTER_CATALA_VARIANT}-${TREESITTER_CATALA_LANG}"
 description = "Catala grammar for the tree-sitter parsing library"
 version = "0.0.2"
 keywords = ["incremental", "parsing", "tree-sitter", "Catala"]
