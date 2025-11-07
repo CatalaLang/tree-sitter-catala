@@ -4,7 +4,7 @@
       "name": "catala_en",
       "camelcase": "CatalaEn",
       "scope": "source.catala_en",
-      "path": "en",
+      "path": "catala_en",
       "file-types": [
         "catala_en"
       ]
@@ -13,7 +13,7 @@
       "name": "catala_fr",
       "camelcase": "CatalaFr",
       "scope": "source.catala_fr",
-      "path": "fr",
+      "path": "catala_fr",
       "file-types": [
         "catala_fr"
       ]
@@ -22,7 +22,7 @@
       "name": "catala_pl",
       "camelcase": "CatalaPl",
       "scope": "source.catala_pl",
-      "path": "pl",
+      "path": "catala_pl",
       "file-types": [
         "catala_pl"
       ]
