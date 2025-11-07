@@ -449,6 +449,7 @@ module.exports = grammar({
         $.e_match,
         $.e_ifthenelse,
         $.e_letin,
+        $.e_assert,
         $.e_fieldaccess,
         $.e_struct,
         $.e_enum,
@@ -548,6 +549,8 @@ module.exports = grammar({
       prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
     e_letin: $ =>
       prec.right(seq($.LET, $.binder, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
+    e_assert: $ =>
+      prec.right(seq($.ASSERTION, field('cond', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
       prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
