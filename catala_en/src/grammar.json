@@ -349,6 +349,10 @@
       "type": "SYMBOL",
       "name": "_UIDENT"
     },
+    "abstract_type_name": {
+      "type": "SYMBOL",
+      "name": "_UIDENT"
+    },
     "scope_var": {
       "type": "SEQ",
       "members": [
@@ -3343,6 +3347,35 @@
         }
       ]
     },
+    "abstract_decl": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "DECLARATION"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "TYPE"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "abstract_type_name"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "COLON"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "EXTERNAL"
+        }
+      ]
+    },
     "toplevel_def": {
       "type": "SEQ",
       "members": [
@@ -3425,6 +3458,10 @@
           {
             "type": "SYMBOL",
             "name": "enum_decl"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "abstract_decl"
           },
           {
             "type": "SYMBOL",
@@ -4351,6 +4388,13 @@
       "content": {
         "type": "STRING",
         "value": "as"
+      }
+    },
+    "EXTERNAL": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "external"
       }
     },
     "MODULE_EXTERNAL": {
