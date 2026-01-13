@@ -93,7 +93,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: 'Using',
     MODULE_ALIAS: 'as',
-    MODULE_EXTERNAL: 'external',
+    EXTERNAL: 'external',
   },
   fr: {
     SCOPE: /champ\s+d'application/,
@@ -177,7 +177,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: /Usage\s+de/,
     MODULE_ALIAS: /en\s+tant\s+que/,
-    MODULE_EXTERNAL: 'externe',
+    EXTERNAL: 'externe',
   },
   pl: {
     SCOPE: "zakres",
@@ -261,7 +261,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: 'Using',
     MODULE_ALIAS: 'as',
-    MODULE_EXTERNAL: 'external',
+    EXTERNAL: 'external',
   }
 }
 
@@ -398,6 +398,8 @@ module.exports = grammar({
     enum_struct_name: $ => $._UIDENT,
 
     constructor_name: $ => $._UIDENT,
+
+    abstract_type_name: $ => $._UIDENT,
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
@@ -690,6 +692,9 @@ module.exports = grammar({
       seq($.DECLARATION, $.ENUM, field('name', $.enum_struct_name), $.COLON,
           field('body', repeat(seq($.ALT, $.enum_decl_item)))),
 
+    abstract_decl: $ =>
+      seq($.DECLARATION, $.TYPE, field('name', $.abstract_type_name), $.COLON, $.EXTERNAL),
+
     toplevel_def: $ =>
       seq(
         $.DECLARATION, field('name', $.variable), $.CONTENT, $.typ,
@@ -703,6 +708,7 @@ module.exports = grammar({
         $.scope_decl,
         $.struct_decl,
         $.enum_decl,
+        $.abstract_decl,
         $.toplevel_def
       )),
 
@@ -839,7 +845,8 @@ module.exports = grammar({
   MODULE_DEF: $ => token(tokens.MODULE_DEF),
   MODULE_USE: $ => token(tokens.MODULE_USE),
   MODULE_ALIAS: $ => token(tokens.MODULE_ALIAS),
-  MODULE_EXTERNAL: $ => token(tokens.MODULE_EXTERNAL),
+  EXTERNAL: $ => token(tokens.EXTERNAL),
+  MODULE_EXTERNAL: $ => token(tokens.EXTERNAL),
 
   ALT: $ => token(tokens.ALT),
   AT_PAGE: $ => token(tokens.AT_PAGE),

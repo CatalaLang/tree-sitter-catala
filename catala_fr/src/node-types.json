@@ -12,6 +12,59 @@
     "fields": {}
   },
   {
+    "type": "EXTERNAL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "MODULE_EXTERNAL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "abstract_decl",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "abstract_type_name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "COLON",
+          "named": true
+        },
+        {
+          "type": "DECLARATION",
+          "named": true
+        },
+        {
+          "type": "EXTERNAL",
+          "named": true
+        },
+        {
+          "type": "TYPE",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "abstract_type_name",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "assertion",
     "named": true,
     "fields": {
@@ -148,6 +201,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "abstract_decl",
+          "named": true
+        },
         {
           "type": "begin_code_fence",
           "named": true
@@ -7837,10 +7894,6 @@
     "named": true
   },
   {
-    "type": "MODULE_EXTERNAL",
-    "named": true
-  },
-  {
     "type": "MODULE_USE",
     "named": true
   },
@@ -7999,6 +8052,10 @@
   {
     "type": "YEAR",
     "named": true
+  },
+  {
+    "type": "externe",
+    "named": false
   },
   {
     "type": "|",

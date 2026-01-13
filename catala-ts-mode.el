@@ -178,6 +178,8 @@
    :language lang :feature 'all :override t
      "(enum_struct_name) @catala-font-lock-type-face"
    :language lang :feature 'all :override t
+     "(abstract_type_name) @catala-font-lock-type-face"
+   :language lang :feature 'all :override t
      "(label) @catala-font-lock-label-face"
    :language lang :feature 'all :override t
      "(state_label) @catala-font-lock-state-face"
@@ -206,7 +208,7 @@
    :language lang :feature 'all :override 'keep
      "[(struct_decl_item) (enum_decl_item) (rule) (definition) (assertion) (rounding_mode)] @catala-font-lock-definition-face"
    :language lang :feature 'all :override 'keep
-     "[(scope) (scope_decl) (struct_decl) (enum_decl) (toplevel_def)] @catala-font-lock-declaration-face"
+     "[(scope) (scope_decl) (struct_decl) (enum_decl) (abstract_decl) (toplevel_def)] @catala-font-lock-declaration-face"
    :language lang :feature 'all :override 'prepend
      "[(SCOPE) (CONSEQUENCE) (DATA) (DEPENDS) (DECLARATION) (CONTEXT) (DECREASING) (INCREASING) (OF) (LIST) (OPTION) (CONTAINS) (ENUM) (INTEGER) (MONEY) (DECIMAL) (DATE) (DURATION) (BOOLEAN) (POSITION) (SUM) (FILLED) (DEFINITION) (STATE) (LABEL) (EXCEPTION) (DEFINED_AS) (MATCH) (WILDCARD) (WITH_PATT) (BUT_REPLACE) (UNDER_CONDITION) (IF) (THEN) (ELSE) (CONDITION) (CONTENT) (STRUCT) (ASSERTION) (WITH) (FOR) (ALL) (WE_HAVE) (RULE) (LET) (EXISTS) (IN) (AMONG) (SUCH) (THAT) (NOT) (MAXIMUM) (MINIMUM) (COMBINE) (INITIALLY) (IMPOSSIBLE) (IS) (EMPTY) (CARDINAL) (YEAR) (MONTH) (DAY) (TRUE) (FALSE) (INPUT) (OUTPUT) (INTERNAL)] @catala-font-lock-keyword-face"
    :language lang :feature 'all :override t
