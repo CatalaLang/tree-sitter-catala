@@ -363,9 +363,9 @@ module.exports = grammar({
 
     ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
     COMMENT: $ => seq('#', /[^\n]*/),
-    _hspace: $ => token.immediate(/[\p{Zs}\t]+/),
+    _hspace: $ => token.immediate(prec(1,/[\p{Zs}\t]+/)),
     _newline: $ => token.immediate(/[\p{Zs}\t]*\r?\n[\p{Zs}\t]*/),
-    _hardnl: $ => token.immediate(/[\p{Zs}\t]*\r?\n/),
+    _hardnl: $ => token.immediate(prec(2,/[\p{Zs}\t]*\r?\n/)),
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
     _law_text: $ => prec.right(choice(
