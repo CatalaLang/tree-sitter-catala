@@ -77,6 +77,10 @@ const tokens_local = {
     OR_EMPTY: /or\s+if\s+list\s+empty/,
     BUT_REPLACE: /but\s+replace/,
     CARDINAL: "number",
+    SORT: "sort",
+    ORDER_INCREASING: /in\s+increasing\s+order/,
+    ORDER_DECREASING: /in\s+decreasing\s+order/,
+    AND_THEN: /and\s+then/,
     YEAR: "year",
     MONTH: "month",
     DAY: "day",
@@ -161,6 +165,10 @@ const tokens_local = {
     OR_EMPTY: /ou\s+si\s+liste\s+vide/,
     BUT_REPLACE: /mais\s+en\s+remplaçant/,
     CARDINAL: "nombre",
+    SORT: "trie",
+    ORDER_INCREASING: /par\s+ordre\s+croissant/,
+    ORDER_DECREASING: /par\s+ordre\s+décroissant/,
+    AND_THEN: "puis",
     YEAR: "an",
     MONTH: "mois",
     DAY: "jour",
@@ -245,6 +253,10 @@ const tokens_local = {
     OR_EMPTY: /lub\s+jezeli\s+kolekcja\s+pusty/,
     BUT_REPLACE: /ale\s+zastąpić/,
     CARDINAL: "liczba",
+    SORT: "sort",
+    ORDER_INCREASING: /in\s+increasing\s+order/,
+    ORDER_DECREASING: /in\s+decreasing\s+order/,
+    AND_THEN: /and\s+then/,
     YEAR: "rok",
     MONTH: "miesiac",
     DAY: "dzien",
@@ -442,6 +454,7 @@ module.exports = grammar({
         $.e_coll_sum,
         $.e_coll_map,
         $.e_coll_extremum,
+        $.e_coll_sort,
         $.e_unop,
         $.e_binop,
         $.e_coll_exists,
@@ -455,7 +468,7 @@ module.exports = grammar({
         $.e_enum,
         $.e_coll_filter,
         $.e_coll_filter_map,
-        $.e_coll_arg_extremum,
+        $.e_coll_find,
         $.e_coll_fold,
       ),
 
@@ -475,7 +488,7 @@ module.exports = grammar({
       seq($.LPAREN, $.tuple_contents, $.RPAREN),
 
     collection_elements: $ =>
-      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr),
+      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr, optional($.SEMICOLON)),
 
     e_collection: $ =>
       seq($.LBRACKET, optional($.collection_elements), $.RBRACKET),
@@ -511,6 +524,13 @@ module.exports = grammar({
     e_coll_extremum: $ =>
       prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
                      optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
+    e_coll_sort: $ =>
+      prec.right(choice(
+        seq($.SORT, field('coll', $._expr),
+            choice($.ORDER_INCREASING, $.ORDER_DECREASING)),
+        seq($.SORT, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
+            choice($.ORDER_INCREASING, $.ORDER_DECREASING),
+            $.OF, field('criteria', repeat(seq($._expr, $.AND_THEN)), $._expr)))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -570,10 +590,11 @@ module.exports = grammar({
           seq($.MAP_EACH, $.binder, $.AMONG, field('coll', $._expr),
               $.SUCH, $.THAT, field('cond', $._expr), $.TO, field('mapf', $._expr))
       ),
-    e_coll_arg_extremum: $ =>
+    e_coll_find: $ =>
       prec.right(seq($.CONTENT, $.OF, $.binder, $.AMONG, field('coll', $._expr),
-                     $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
+                     $.SUCH, $.THAT, field('mapf', $._expr),
+                     optional(seq($.IS, choice($.MINIMUM,$.MAXIMUM),
+                                  optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))))),
 
     struct_content_field: $ =>
       seq($.qfield, $.COLON, $._expr),
@@ -833,6 +854,10 @@ module.exports = grammar({
   OR_EMPTY: $ => token(tokens.OR_EMPTY),
   BUT_REPLACE: $ => token(tokens.BUT_REPLACE),
   CARDINAL: $ => token(tokens.CARDINAL),
+  SORT: $ => token(tokens.SORT),
+  ORDER_INCREASING: $ => token(tokens.ORDER_INCREASING),
+  ORDER_DECREASING: $ => token(tokens.ORDER_DECREASING),
+  AND_THEN: $ => token(tokens.AND_THEN),
   YEAR: $ => token(tokens.YEAR),
   MONTH: $ => token(tokens.MONTH),
   DAY: $ => token(tokens.DAY),

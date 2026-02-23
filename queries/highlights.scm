@@ -53,7 +53,7 @@
 (e_coll_exists [(EXISTS) (AMONG) (SUCH) (THAT)] @function.builtin)
 (e_coll_forall [(FOR) (ALL) (AMONG) (WE_HAVE)] @function.builtin)
 (e_coll_filter_map [(MAP_EACH) (AMONG) (SUCH) (THAT) (TO)] @function.builtin)
-(e_coll_arg_extremum [(CONTENT) (OF) (AMONG) (SUCH) (THAT) (IS) (MINIMUM) (MAXIMUM) (OR_EMPTY) (THEN)] @function.builtin)
+(e_coll_find [(CONTENT) (OF) (AMONG) (SUCH) (THAT) (IS) (MINIMUM) (MAXIMUM) (OR_EMPTY) (THEN)] @function.builtin)
 
 (literal) @number
 [(YEAR) (MONTH) (DAY)] @constant.builtin
