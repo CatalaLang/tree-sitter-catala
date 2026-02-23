@@ -60,8 +60,12 @@
     "_hspace": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "[\\p{Zs}\\t]+"
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[\\p{Zs}\\t]+"
+        }
       }
     },
     "_newline": {
@@ -74,8 +78,12 @@
     "_hardnl": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "[\\p{Zs}\\t]*\\r?\\n"
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "PATTERN",
+          "value": "[\\p{Zs}\\t]*\\r?\\n"
+        }
       }
     },
     "_law_text": {
