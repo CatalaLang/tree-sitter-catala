@@ -493,7 +493,7 @@ module.exports = grammar({
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
-                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.variable)))),
+                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.binder)))),
     e_but_replace: $ =>
       prec.right('apply', seq($._expr, $.BUT_REPLACE,
                               $.LBRACE, $.struct_content_fields, $.RBRACE)),
@@ -562,7 +562,7 @@ module.exports = grammar({
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
     e_enum: $ =>
-      prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
+      prec('CONTENT', seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
       prec.right(seq($.LIST, $.OF, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>

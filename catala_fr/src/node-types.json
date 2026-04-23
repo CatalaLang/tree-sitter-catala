@@ -6002,11 +6002,11 @@
           "named": true
         },
         {
-          "type": "qconstructor",
+          "type": "binder",
           "named": true
         },
         {
-          "type": "variable",
+          "type": "qconstructor",
           "named": true
         }
       ]

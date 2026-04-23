@@ -1008,7 +1008,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "variable"
+                    "name": "binder"
                   }
                 ]
               },
