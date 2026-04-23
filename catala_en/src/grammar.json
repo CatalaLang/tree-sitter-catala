@@ -2136,8 +2136,8 @@
       ]
     },
     "e_enum": {
-      "type": "PREC_RIGHT",
-      "value": 0,
+      "type": "PREC",
+      "value": "CONTENT",
       "content": {
         "type": "SEQ",
         "members": [
