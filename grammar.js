@@ -530,7 +530,7 @@ module.exports = grammar({
             choice($.ORDER_INCREASING, $.ORDER_DECREASING)),
         seq($.SORT, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
             choice($.ORDER_INCREASING, $.ORDER_DECREASING),
-            $.OF, field('criteria', repeat(seq($._expr, $.AND_THEN)), $._expr)))),
+            $.OF, field('criteria', seq(repeat(seq($._expr, $.AND_THEN)), $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
