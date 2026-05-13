@@ -275,6 +275,12 @@
 
 \\<catala-ts-mode-map>"
   :group 'catala
+  :syntax-table (let ((table (make-syntax-table)))
+                  (modify-syntax-entry ?_ "w" table)
+                  (modify-syntax-entry ?' "w" table)
+                  (modify-syntax-entry ?` "\"" table)
+                  table)
+
   (let*
       ((name (buffer-file-name (current-buffer)))
        (lang (if (and name (string-match-p "\\.catala_fr" name))
@@ -353,7 +359,6 @@
                 ("!=" . ?≠)
                 ("--" . ?—)
                 ))
-
 
   (run-mode-hooks 'catala-mode-hook)
 )
