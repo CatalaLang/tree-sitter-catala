@@ -347,7 +347,7 @@
           "named": true
         },
         {
-          "type": "Round",
+          "type": "ROUND",
           "named": true
         }
       ]
@@ -7708,7 +7708,7 @@
           "named": true
         },
         {
-          "type": "Round",
+          "type": "ROUND",
           "named": true
         }
       ]
@@ -9062,15 +9062,15 @@
     "named": true
   },
   {
+    "type": "ROUND",
+    "named": true
+  },
+  {
     "type": "RPAREN",
     "named": true
   },
   {
     "type": "RULE",
-    "named": true
-  },
-  {
-    "type": "Round",
     "named": true
   },
   {
