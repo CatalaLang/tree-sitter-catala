@@ -22,7 +22,7 @@ const tokens_local = {
     INCREASING: "up",
     OF: "of",
     LIST: "list",
-    OPTION: "optional",
+    OPTION: /optional\s+of/,
     CONTAINS: "contains",
     ENUM: "enumeration",
     INTEGER: "integer",
@@ -110,7 +110,7 @@ const tokens_local = {
     INCREASING: "supérieur",
     OF: "de",
     LIST: "liste",
-    OPTION: "optionnel",
+    OPTION: /optionnel\s+de/,
     CONTAINS: "contient",
     ENUM: "énumération",
     INTEGER: "entier",
@@ -410,8 +410,8 @@ module.exports = grammar({
       seq(repeat(seq($.typ, $.COMMA)), $.typ),
     typ: $ => choice(
       $.primitive_typ,
-      seq ($.LIST, $.OF, $.typ),
-      seq ($.OPTION, $.OF, $.typ),
+      seq ($.LIST, $.typ),
+      seq ($.OPTION, $.typ),
       seq ($.LPAREN, $.typ_list, $.RPAREN)
     ),
 
@@ -599,7 +599,7 @@ module.exports = grammar({
     e_enum: $ =>
       prec('CONTENT', seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
-      prec.right(seq($.LIST, $.OF, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
+      prec.right(seq($.LIST, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
       prec.right(
           seq($.MAP_EACH, $.binder, $.AMONG, field('coll', $._expr),
