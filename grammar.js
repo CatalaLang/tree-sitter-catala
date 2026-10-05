@@ -22,7 +22,7 @@ const tokens_local = {
     INCREASING: "up",
     OF: "of",
     LIST: "list",
-    OPTION: "optional",
+    OPTION: /optional\s+of/,
     CONTAINS: "contains",
     ENUM: "enumeration",
     INTEGER: "integer",
@@ -110,7 +110,7 @@ const tokens_local = {
     INCREASING: "supérieur",
     OF: "de",
     LIST: "liste",
-    OPTION: "optionnel",
+    OPTION: /optionnel\s+de/,
     CONTAINS: "contient",
     ENUM: "énumération",
     INTEGER: "entier",
@@ -396,7 +396,7 @@ module.exports = grammar({
     typ: $ => choice(
       $.primitive_typ,
       seq ($.LIST, $.OF, $.typ),
-      seq ($.OPTION, $.OF, $.typ),
+      seq ($.OPTION, $.typ),
       seq ($.LPAREN, $.typ_list, $.RPAREN)
     ),
 
