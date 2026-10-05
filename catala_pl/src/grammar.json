@@ -294,10 +294,6 @@
             },
             {
               "type": "SYMBOL",
-              "name": "OF"
-            },
-            {
-              "type": "SYMBOL",
               "name": "typ"
             }
           ]
@@ -2651,7 +2647,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "Round"
+          "name": "ROUND"
         }
       ]
     },
@@ -3023,7 +3019,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "Round"
+          "name": "ROUND"
         },
         {
           "type": "CHOICE",
@@ -4057,14 +4053,14 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "data"
+        "value": "dane"
       }
     },
     "DEPENDS": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "zalezy\\s+od"
+        "value": "zależy\\s+od"
       }
     },
     "DECLARATION": {
@@ -4106,7 +4102,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "kolekcja"
+        "value": "lista"
       }
     },
     "OPTION": {
@@ -4134,7 +4130,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "calkowita"
+        "value": "całkowita"
       }
     },
     "MONEY": {
@@ -4161,8 +4157,8 @@
     "DURATION": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "czas\\s+trwania"
+        "type": "STRING",
+        "value": "czastrwania"
       }
     },
     "BOOLEAN": {
@@ -4190,7 +4186,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "spelnione"
+        "value": "spełnione"
       }
     },
     "DEFINITION": {
@@ -4246,7 +4242,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "typu"
+        "value": "rodzaj"
       }
     },
     "WITH_PATT": {
@@ -4267,7 +4263,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "jezeli"
+        "value": "jeżeli"
       }
     },
     "THEN": {
@@ -4365,7 +4361,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "in"
+        "value": "w"
       }
     },
     "AMONG": {
@@ -4379,7 +4375,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "takie\\s+ze"
+        "value": "takie\\s+że"
       }
     },
     "THAT": {
@@ -4400,7 +4396,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "maximum"
+        "value": "maksimum"
       }
     },
     "MINIMUM": {
@@ -4414,14 +4410,14 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "łączyć"
+        "value": "połączyć"
       }
     },
     "MAP_EACH": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "plan każdy"
+        "type": "PATTERN",
+        "value": "plan\\s+każdy"
       }
     },
     "TO": {
@@ -4456,7 +4452,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "lub\\s+jezeli\\s+kolekcja\\s+pusty"
+        "value": "lub\\s+jeżeli\\s+lista\\s+pusta"
       }
     },
     "BUT_REPLACE": {
@@ -4484,14 +4480,14 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "in\\s+increasing\\s+order"
+        "value": "by\\s+increasing\\s+order"
       }
     },
     "ORDER_DECREASING": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "in\\s+decreasing\\s+order"
+        "value": "by\\s+decreasing\\s+order"
       }
     },
     "AND_THEN": {
@@ -4512,14 +4508,14 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "miesiac"
+        "value": "miesiąc"
       }
     },
     "DAY": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "dzien"
+        "value": "dzień"
       }
     },
     "TRUE": {
@@ -4533,7 +4529,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "falsz"
+        "value": "fałsz"
       }
     },
     "INPUT": {
@@ -4557,7 +4553,7 @@
         "value": "wewnętrzny"
       }
     },
-    "Round": {
+    "ROUND": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
@@ -4567,15 +4563,15 @@
     "DECIMAL_LITERAL": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "-?[0-9]+\\.[0-9]+"
+        "type": "STRING",
+        "value": "/-?[0-9]+.[0-9]+/"
       }
     },
     "MONEY_AMOUNT": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "-?[0-9]([0-9,]*[0-9])?(\\.[0-9]{1,2})?\\p{Zs}*PLN"
+        "type": "STRING",
+        "value": "/-?[0-9]([0-9,]*[0-9])?(.[0-9]{1,2})?p{Zs}*PLN/}"
       }
     },
     "LAW_INCLUDE": {
@@ -4842,8 +4838,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4861,8 +4857,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4880,8 +4876,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4899,8 +4895,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4932,8 +4928,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4951,8 +4947,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4970,8 +4966,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -4989,8 +4985,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^$]?"
+              "type": "STRING",
+              "value": "/[!.@^PLN]?/"
             }
           }
         ]
@@ -5014,7 +5010,7 @@
       "type": "TOKEN",
       "content": {
         "type": "STRING",
-        "value": "xor"
+        "value": "albo"
       }
     }
   },

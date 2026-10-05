@@ -12,22 +12,12 @@
     "fields": {}
   },
   {
-    "type": "CONTENT",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "EXTERNAL",
     "named": true,
     "fields": {}
   },
   {
     "type": "MODULE_EXTERNAL",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "TYPE",
     "named": true,
     "fields": {}
   },
@@ -197,7 +187,7 @@
           "named": true
         },
         {
-          "type": "Round",
+          "type": "ROUND",
           "named": true
         }
       ]
@@ -7558,7 +7548,7 @@
           "named": true
         },
         {
-          "type": "Round",
+          "type": "ROUND",
           "named": true
         }
       ]
@@ -8608,6 +8598,10 @@
     "named": true
   },
   {
+    "type": "CONTENT",
+    "named": true
+  },
+  {
     "type": "CONTEXT",
     "named": true
   },
@@ -8912,15 +8906,15 @@
     "named": true
   },
   {
+    "type": "ROUND",
+    "named": true
+  },
+  {
     "type": "RPAREN",
     "named": true
   },
   {
     "type": "RULE",
-    "named": true
-  },
-  {
-    "type": "Round",
     "named": true
   },
   {
@@ -8972,6 +8966,10 @@
     "named": true
   },
   {
+    "type": "TYPE",
+    "named": true
+  },
+  {
     "type": "UNDER_CONDITION",
     "named": true
   },
@@ -9001,10 +8999,6 @@
   },
   {
     "type": "external",
-    "named": false
-  },
-  {
-    "type": "typu",
     "named": false
   },
   {

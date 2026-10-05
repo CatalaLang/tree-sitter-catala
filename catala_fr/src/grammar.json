@@ -294,10 +294,6 @@
             },
             {
               "type": "SYMBOL",
-              "name": "OF"
-            },
-            {
-              "type": "SYMBOL",
               "name": "typ"
             }
           ]
@@ -2651,7 +2647,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "Round"
+          "name": "ROUND"
         }
       ]
     },
@@ -3023,7 +3019,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "Round"
+          "name": "ROUND"
         },
         {
           "type": "CHOICE",
@@ -4105,15 +4101,15 @@
     "LIST": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "liste"
+        "type": "PATTERN",
+        "value": "liste\\s+de"
       }
     },
     "OPTION": {
       "type": "TOKEN",
       "content": {
-        "type": "STRING",
-        "value": "optionnel"
+        "type": "PATTERN",
+        "value": "optionnel\\s+de"
       }
     },
     "CONTAINS": {
@@ -4413,7 +4409,7 @@
     "COMBINE": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
+        "type": "STRING",
         "value": "combine"
       }
     },
@@ -4427,7 +4423,7 @@
     "TO": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
+        "type": "STRING",
         "value": "en"
       }
     },
@@ -4557,7 +4553,7 @@
         "value": "interne"
       }
     },
-    "Round": {
+    "ROUND": {
       "type": "TOKEN",
       "content": {
         "type": "STRING",
@@ -4567,15 +4563,15 @@
     "DECIMAL_LITERAL": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "-?[0-9]+,[0-9]+"
+        "type": "STRING",
+        "value": "/-?[0-9]+,[0-9]+/"
       }
     },
     "MONEY_AMOUNT": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "-?[0-9]([0-9\\p{Zs}]*[0-9])?(,[0-9]{1,2})?\\p{Zs}*€"
+        "type": "STRING",
+        "value": "/-?[0-9]([0-9p{Zs}]*[0-9])?(,[0-9]{1,2})?p{Zs}*€/}"
       }
     },
     "LAW_INCLUDE": {
@@ -4842,8 +4838,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4861,8 +4857,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4880,8 +4876,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4899,8 +4895,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4932,8 +4928,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4951,8 +4947,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4970,8 +4966,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]
@@ -4989,8 +4985,8 @@
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
-              "type": "PATTERN",
-              "value": "[!.@^€]?"
+              "type": "STRING",
+              "value": "/[!.@^€]?/"
             }
           }
         ]

@@ -1,269 +1,8 @@
-var lang = "en"
-if ('TREESITTER_CATALA_LANG' in process.env) {
-  lang = process.env.TREESITTER_CATALA_LANG
-}
+const {lang_name, tokens_local} = require('./pl.js');
 
-var variant = "catala"
-if ('TREESITTER_CATALA_VARIANT' in process.env) {
-  variant = process.env.TREESITTER_CATALA_VARIANT
-}
+variant = "catala_expr"
 
-const name = (variant+"_"+lang)
-
-const tokens_local = {
-  en: {
-    SCOPE: "scope",
-    CONSEQUENCE: "consequence",
-    DATA: "data",
-    DEPENDS: /depends\s+on/,
-    DECLARATION: "declaration",
-    CONTEXT: "context",
-    DECREASING: "down",
-    INCREASING: "up",
-    OF: "of",
-    LIST: "list",
-    OPTION: "optional",
-    CONTAINS: "contains",
-    ENUM: "enumeration",
-    INTEGER: "integer",
-    MONEY: "money",
-    DECIMAL: "decimal",
-    DATE: "date",
-    DURATION: "duration",
-    BOOLEAN: "boolean",
-    POSITION: "code_location",
-    SUM: "sum",
-    FILLED: "fulfilled",
-    DEFINITION: "definition",
-    STATE: "state",
-    LABEL: "label",
-    EXCEPTION: "exception",
-    DEFINED_AS: "equals",
-    MATCH: "match",
-    WILDCARD: "anything",
-    TYPE: "type",
-    WITH_PATT: /with\s+pattern/,
-    UNDER_CONDITION: /under\s+condition/,
-    IF: "if",
-    THEN: "then",
-    ELSE: "else",
-    CONDITION: "condition",
-    CONTENT: "content",
-    STRUCT: "structure",
-    ASSERTION: "assertion",
-    WITH: "with",
-    FOR: "for",
-    ALL: "all",
-    WE_HAVE: /we\s+have/,
-    RULE: "rule",
-    LET: "let",
-    EXISTS: "exists",
-    IN: "in",
-    AMONG: "among",
-    SUCH: "such",
-    THAT: "that",
-    AND: "and",
-    OR: "or",
-    XOR: "xor",
-    NOT: "not",
-    MAXIMUM: "maximum",
-    MINIMUM: "minimum",
-    COMBINE: "combine",
-    MAP_EACH: /map\s+each/,
-    TO: /to/,
-    INITIALLY: "initially",
-    IMPOSSIBLE: "impossible",
-    IS: "is",
-    OR_EMPTY: /or\s+if\s+list\s+empty/,
-    BUT_REPLACE: /but\s+replace/,
-    CARDINAL: "number",
-    YEAR: "year",
-    MONTH: "month",
-    DAY: "day",
-    TRUE: "true",
-    FALSE: "false",
-    INPUT: "input",
-    OUTPUT: "output",
-    INTERNAL: "internal",
-    Round: "round",
-    DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
-    MONEY_AMOUNT: /-?\$[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?/,
-    OP_KIND_SUFFIX: /[!.@^$]?/,
-    LAW_INCLUDE: 'Include',
-    MODULE_DEF: 'Module',
-    MODULE_USE: 'Using',
-    MODULE_ALIAS: 'as',
-    MODULE_EXTERNAL: 'external',
-  },
-  fr: {
-    SCOPE: /champ\s+d'application/,
-    CONSEQUENCE: "conséquence",
-    DATA: "donnée",
-    DEPENDS: /dépend\s+de/,
-    DECLARATION: "déclaration",
-    CONTEXT: "contexte",
-    DECREASING: "inférieur",
-    INCREASING: "supérieur",
-    OF: "de",
-    LIST: "liste",
-    OPTION: "optionnel",
-    CONTAINS: "contient",
-    ENUM: "énumération",
-    INTEGER: "entier",
-    MONEY: "argent",
-    DECIMAL: "décimal",
-    DATE: "date",
-    DURATION: "durée",
-    BOOLEAN: "booléen",
-    POSITION: "position_source",
-    SUM: "somme",
-    FILLED: "rempli",
-    DEFINITION: "définition",
-    STATE: "état",
-    LABEL: "étiquette",
-    EXCEPTION: "exception",
-    DEFINED_AS: /égal\s+à/,
-    MATCH: "selon",
-    WILDCARD: /n'importe\s+quel/,
-    TYPE: "type",
-    WITH_PATT: /sous\s+forme/,
-    UNDER_CONDITION: /sous\s+condition/,
-    IF: "si",
-    THEN: "alors",
-    ELSE: "sinon",
-    CONDITION: "condition",
-    CONTENT: "contenu",
-    STRUCT: "structure",
-    ASSERTION: "assertion",
-    WITH: "avec",
-    FOR: "pour",
-    ALL: "tout",
-    WE_HAVE: /on\s+a/,
-    RULE: "règle",
-    LET: "soit",
-    EXISTS: "existe",
-    IN: "dans",
-    AMONG: "parmi",
-    SUCH: "tel",
-    THAT: "que",
-    AND: "et",
-    OR: "ou",
-    XOR: /ou\s+bien/,
-    NOT: "non",
-    MAXIMUM: "maximum",
-    MINIMUM: "minimum",
-    COMBINE: /combine/,
-    MAP_EACH: /transforme\s+chaque/,
-    TO: /en/,
-    INITIALLY: "initialement",
-    IMPOSSIBLE: "impossible",
-    IS: "est",
-    OR_EMPTY: /ou\s+si\s+liste\s+vide/,
-    BUT_REPLACE: /mais\s+en\s+remplaçant/,
-    CARDINAL: "nombre",
-    YEAR: "an",
-    MONTH: "mois",
-    DAY: "jour",
-    TRUE: "vrai",
-    FALSE: "faux",
-    INPUT: "entrée",
-    OUTPUT: "résultat",
-    INTERNAL: "interne",
-    Round: "arrondi",
-    DECIMAL_LITERAL: /-?[0-9]+,[0-9]+/,
-    MONEY_AMOUNT: /-?[0-9]([0-9\p{Zs}]*[0-9])?(,[0-9]{1,2})?\p{Zs}*€/,
-    OP_KIND_SUFFIX: /[!.@^€]?/,
-    LAW_INCLUDE: 'Inclusion',
-    MODULE_DEF: 'Module',
-    MODULE_USE: /Usage\s+de/,
-    MODULE_ALIAS: /en\s+tant\s+que/,
-    MODULE_EXTERNAL: 'externe',
-  },
-  pl: {
-    SCOPE: "zakres",
-    CONSEQUENCE: "konsekwencja",
-    DATA: "data",
-    DEPENDS: /zalezy\s+od/,
-    DECLARATION: "deklaracja",
-    CONTEXT: "kontekst",
-    DECREASING: "dół",
-    INCREASING: "górę",
-    OF: "z",
-    LIST: "kolekcja",
-    OPTION: "opcjonalny",
-    CONTAINS: "zawiera",
-    ENUM: "enumeracja",
-    INTEGER: "calkowita",
-    MONEY: "pieniądze",
-    DECIMAL: "dziesiętny",
-    DATE: "czas",
-    DURATION: /czas\s+trwania/,
-    BOOLEAN: "zerojedynkowy",
-    POSITION: "code_location",
-    SUM: "suma",
-    FILLED: "spelnione",
-    DEFINITION: "definicja",
-    STATE: "stan",
-    LABEL: "etykieta",
-    EXCEPTION: "wyjątek",
-    DEFINED_AS: "wynosi",
-    MATCH: "pasuje",
-    WILDCARD: "cokolwiek",
-    TYPE: "typu",
-    WITH_PATT: /ze\s+wzorem/,
-    UNDER_CONDITION: /pod\s+warunkiem/,
-    IF: "jezeli",
-    THEN: "wtedy",
-    ELSE: "inaczej",
-    CONDITION: "warunek",
-    CONTENT: "typu",
-    STRUCT: "struktura",
-    ASSERTION: "asercja",
-    WITH: /wraz\s+z/,
-    FOR: "dla",
-    ALL: "wszystkie",
-    WE_HAVE: "mamy",
-    RULE: "zasada",
-    LET: "niech",
-    EXISTS: "istnieje",
-    IN: "in",
-    AMONG: "wśród",
-    SUCH: /takie\s+ze/,
-    THAT: "to",
-    AND: "i",
-    OR: "lub",
-    XOR: "xor",
-    NOT: "nie",
-    MAXIMUM: "maximum",
-    MINIMUM: "minimum",
-    COMBINE: "łączyć",
-    MAP_EACH: "plan każdy",
-    TO: "do",
-    INITIALLY: "początkowo",
-    IMPOSSIBLE: "niemożliwe",
-    IS: "jest",
-    OR_EMPTY: /lub\s+jezeli\s+kolekcja\s+pusty/,
-    BUT_REPLACE: /ale\s+zastąpić/,
-    CARDINAL: "liczba",
-    YEAR: "rok",
-    MONTH: "miesiac",
-    DAY: "dzien",
-    TRUE: "prawda",
-    FALSE: "falsz",
-    INPUT: "wejście",
-    OUTPUT: "wyjście",
-    INTERNAL: "wewnętrzny",
-    Round: "zaokrąglony",
-    DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
-    MONEY_AMOUNT: /-?[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?\p{Zs}*PLN/,
-    OP_KIND_SUFFIX: /[!.@^$]?/,
-    LAW_INCLUDE: 'Include',
-    MODULE_DEF: 'Module',
-    MODULE_USE: 'Using',
-    MODULE_ALIAS: 'as',
-    MODULE_EXTERNAL: 'external',
-  }
-}
+const name = (variant+"_"+lang_name)
 
 // International tokens needing no translation (so far)
 const tokens_international = {
@@ -310,7 +49,7 @@ const tokens_international = {
   SEMICOLON: ';',
 }
 
-const tokens = Object.assign({}, tokens_local[lang], tokens_international)
+const tokens = Object.assign({}, tokens_local, tokens_international)
 
 const inline = $ => [
   // $.law_text,
@@ -363,9 +102,9 @@ module.exports = grammar({
 
     ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
     COMMENT: $ => seq('#', /[^\n]*/),
-    _hspace: $ => token.immediate(/[\p{Zs}\t]+/),
+    _hspace: $ => token.immediate(prec(1,/[\p{Zs}\t]+/)),
     _newline: $ => token.immediate(/[\p{Zs}\t]*\r?\n[\p{Zs}\t]*/),
-    _hardnl: $ => token.immediate(/[\p{Zs}\t]*\r?\n/),
+    _hardnl: $ => token.immediate(prec(2,/[\p{Zs}\t]*\r?\n/)),
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
     _law_text: $ => prec.right(choice(
@@ -384,7 +123,7 @@ module.exports = grammar({
     typ: $ => choice(
       $.primitive_typ,
       seq ($.LIST, $.OF, $.typ),
-      seq ($.OPTION, $.OF, $.typ),
+      seq ($.OPTION, $.typ),
       seq ($.LPAREN, $.typ_list, $.RPAREN)
     ),
 
@@ -398,6 +137,8 @@ module.exports = grammar({
     enum_struct_name: $ => $._UIDENT,
 
     constructor_name: $ => $._UIDENT,
+
+    abstract_type_name: $ => $._UIDENT,
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
@@ -440,6 +181,7 @@ module.exports = grammar({
         $.e_coll_sum,
         $.e_coll_map,
         $.e_coll_extremum,
+        $.e_coll_sort,
         $.e_unop,
         $.e_binop,
         $.e_coll_exists,
@@ -447,12 +189,13 @@ module.exports = grammar({
         $.e_match,
         $.e_ifthenelse,
         $.e_letin,
+        $.e_assert,
         $.e_fieldaccess,
         $.e_struct,
         $.e_enum,
         $.e_coll_filter,
         $.e_coll_filter_map,
-        $.e_coll_arg_extremum,
+        $.e_coll_find,
         $.e_coll_fold,
       ),
 
@@ -472,7 +215,7 @@ module.exports = grammar({
       seq($.LPAREN, $.tuple_contents, $.RPAREN),
 
     collection_elements: $ =>
-      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr),
+      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr, optional($.SEMICOLON)),
 
     e_collection: $ =>
       seq($.LBRACKET, optional($.collection_elements), $.RBRACKET),
@@ -490,7 +233,7 @@ module.exports = grammar({
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
-                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.variable)))),
+                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.binder)))),
     e_but_replace: $ =>
       prec.right('apply', seq($._expr, $.BUT_REPLACE,
                               $.LBRACE, $.struct_content_fields, $.RBRACE)),
@@ -508,6 +251,13 @@ module.exports = grammar({
     e_coll_extremum: $ =>
       prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
                      optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
+    e_coll_sort: $ =>
+      prec.right(choice(
+        seq($.SORT, field('coll', $._expr),
+            choice($.ORDER_INCREASING, $.ORDER_DECREASING)),
+        seq($.SORT, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
+            choice($.ORDER_INCREASING, $.ORDER_DECREASING),
+            $.OF, field('criteria', seq(repeat(seq($._expr, $.AND_THEN)), $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -546,6 +296,8 @@ module.exports = grammar({
       prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
     e_letin: $ =>
       prec.right(seq($.LET, $.binder, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
+    e_assert: $ =>
+      prec.right(seq($.ASSERTION, field('cond', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
       prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
@@ -557,7 +309,7 @@ module.exports = grammar({
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
     e_enum: $ =>
-      prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
+      prec('CONTENT', seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
       prec.right(seq($.LIST, $.OF, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
@@ -565,10 +317,11 @@ module.exports = grammar({
           seq($.MAP_EACH, $.binder, $.AMONG, field('coll', $._expr),
               $.SUCH, $.THAT, field('cond', $._expr), $.TO, field('mapf', $._expr))
       ),
-    e_coll_arg_extremum: $ =>
+    e_coll_find: $ =>
       prec.right(seq($.CONTENT, $.OF, $.binder, $.AMONG, field('coll', $._expr),
-                     $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
+                     $.SUCH, $.THAT, field('mapf', $._expr),
+                     optional(seq($.IS, choice($.MINIMUM,$.MAXIMUM),
+                                  optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))))),
 
     struct_content_field: $ =>
       seq($.qfield, $.COLON, $._expr),
@@ -597,7 +350,7 @@ module.exports = grammar({
         $.CARDINAL,
         $.DECIMAL,
         $.MONEY,
-        $.Round,
+        $.ROUND,
       ),
 
     expression: $ => $._expr,
@@ -638,7 +391,7 @@ module.exports = grammar({
       ),
 
     rounding_mode: $ =>
-      seq($.DATE, $.Round, choice($.INCREASING, $.DECREASING)),
+      seq($.DATE, $.ROUND, choice($.INCREASING, $.DECREASING)),
 
     scope: $ =>
       seq($.SCOPE, field('name', $.scope_name),
@@ -690,6 +443,9 @@ module.exports = grammar({
       seq($.DECLARATION, $.ENUM, field('name', $.enum_struct_name), $.COLON,
           field('body', repeat(seq($.ALT, $.enum_decl_item)))),
 
+    abstract_decl: $ =>
+      seq($.DECLARATION, $.TYPE, field('name', $.abstract_type_name), $.COLON, $.EXTERNAL),
+
     toplevel_def: $ =>
       seq(
         $.DECLARATION, field('name', $.variable), $.CONTENT, $.typ,
@@ -703,6 +459,7 @@ module.exports = grammar({
         $.scope_decl,
         $.struct_decl,
         $.enum_decl,
+        $.abstract_decl,
         $.toplevel_def
       )),
 
@@ -824,6 +581,10 @@ module.exports = grammar({
   OR_EMPTY: $ => token(tokens.OR_EMPTY),
   BUT_REPLACE: $ => token(tokens.BUT_REPLACE),
   CARDINAL: $ => token(tokens.CARDINAL),
+  SORT: $ => token(tokens.SORT),
+  ORDER_INCREASING: $ => token(tokens.ORDER_INCREASING),
+  ORDER_DECREASING: $ => token(tokens.ORDER_DECREASING),
+  AND_THEN: $ => token(tokens.AND_THEN),
   YEAR: $ => token(tokens.YEAR),
   MONTH: $ => token(tokens.MONTH),
   DAY: $ => token(tokens.DAY),
@@ -832,14 +593,15 @@ module.exports = grammar({
   INPUT: $ => token(tokens.INPUT),
   OUTPUT: $ => token(tokens.OUTPUT),
   INTERNAL: $ => token(tokens.INTERNAL),
-  Round: $ => token(tokens.Round),
+  ROUND: $ => token(tokens.ROUND),
   DECIMAL_LITERAL: $ => token(tokens.DECIMAL_LITERAL),
   MONEY_AMOUNT: $ => token(tokens.MONEY_AMOUNT),
   LAW_INCLUDE: $ => token(tokens.LAW_INCLUDE),
   MODULE_DEF: $ => token(tokens.MODULE_DEF),
   MODULE_USE: $ => token(tokens.MODULE_USE),
   MODULE_ALIAS: $ => token(tokens.MODULE_ALIAS),
-  MODULE_EXTERNAL: $ => token(tokens.MODULE_EXTERNAL),
+  EXTERNAL: $ => token(tokens.EXTERNAL),
+  MODULE_EXTERNAL: $ => token(tokens.EXTERNAL),
 
   ALT: $ => token(tokens.ALT),
   AT_PAGE: $ => token(tokens.AT_PAGE),
