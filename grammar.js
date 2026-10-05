@@ -89,7 +89,7 @@ const tokens_local = {
     INPUT: "input",
     OUTPUT: "output",
     INTERNAL: "internal",
-    Round: "round",
+    ROUND: "round",
     DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
     MONEY_AMOUNT: /-?\$[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
@@ -177,7 +177,7 @@ const tokens_local = {
     INPUT: "entrée",
     OUTPUT: "résultat",
     INTERNAL: "interne",
-    Round: "arrondi",
+    ROUND: "arrondi",
     DECIMAL_LITERAL: /-?[0-9]+,[0-9]+/,
     MONEY_AMOUNT: /-?[0-9]([0-9\p{Zs}]*[0-9])?(,[0-9]{1,2})?\p{Zs}*€/,
     OP_KIND_SUFFIX: /[!.@^€]?/,
@@ -265,7 +265,7 @@ const tokens_local = {
     INPUT: "wejście",
     OUTPUT: "wyjście",
     INTERNAL: "wewnętrzny",
-    Round: "zaokrąglony",
+    ROUND: "zaokrąglony",
     DECIMAL_LITERAL: /-?[0-9]+\.[0-9]+/,
     MONEY_AMOUNT: /-?[0-9]([0-9,]*[0-9])?(\.[0-9]{1,2})?\p{Zs}*PLN/,
     OP_KIND_SUFFIX: /[!.@^$]?/,
@@ -623,7 +623,7 @@ module.exports = grammar({
         $.CARDINAL,
         $.DECIMAL,
         $.MONEY,
-        $.Round,
+        $.ROUND,
       ),
 
     expression: $ => $._expr,
@@ -664,7 +664,7 @@ module.exports = grammar({
       ),
 
     rounding_mode: $ =>
-      seq($.DATE, $.Round, choice($.INCREASING, $.DECREASING)),
+      seq($.DATE, $.ROUND, choice($.INCREASING, $.DECREASING)),
 
     scope: $ =>
       seq($.SCOPE, field('name', $.scope_name),
@@ -866,7 +866,7 @@ module.exports = grammar({
   INPUT: $ => token(tokens.INPUT),
   OUTPUT: $ => token(tokens.OUTPUT),
   INTERNAL: $ => token(tokens.INTERNAL),
-  Round: $ => token(tokens.Round),
+  ROUND: $ => token(tokens.ROUND),
   DECIMAL_LITERAL: $ => token(tokens.DECIMAL_LITERAL),
   MONEY_AMOUNT: $ => token(tokens.MONEY_AMOUNT),
   LAW_INCLUDE: $ => token(tokens.LAW_INCLUDE),
