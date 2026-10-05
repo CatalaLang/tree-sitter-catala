@@ -1,0 +1,7 @@
+(executable
+ (name tokens)
+ (libraries catala.languages))
+
+(executable
+ (name list_langs)
+ (libraries catala.languages))
