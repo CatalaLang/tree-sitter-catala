@@ -4,32 +4,49 @@
   "word": "_LIDENT",
   "rules": {
     "source_file": {
-      "type": "REPEAT",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_hardnl"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "law_block"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "code_block"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "directive"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "verb_block"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_hardnl"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "law_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "code_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "directive"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "verb_block"
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_hspace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "ATTRIBUTE": {
       "type": "SEQ",

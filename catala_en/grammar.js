@@ -361,12 +361,16 @@ module.exports = grammar({
   {
     source_file: (
       variant == "catala" ? ($ =>
-        repeat(choice(
-          $._hardnl,
-          $.law_block,
-          $.code_block,
-          $.directive,
-          $.verb_block))
+        seq(
+          repeat(choice(
+            $._hardnl,
+            $.law_block,
+            $.code_block,
+            $.directive,
+            $.verb_block)),
+          // Some files have trailing whitespaces without
+          // newlines at EOF
+          optional($._hspace))
       ) :
       variant == "catala_code" ? ($ => $._code) :
       variant == "catala_expr" ? ($ => $._expr) :
