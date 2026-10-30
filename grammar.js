@@ -377,7 +377,18 @@ module.exports = grammar({
         console.error("Unknown variant "+ variant)
     ),
 
-    ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
+    string: $ => (/"(\\(.|\n)|[^\\"]|\n)*"/),
+
+    ATTRIBUTE: $ => seq (
+      '#[',
+      field('path', seq($._LIDENT, repeat(seq($.DOT, $._LIDENT)))),
+      optional(seq(
+        $.EQUAL,
+        field('value', choice($.string, $._expr))
+      )),
+      ']'
+    ),
+
     COMMENT: $ => seq('#', /[^\n]*/),
     _hspace: $ => token.immediate(prec(1,/[\p{Zs}\t]+/)),
     _newline: $ => token.immediate(/[\p{Zs}\t]*\r?\n[\p{Zs}\t]*/),

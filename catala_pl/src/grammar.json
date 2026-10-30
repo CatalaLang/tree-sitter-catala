@@ -48,6 +48,10 @@
         }
       ]
     },
+    "string": {
+      "type": "PATTERN",
+      "value": "\"(\\\\(.|\\n)|[^\\\\\"]|\\n)*\""
+    },
     "ATTRIBUTE": {
       "type": "SEQ",
       "members": [
@@ -56,8 +60,71 @@
           "value": "#["
         },
         {
-          "type": "PATTERN",
-          "value": "([^\\]\\\\]|\\\\(.|\\n))*]"
+          "type": "FIELD",
+          "name": "path",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_LIDENT"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "DOT"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_LIDENT"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "EQUAL"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "value",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "string"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_expr"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "]"
         }
       ]
     },

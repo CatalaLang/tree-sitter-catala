@@ -3,7 +3,162 @@
     "type": "ATTRIBUTE",
     "named": true,
     "extra": true,
-    "fields": {}
+    "fields": {
+      "path": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "DOT",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "builtin",
+            "named": true
+          },
+          {
+            "type": "e_apply",
+            "named": true
+          },
+          {
+            "type": "e_assert",
+            "named": true
+          },
+          {
+            "type": "e_binop",
+            "named": true
+          },
+          {
+            "type": "e_but_replace",
+            "named": true
+          },
+          {
+            "type": "e_coll_contains",
+            "named": true
+          },
+          {
+            "type": "e_coll_exists",
+            "named": true
+          },
+          {
+            "type": "e_coll_extremum",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter",
+            "named": true
+          },
+          {
+            "type": "e_coll_filter_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_find",
+            "named": true
+          },
+          {
+            "type": "e_coll_fold",
+            "named": true
+          },
+          {
+            "type": "e_coll_forall",
+            "named": true
+          },
+          {
+            "type": "e_coll_map",
+            "named": true
+          },
+          {
+            "type": "e_coll_sort",
+            "named": true
+          },
+          {
+            "type": "e_coll_sum",
+            "named": true
+          },
+          {
+            "type": "e_collection",
+            "named": true
+          },
+          {
+            "type": "e_enum",
+            "named": true
+          },
+          {
+            "type": "e_fieldaccess",
+            "named": true
+          },
+          {
+            "type": "e_ifthenelse",
+            "named": true
+          },
+          {
+            "type": "e_letin",
+            "named": true
+          },
+          {
+            "type": "e_match",
+            "named": true
+          },
+          {
+            "type": "e_paren",
+            "named": true
+          },
+          {
+            "type": "e_scope_apply",
+            "named": true
+          },
+          {
+            "type": "e_struct",
+            "named": true
+          },
+          {
+            "type": "e_test_match",
+            "named": true
+          },
+          {
+            "type": "e_tuple",
+            "named": true
+          },
+          {
+            "type": "e_unop",
+            "named": true
+          },
+          {
+            "type": "e_var_state",
+            "named": true
+          },
+          {
+            "type": "e_variable",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "EQUAL",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "COMMENT",
@@ -23,6 +178,11 @@
   },
   {
     "type": "MODULE_EXTERNAL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "RBRACKET",
     "named": true,
     "fields": {}
   },
@@ -8908,10 +9068,6 @@
     "named": true
   },
   {
-    "type": "RBRACKET",
-    "named": true
-  },
-  {
     "type": "RPAREN",
     "named": true
   },
@@ -9000,8 +9156,16 @@
     "named": true
   },
   {
+    "type": "]",
+    "named": false
+  },
+  {
     "type": "external",
     "named": false
+  },
+  {
+    "type": "string",
+    "named": true
   },
   {
     "type": "typu",
