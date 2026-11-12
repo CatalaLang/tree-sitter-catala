@@ -2093,6 +2093,26 @@
             "name": "MATCH"
           },
           {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "arg",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expr"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "COMMA"
+                }
+              ]
+            }
+          },
+          {
             "type": "FIELD",
             "name": "arg",
             "content": {
@@ -2249,43 +2269,24 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "WILDCARD"
-              },
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "qconstructor"
-                  },
-                  {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "CONTENT"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "binder"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_match_pattern"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "COMMA"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_match_pattern"
+                }
+              ]
+            }
           },
           {
             "type": "SYMBOL",
@@ -2297,6 +2298,45 @@
           }
         ]
       }
+    },
+    "_match_pattern": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "WILDCARD"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "qconstructor"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "CONTENT"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "binder"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     "e_fieldaccess": {
       "type": "PREC_LEFT",

@@ -578,7 +578,9 @@ module.exports = grammar({
       prec.right(seq($.FOR, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
         $.WE_HAVE, field('cond', $._expr))),
     e_match: $ =>
-      prec.right(seq($.MATCH, field('arg', $._expr), $.WITH_PATT,
+      prec.right(seq($.MATCH,
+        repeat(seq(field('arg', $._expr), $.COMMA)), field('arg', $._expr),
+        $.WITH_PATT,
         repeat1(seq($.ALT, $.match_case)))),
     e_ifthenelse: $ =>
       prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
@@ -588,8 +590,11 @@ module.exports = grammar({
       prec.right(seq($.ASSERTION, field('cond', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
-      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
+      prec.right(seq($._match_pattern, repeat(seq($.COMMA, $._match_pattern)),
                      $.COLON, $._expr)),
+
+    _match_pattern: $ =>
+      choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
 
     e_fieldaccess: $ =>
       prec.left('DOT', seq($._expr, $.DOT, choice($.qfield, $.TUPLE_INDEX))),

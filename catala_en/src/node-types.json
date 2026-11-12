@@ -6112,7 +6112,7 @@
     "named": true,
     "fields": {
       "arg": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -6248,6 +6248,10 @@
       "types": [
         {
           "type": "ALT",
+          "named": true
+        },
+        {
+          "type": "COMMA",
           "named": true
         },
         {
@@ -7344,6 +7348,10 @@
       "types": [
         {
           "type": "COLON",
+          "named": true
+        },
+        {
+          "type": "COMMA",
           "named": true
         },
         {
