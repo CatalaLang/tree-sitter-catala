@@ -77,6 +77,10 @@ const tokens_local = {
     OR_EMPTY: /or\s+if\s+list\s+empty/,
     BUT_REPLACE: /but\s+replace/,
     CARDINAL: "number",
+    SORT: "sort",
+    ORDER_INCREASING: /in\s+increasing\s+order/,
+    ORDER_DECREASING: /in\s+decreasing\s+order/,
+    AND_THEN: /and\s+then/,
     YEAR: "year",
     MONTH: "month",
     DAY: "day",
@@ -93,7 +97,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: 'Using',
     MODULE_ALIAS: 'as',
-    MODULE_EXTERNAL: 'external',
+    EXTERNAL: 'external',
   },
   fr: {
     SCOPE: /champ\s+d'application/,
@@ -161,6 +165,10 @@ const tokens_local = {
     OR_EMPTY: /ou\s+si\s+liste\s+vide/,
     BUT_REPLACE: /mais\s+en\s+remplaçant/,
     CARDINAL: "nombre",
+    SORT: "trie",
+    ORDER_INCREASING: /par\s+ordre\s+croissant/,
+    ORDER_DECREASING: /par\s+ordre\s+décroissant/,
+    AND_THEN: "puis",
     YEAR: "an",
     MONTH: "mois",
     DAY: "jour",
@@ -177,7 +185,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: /Usage\s+de/,
     MODULE_ALIAS: /en\s+tant\s+que/,
-    MODULE_EXTERNAL: 'externe',
+    EXTERNAL: 'externe',
   },
   pl: {
     SCOPE: "zakres",
@@ -245,6 +253,10 @@ const tokens_local = {
     OR_EMPTY: /lub\s+jezeli\s+kolekcja\s+pusty/,
     BUT_REPLACE: /ale\s+zastąpić/,
     CARDINAL: "liczba",
+    SORT: "sort",
+    ORDER_INCREASING: /in\s+increasing\s+order/,
+    ORDER_DECREASING: /in\s+decreasing\s+order/,
+    AND_THEN: /and\s+then/,
     YEAR: "rok",
     MONTH: "miesiac",
     DAY: "dzien",
@@ -261,7 +273,7 @@ const tokens_local = {
     MODULE_DEF: 'Module',
     MODULE_USE: 'Using',
     MODULE_ALIAS: 'as',
-    MODULE_EXTERNAL: 'external',
+    EXTERNAL: 'external',
   }
 }
 
@@ -349,23 +361,38 @@ module.exports = grammar({
   {
     source_file: (
       variant == "catala" ? ($ =>
-        repeat(choice(
-          $._hardnl,
-          $.law_block,
-          $.code_block,
-          $.directive,
-          $.verb_block))
+        seq(
+          repeat(choice(
+            $._hardnl,
+            $.law_block,
+            $.code_block,
+            $.directive,
+            $.verb_block)),
+          // Some files have trailing whitespaces without
+          // newlines at EOF
+          optional($._hspace))
       ) :
       variant == "catala_code" ? ($ => $._code) :
       variant == "catala_expr" ? ($ => $._expr) :
         console.error("Unknown variant "+ variant)
     ),
 
-    ATTRIBUTE: $ => seq ('#[', /([^\]\\]|\\(.|\n))*]/),
+    string: $ => (/"(\\(.|\n)|[^\\"]|\n)*"/),
+
+    ATTRIBUTE: $ => seq (
+      '#[',
+      field('path', seq($._LIDENT, repeat(seq($.DOT, $._LIDENT)))),
+      optional(seq(
+        $.EQUAL,
+        field('value', choice($.string, $._expr))
+      )),
+      ']'
+    ),
+
     COMMENT: $ => seq('#', /[^\n]*/),
-    _hspace: $ => token.immediate(/[\p{Zs}\t]+/),
+    _hspace: $ => token.immediate(prec(1,/[\p{Zs}\t]+/)),
     _newline: $ => token.immediate(/[\p{Zs}\t]*\r?\n[\p{Zs}\t]*/),
-    _hardnl: $ => token.immediate(/[\p{Zs}\t]*\r?\n/),
+    _hardnl: $ => token.immediate(prec(2,/[\p{Zs}\t]*\r?\n/)),
     // newline tokens need to be explicit outside of code blocks, to properly
     // detect beginnings of lines; add them to the choice of toplevel items and make all tokens "immediate"
     _law_text: $ => prec.right(choice(
@@ -398,6 +425,8 @@ module.exports = grammar({
     enum_struct_name: $ => $._UIDENT,
 
     constructor_name: $ => $._UIDENT,
+
+    abstract_type_name: $ => $._UIDENT,
 
     scope_var: $ => seq(repeat(seq($.variable, $.DOT)),$.variable),
 
@@ -440,6 +469,7 @@ module.exports = grammar({
         $.e_coll_sum,
         $.e_coll_map,
         $.e_coll_extremum,
+        $.e_coll_sort,
         $.e_unop,
         $.e_binop,
         $.e_coll_exists,
@@ -447,12 +477,13 @@ module.exports = grammar({
         $.e_match,
         $.e_ifthenelse,
         $.e_letin,
+        $.e_assert,
         $.e_fieldaccess,
         $.e_struct,
         $.e_enum,
         $.e_coll_filter,
         $.e_coll_filter_map,
-        $.e_coll_arg_extremum,
+        $.e_coll_find,
         $.e_coll_fold,
       ),
 
@@ -472,7 +503,7 @@ module.exports = grammar({
       seq($.LPAREN, $.tuple_contents, $.RPAREN),
 
     collection_elements: $ =>
-      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr),
+      seq(repeat(seq($._expr, $.SEMICOLON)), $._expr, optional($.SEMICOLON)),
 
     e_collection: $ =>
       seq($.LBRACKET, optional($.collection_elements), $.RBRACKET),
@@ -490,7 +521,7 @@ module.exports = grammar({
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
-                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.variable)))),
+                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.binder)))),
     e_but_replace: $ =>
       prec.right('apply', seq($._expr, $.BUT_REPLACE,
                               $.LBRACE, $.struct_content_fields, $.RBRACE)),
@@ -508,6 +539,13 @@ module.exports = grammar({
     e_coll_extremum: $ =>
       prec.right(seq(choice($.MINIMUM, $.MAXIMUM), $.OF, field('coll', $._expr),
                      optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
+    e_coll_sort: $ =>
+      prec.right(choice(
+        seq($.SORT, field('coll', $._expr),
+            choice($.ORDER_INCREASING, $.ORDER_DECREASING)),
+        seq($.SORT, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
+            choice($.ORDER_INCREASING, $.ORDER_DECREASING),
+            $.OF, field('criteria', seq(repeat(seq($._expr, $.AND_THEN)), $._expr))))),
 
     e_unop: $ =>
       prec.right('unop_expr', choice(
@@ -540,16 +578,23 @@ module.exports = grammar({
       prec.right(seq($.FOR, $.ALL, $.binder, $.AMONG, field('coll', $._expr),
         $.WE_HAVE, field('cond', $._expr))),
     e_match: $ =>
-      prec.right(seq($.MATCH, field('arg', $._expr), $.WITH_PATT,
+      prec.right(seq($.MATCH,
+        repeat(seq(field('arg', $._expr), $.COMMA)), field('arg', $._expr),
+        $.WITH_PATT,
         repeat1(seq($.ALT, $.match_case)))),
     e_ifthenelse: $ =>
       prec.right(seq($.IF, field('cond', $._expr), $.THEN, field('then', $._expr), $.ELSE, field('else', $._expr))),
     e_letin: $ =>
       prec.right(seq($.LET, $.binder, $.DEFINED_AS, field('def', $._expr), $.IN, field('body', $._expr))),
+    e_assert: $ =>
+      prec.right(seq($.ASSERTION, field('cond', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
-      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
+      prec.right(seq($._match_pattern, repeat(seq($.COMMA, $._match_pattern)),
                      $.COLON, $._expr)),
+
+    _match_pattern: $ =>
+      choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
 
     e_fieldaccess: $ =>
       prec.left('DOT', seq($._expr, $.DOT, choice($.qfield, $.TUPLE_INDEX))),
@@ -557,7 +602,7 @@ module.exports = grammar({
     e_struct: $ =>
       seq($.qenum_struct, $.LBRACE, $.struct_content_fields, $.RBRACE),
     e_enum: $ =>
-      prec.right(seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
+      prec('CONTENT', seq($.qconstructor, optional(seq($.CONTENT, $._expr)))),
     e_coll_filter: $ =>
       prec.right(seq($.LIST, $.OF, $.binder, $.AMONG, field('coll', $._expr), $.SUCH, $.THAT, field('cond', $._expr))),
     e_coll_filter_map: $ =>
@@ -565,10 +610,11 @@ module.exports = grammar({
           seq($.MAP_EACH, $.binder, $.AMONG, field('coll', $._expr),
               $.SUCH, $.THAT, field('cond', $._expr), $.TO, field('mapf', $._expr))
       ),
-    e_coll_arg_extremum: $ =>
+    e_coll_find: $ =>
       prec.right(seq($.CONTENT, $.OF, $.binder, $.AMONG, field('coll', $._expr),
-                     $.SUCH, $.THAT, field('mapf', $._expr), $.IS, choice($.MINIMUM,$.MAXIMUM),
-                     optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))),
+                     $.SUCH, $.THAT, field('mapf', $._expr),
+                     optional(seq($.IS, choice($.MINIMUM,$.MAXIMUM),
+                                  optional(seq($.OR_EMPTY, $.THEN, field('dft', $._expr))))))),
 
     struct_content_field: $ =>
       seq($.qfield, $.COLON, $._expr),
@@ -690,6 +736,9 @@ module.exports = grammar({
       seq($.DECLARATION, $.ENUM, field('name', $.enum_struct_name), $.COLON,
           field('body', repeat(seq($.ALT, $.enum_decl_item)))),
 
+    abstract_decl: $ =>
+      seq($.DECLARATION, $.TYPE, field('name', $.abstract_type_name), $.COLON, $.EXTERNAL),
+
     toplevel_def: $ =>
       seq(
         $.DECLARATION, field('name', $.variable), $.CONTENT, $.typ,
@@ -703,6 +752,7 @@ module.exports = grammar({
         $.scope_decl,
         $.struct_decl,
         $.enum_decl,
+        $.abstract_decl,
         $.toplevel_def
       )),
 
@@ -824,6 +874,10 @@ module.exports = grammar({
   OR_EMPTY: $ => token(tokens.OR_EMPTY),
   BUT_REPLACE: $ => token(tokens.BUT_REPLACE),
   CARDINAL: $ => token(tokens.CARDINAL),
+  SORT: $ => token(tokens.SORT),
+  ORDER_INCREASING: $ => token(tokens.ORDER_INCREASING),
+  ORDER_DECREASING: $ => token(tokens.ORDER_DECREASING),
+  AND_THEN: $ => token(tokens.AND_THEN),
   YEAR: $ => token(tokens.YEAR),
   MONTH: $ => token(tokens.MONTH),
   DAY: $ => token(tokens.DAY),
@@ -839,7 +893,8 @@ module.exports = grammar({
   MODULE_DEF: $ => token(tokens.MODULE_DEF),
   MODULE_USE: $ => token(tokens.MODULE_USE),
   MODULE_ALIAS: $ => token(tokens.MODULE_ALIAS),
-  MODULE_EXTERNAL: $ => token(tokens.MODULE_EXTERNAL),
+  EXTERNAL: $ => token(tokens.EXTERNAL),
+  MODULE_EXTERNAL: $ => token(tokens.EXTERNAL),
 
   ALT: $ => token(tokens.ALT),
   AT_PAGE: $ => token(tokens.AT_PAGE),
