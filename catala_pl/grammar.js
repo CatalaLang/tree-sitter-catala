@@ -588,7 +588,9 @@ module.exports = grammar({
       prec.right(seq($.ASSERTION, field('cond', $._expr), $.IN, field('body', $._expr))),
 
     match_case: $ =>
-      prec.right(seq(choice($.WILDCARD, seq($.qconstructor, optional(seq($.CONTENT, $.binder)))),
+      prec.right(seq(choice($.WILDCARD,
+                            seq($.qconstructor, optional(seq($.CONTENT, $.binder)),
+                                repeat(seq($.OR, $.qconstructor, optional(seq($.CONTENT, $.binder)))))),
                      $.COLON, $._expr)),
 
     e_fieldaccess: $ =>

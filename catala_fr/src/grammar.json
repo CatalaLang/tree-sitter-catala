@@ -2282,6 +2282,43 @@
                         "type": "BLANK"
                       }
                     ]
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "OR"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "qconstructor"
+                        },
+                        {
+                          "type": "CHOICE",
+                          "members": [
+                            {
+                              "type": "SEQ",
+                              "members": [
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "CONTENT"
+                                },
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "binder"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "BLANK"
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   }
                 ]
               }
