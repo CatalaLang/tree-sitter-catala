@@ -521,7 +521,12 @@ module.exports = grammar({
                                            $.RBRACE)))),
     e_test_match: $ =>
       prec.right('apply', seq(field('arg', $._expr),
-                              $.WITH_PATT, $.qconstructor, optional(seq($.CONTENT, $.binder)))),
+                              $.WITH_PATT,
+                              choice(seq($.qconstructor, optional(seq($.CONTENT, $.binder))),
+                                     seq($.LPAREN,
+                                         $.qconstructor, optional(seq($.CONTENT, $.binder)),
+                                         repeat(seq($.OR, $.qconstructor, optional(seq($.CONTENT, $.binder)))),
+                                         $.RPAREN)))),
     e_but_replace: $ =>
       prec.right('apply', seq($._expr, $.BUT_REPLACE,
                               $.LBRACE, $.struct_content_fields, $.RBRACE)),

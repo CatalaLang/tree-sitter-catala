@@ -1093,10 +1093,6 @@
             "name": "WITH_PATT"
           },
           {
-            "type": "SYMBOL",
-            "name": "qconstructor"
-          },
-          {
             "type": "CHOICE",
             "members": [
               {
@@ -1104,16 +1100,105 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "CONTENT"
+                    "name": "qconstructor"
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "binder"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "CONTENT"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "binder"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "type": "BLANK"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "LPAREN"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "qconstructor"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "CONTENT"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "binder"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "OR"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "qconstructor"
+                        },
+                        {
+                          "type": "CHOICE",
+                          "members": [
+                            {
+                              "type": "SEQ",
+                              "members": [
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "CONTENT"
+                                },
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "binder"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "BLANK"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "RPAREN"
+                  }
+                ]
               }
             ]
           }

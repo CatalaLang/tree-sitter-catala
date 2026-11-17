@@ -6628,6 +6628,18 @@
           "named": true
         },
         {
+          "type": "LPAREN",
+          "named": true
+        },
+        {
+          "type": "OR",
+          "named": true
+        },
+        {
+          "type": "RPAREN",
+          "named": true
+        },
+        {
           "type": "WITH_PATT",
           "named": true
         },
