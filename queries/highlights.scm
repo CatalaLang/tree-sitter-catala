@@ -33,6 +33,10 @@
 
 (match_case (WILDCARD) @constructor)
 
+(match_case (OR) @operator)
+
+(e_test_match (OR) @operator)
+
 (e_fieldaccess (DOT)* @operator)
 
 [(field_name) (TUPLE_INDEX)] @constructor
